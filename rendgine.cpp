@@ -3,32 +3,45 @@
 #include "lodepng.h"
 #include "object.h"
 
-void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned width, unsigned height);
+// ---- Global variable declarations ----
+double s;
+int hres, vres;
 
+// ---- Function declarations ----
+void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);
+
+// ---- Main funciton ----
 int main(int argc, char* argv[]){
 
 	const char* pngName = "image.png";
 
 	//generate some image
-	unsigned width = 512, height = 512;
+	hres = vres = 512;
 	std::vector<unsigned char> image;
-	image.resize(width * height * 4);
-	for(unsigned y = 0; y < height; y++)
-	for(unsigned x = 0; x < width; x++)
+	image.resize(hres * vres * 4);
+	for(int y = 0; y < vres; y++)
+	for(int x = 0; x < hres; x++)
 	{
-  		image[4 * width * y + 4 * x + 0] = 255 * !(x & y);
-  		image[4 * width * y + 4 * x + 1] = x ^ y;
-  		image[4 * width * y + 4 * x + 2] = x | y;
-  		image[4 * width * y + 4 * x + 3] = 255;
+
+
+		//@RESUME
+
+  		image[4 * hres * y + 4 * x + 0] = 255 * !(x & y);
+  		image[4 * hres * y + 4 * x + 1] = x ^ y;
+  		image[4 * hres * y + 4 * x + 2] = x | y;
+  		image[4 * hres * y + 4 * x + 3] = 255;
+
+
 	}
- 	encodeOneStep(pngName, image, width, height);
+ 	encodeOneStep(pngName, image, hres, vres);
 
 
 	return 0;
 }
 
-void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned width, unsigned height)
+// ---- Function defintions
+void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres)
 {
-	unsigned error = lodepng::encode(filename, image, width, height);
+	unsigned error = lodepng::encode(filename, image, hres, vres);
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
