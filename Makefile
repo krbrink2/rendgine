@@ -4,8 +4,8 @@ TARGET = rendgine
 
 default: $(TARGET)
 
-$(TARGET): $(TARGET).o object.o lodepng.o
-	$(CC) -o $(TARGET) $(TARGET).o object.o lodepng.o $(CFLAGS)
+$(TARGET): $(TARGET).o object.o lodepng.o sphere.o
+	$(CC) -o $(TARGET) $(TARGET).o object.o lodepng.o sphere.o $(CFLAGS)
 
 $(TARGET).o: $(TARGET).cpp object.h
 	$(CC) -c $(TARGET).cpp $(CFLAGS)
@@ -15,6 +15,9 @@ lodepng.o: lodepng.cpp lodepng.h
 
 object.o: object.cpp object.h
 	$(CC) -c object.cpp $(CFLAGS)
+
+sphere.o: sphere.cpp sphere.h
+	$(CC) -c sphere.cpp $(CFLAGS)
 
 clean:
 	$(RM) $(TARGET) *.o *~
