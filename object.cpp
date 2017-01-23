@@ -3,3 +3,7 @@
 Object::Object(){
 
 }
+
+Object::~Object(){
+
+}
