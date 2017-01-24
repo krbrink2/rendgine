@@ -1,3 +1,5 @@
+#include <iostream>
+#include <math.h>
 #include "plane.h"
 #include "Constants.h"
 
@@ -17,7 +19,7 @@ Plane::~Plane(){
 
 bool Plane::hit(const Ray& ray, double& t){
 	double dDotn = ray.d * n;
-	if(dDotn < kEpsilon){
+	if(fabs(dDotn) < kEpsilon){
 		return false;
 	}
 	

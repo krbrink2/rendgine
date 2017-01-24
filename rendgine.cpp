@@ -27,7 +27,9 @@ int main(int argc, char* argv[]){
 	s = .1;
 
 	// Add objects
-	Object* newPlane = new Plane(Point3D(0, 0, -10), Normal(-1, 1, 1));
+	Normal n(-1, 1, 1);
+	n.normalize();
+	Object* newPlane = new Plane(Point3D(0, 0, -10), n);
 	objects.push_back(newPlane); //new Plane(Point3D(0, 0, -10), Normal(-1, 1, 1)));
 
 	//generate some image
@@ -41,10 +43,11 @@ int main(int argc, char* argv[]){
 	{
 
 		// Set to default color
-		image[4*hres*y + 4*x + 0] = 255;
+		image[4*hres*y + 4*x + 0] = 0;
 		image[4*hres*y + 4*x + 1] = 0;
 		image[4*hres*y + 4*x + 2] = 0; 
-		image[4*hres*y + 4*x + 4] = 255;
+		image[4*hres*y + 4*x + 3] = 255;
+
 
 		// Create ray
 		double wx = s*(x - hres/2 + .5);
