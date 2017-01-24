@@ -32,7 +32,7 @@ int main(int argc, char* argv[]){
 	n.normalize();
 	objects.push_back(new Plane(Point3D(0, 0, -10), n));
 	objects[0]->color = RGBColor(255, 0, 0);
-	objects.push_back(new Sphere(1, Point3D(0, 0, -10)));
+	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
 	objects[1]->color = RGBColor(0, 255, 0);
 
 	//generate some image
@@ -57,7 +57,7 @@ int main(int argc, char* argv[]){
 		double wy = s*(y - vres/2 + .5);
 		Point3D o = Point3D(wx, wy, 0);
 		Vector3D d = Vector3D(0, 0, -1);
-		Ray ray = Ray(0, d);
+		Ray ray = Ray(o, d);
 
 		double tmin = kHugeValue;
 

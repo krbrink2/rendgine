@@ -26,11 +26,9 @@ bool Sphere::hit(const Ray& ray, double& t){
 
 
 	if(disc < 0){
-		cout << "A" << endl;
 		return false;
 	}
 	else{
-		//cout << "B" << endl;
 		return true;
 	}
 
