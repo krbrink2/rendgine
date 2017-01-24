@@ -7,7 +7,7 @@ class Object
 {
 public:
 	Object();
-	~Object();
+	virtual ~Object();
 	virtual bool hit(const Ray& ray, double& t) = 0;
 
 	RGBColor color;	
