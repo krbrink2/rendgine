@@ -3,6 +3,7 @@
 #include "lodepng.h"
 #include "object.h"
 #include "plane.h"
+#include "sphere.h"
 
 #include "Constants.h"
 #include "Normal.h"
@@ -29,8 +30,10 @@ int main(int argc, char* argv[]){
 	// Add objects
 	Normal n(-1, 1, 1);
 	n.normalize();
-	Object* newPlane = new Plane(Point3D(0, 0, -10), n);
-	objects.push_back(newPlane); //new Plane(Point3D(0, 0, -10), Normal(-1, 1, 1)));
+	objects.push_back(new Plane(Point3D(0, 0, -10), n));
+	objects[0]->color = RGBColor(255, 0, 0);
+	objects.push_back(new Sphere(1, Point3D(0, 0, -10)));
+	objects[1]->color = RGBColor(0, 255, 0);
 
 	//generate some image
 	const char* pngName = "image.png";
@@ -63,11 +66,10 @@ int main(int argc, char* argv[]){
 			// Test for ray-object intersection
 			if(objects[i]->hit(ray, tmin)){
 				// If intersection, color this pixel
-				cout << "!!!" << endl;
 				image[4*hres*y + 4*x + 0] = objects[i]->color.r;
 				image[4*hres*y + 4*x + 1] = objects[i]->color.g;
 				image[4*hres*y + 4*x + 2] = objects[i]->color.b;
-				image[4*hres*y + 4*x + 0] = 255;
+				image[4*hres*y + 4*x + 3] = 255;
 			}
 
 		}
