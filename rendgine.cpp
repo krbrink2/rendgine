@@ -16,6 +16,7 @@ using namespace std;
 double s;
 int hres, vres;
 vector<Object*> objects;
+World* worldPtr;
 
 // ---- Function declarations ----
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);

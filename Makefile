@@ -29,7 +29,7 @@ shaderec.o: Point3D.h Normal.h world.h
 sphere.o: sphere.cpp sphere.h object.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-world.o: RGBColor.h
+world.o: object.h shaderec.h RGBColor.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----

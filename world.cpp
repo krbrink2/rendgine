@@ -18,3 +18,17 @@ World& World::operator=(const World& w){
 
 // ---- Destuctor ----
 World::~World(){}
+
+void World::renderScene(void){
+	//@TODO
+}
+
+ShadeRec World::traceRay(Ray& ray){
+	ShadeRec sr(*this);
+
+	// Let every object check against this ray,
+	//	using sr to record information.
+	for(size_t i = 0; i < objects.size(); i++){
+		objects[i].hit(ray, sr);
+	}
+}

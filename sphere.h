@@ -1,6 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 #include "object.h"
+#include "shaderec.h"
 #include "Normal.h"
 #include "Point3D.h"
 #include "Ray.h"
@@ -14,6 +15,7 @@ public:
 	~Sphere();
 
 	bool hit(const Ray& ray, double& t);
+	bool hit(const Ray& ray, ShadeRec& sr);
 
 	double r;
 	Point3D c;
