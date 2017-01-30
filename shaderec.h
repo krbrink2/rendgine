@@ -13,6 +13,7 @@ class ShadeRec{
 		double t;
 		Point3D hitPoint;
 		Normal hitNormal;
+		RGBColor hitColor;
 
 		ShadeRec(World& _w);						// Constructor
 		ShadeRec(const ShadeRec& sr);				// Copy constructor

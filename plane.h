@@ -1,6 +1,7 @@
 #ifndef PLANE_H
 #define PLANE_H
 #include "object.h"
+#include "Constants.h"
 #include "Normal.h"
 #include "Point3D.h"
 #include "Ray.h"
@@ -14,6 +15,7 @@ public:
 	~Plane();
 
 	bool hit(const Ray& ray, double& t);
+	bool hit(const Ray& ray, ShadeRec& sr);
 
 protected:
 	Point3D a;		// Anchor point
