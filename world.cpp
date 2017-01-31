@@ -1,5 +1,8 @@
 #include "world.h"
 
+extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
+ unsigned hres, unsigned vres);
+
 // ---- Constructor ----
 World::World(void){
 	backgroundColor = RGBColor(0, 0, 0);
@@ -52,7 +55,7 @@ void World::build(void){
 	objects[1]->color = RGBColor(0, 255, 0);	
 }
 
-void World::renderScene(void){
+void World::renderScene(void) const{
 	//generate some image
 	const char* pngName = "image.png";
 	std::vector<unsigned char> image;
@@ -61,7 +64,7 @@ void World::renderScene(void){
 	// For each pixel...
 	for(int y = 0; y < vres; y++)
 	for(int x = 0; x < hres; x++){
-		RGBColor c = computePixel(int x, int y);
+		RGBColor c = computePixel(x, y);
 		image[4*hres*y + 4*x + 0] = c.r;
 		image[4*hres*y + 4*x + 1] = c.g;
 		image[4*hres*y + 4*x + 2] = c.b;
