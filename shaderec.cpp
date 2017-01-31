@@ -1,7 +1,11 @@
 #include "shaderec.h"
 
 // ---- Constructor ----
-ShadeRec::ShadeRec(World& _w): w(_w) {}
+ShadeRec::ShadeRec(World& _w): w(_w) {
+	hitObject = false;
+	t = kHugeValue;
+	hitColor = _w.backgroundColor;
+}
 
 // ---- Copy constructor ----
 ShadeRec::ShadeRec(const ShadeRec& sr):
@@ -9,7 +13,8 @@ ShadeRec::ShadeRec(const ShadeRec& sr):
 	hitObject(sr.hitObject),
 	t(sr.t),
 	hitPoint(sr.hitPoint),
-	hitNormal(sr.hitNormal)
+	hitNormal(sr.hitNormal),
+	hitColor(sr.hitColor);
 {}
 
 // ---- Assignment Operator ----
@@ -19,5 +24,6 @@ ShadeRec& ShadeRec::operator=(const ShadeRec& rhs){
 	t = rhs.t;
 	hitPoint = rhs.hitPoint;
 	hitNormal = rhs.hitNormal;
+	hitColor(rhs.hitColor);
 	return *this;
 }

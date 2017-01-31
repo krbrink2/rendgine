@@ -24,6 +24,11 @@ void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsi
 // ---- Main funciton ----
 int main(int argc, char* argv[]){
 
+	worldPtr = new World();
+	worldPtr->build();
+	worldPtr->renderScene();
+	return 0;
+
 	// Initialize global variables
 	hres = vres = 512;
 	s = .1;

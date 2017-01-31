@@ -19,7 +19,8 @@ public:
 
 	void build(void);
 	void renderScene(void) const;
-	ShadeRec traceRay(Ray& ray);
+	RGBColor computePixel(const int x, const int y);
+	void traceRay(const Ray& ray, ShadeRec& sr);
 };
 
 #endif

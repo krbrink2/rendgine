@@ -1,9 +1,10 @@
 #ifndef SHADEREC_R
 #define SHADEREC_R
 
+#include "world.h"
+#include "Constants.h"
 #include "Point3D.h"
 #include "Normal.h"
-#include "world.h"
 
 
 class ShadeRec{
