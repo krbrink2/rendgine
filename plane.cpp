@@ -16,6 +16,10 @@ Plane::~Plane(){
 
 }
 
+Plane* Plane::clone(void){
+	return new Plane(*this);
+}
+
 bool Plane::hit(const Ray& ray, double& t){
 	double dDotn = ray.d * n;
 	if(fabs(dDotn) < kEpsilon){

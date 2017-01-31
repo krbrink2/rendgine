@@ -14,8 +14,21 @@ Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c) {
 
 }
 
+// ---- Assignment operator ----
+Sphere& Sphere::operator=(const Sphere& rhs){
+	color = rhs.color;
+	r = rhs.r;
+	c = rhs.c;
+	return *this;
+}
+
+// ---- Destructor ----
 Sphere::~Sphere(){
 
+}
+
+Sphere* Sphere::clone(void){
+	return new Sphere(*this);
 }
 
 bool Sphere::hit(const Ray& ray, double& t){

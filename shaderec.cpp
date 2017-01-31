@@ -7,12 +7,18 @@ ShadeRec::ShadeRec(void){
 	hitColor = RGBColor(0, 0, 0);
 }
 
+// ---- Constructor ----
+ShadeRec::ShadeRec(const RGBColor& c):
+	hitObject(false),
+	t(kHugeValue),
+	hitColor(c) {}
+
 // ---- Copy constructor ----
 ShadeRec::ShadeRec(const ShadeRec& sr):
 	hitObject(sr.hitObject),
 	t(sr.t),
 	hitPoint(sr.hitPoint),
-	hitNormal(sr.hitNormal)
+	hitNormal(sr.hitNormal),
 	hitColor(sr.hitColor)
 {}
 

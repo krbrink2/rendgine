@@ -14,7 +14,7 @@ public:
 	double s;
 	int hres, vres;
 	RGBColor backgroundColor;
-		std::vector<Object*> objects;
+	std::vector<Object*> objects;
 
 	World(void);
 	World(const World& w);
@@ -23,8 +23,8 @@ public:
 
 	void build(void);
 	void renderScene(void) const;
-	RGBColor computePixel(const int x, const int y);
-	void traceRay(const Ray& ray, ShadeRec& sr);
+	RGBColor computePixel(const int x, const int y) const;
+	void traceRay(const Ray& ray, ShadeRec& sr) const;
 };
 
 #endif

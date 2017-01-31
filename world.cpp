@@ -16,7 +16,7 @@ World::World(const World& w):
 	backgroundColor(w.backgroundColor)
 {
 	for(size_t i = 0; i < w.objects.size(); i++){
-		objects.push_back(new Object(w.objects[i]));
+		objects.push_back(w.objects[i]->clone());
 	}
 }
 
@@ -27,7 +27,7 @@ World& World::operator=(const World& w){
 	vres = w.vres;
 	hres = w.hres;
 	for(size_t i = 0; i < w.objects.size(); i++){
-		objects.push_back(new Object(w.objects[i]));
+		objects.push_back(objects[i]->clone());
 	}
 	return *this;
 }
@@ -73,7 +73,7 @@ void World::renderScene(void) const{
 	encodeOneStep(pngName, image, hres, vres);
 }
 
-RGBColor World::computePixel(const int x, const int y){
+RGBColor World::computePixel(const int x, const int y) const{
 	// Create ray
 	double wx = s*(x - hres/2 + .5);
 	double wy = s*(y - vres/2 + .5);
@@ -82,16 +82,16 @@ RGBColor World::computePixel(const int x, const int y){
 	Ray ray = Ray(o, d);
 
 	// Trace ray
-	ShadeRec sr(this);
+	ShadeRec sr(backgroundColor);
 	traceRay(ray, sr);
 	return sr.hitColor;
 }
 
-void World::traceRay(const Ray& ray, ShadeRec& sr){
+void World::traceRay(const Ray& ray, ShadeRec& sr) const{
 
 	// Let every object check against this ray,
 	//	using sr to record information.
 	for(size_t i = 0; i < objects.size(); i++){
-		objects[i].hit(ray, sr);
+		objects[i]->hit(ray, sr);
 	}
 }

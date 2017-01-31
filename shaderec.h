@@ -2,8 +2,9 @@
 #define SHADEREC_R
 
 #include "Constants.h"
-#include "Point3D.h"
 #include "Normal.h"
+#include "Point3D.h"
+#include "RGBColor.h"
 
 
 class ShadeRec{
@@ -15,6 +16,7 @@ class ShadeRec{
 		RGBColor hitColor;
 
 		ShadeRec();									// Constructor
+		ShadeRec(const RGBColor& c);
 		ShadeRec(const ShadeRec& sr);				// Copy constructor
 		ShadeRec& operator=(const ShadeRec& rhs);	// Assignment operator
 		~ShadeRec(void);							// Destructor
