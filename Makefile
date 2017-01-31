@@ -1,8 +1,10 @@
 CC = g++
 CFLAGS = -g -Wall -Werror
 TARGET = rendgine
-OBJS = object.o lodepng.o plane.o shaderec.o sphere.o world.o Maths.o Matrix.o Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS = object.h lodepng.h plane.h shaderec.h sphere.h world.h Constants.h Maths.h Matrix.h Normal.h Point3D.h Ray.h RGBColor.h Vector3D.h
+OBJS = object.o lodepng.o plane.o shaderec.o sphere.o world.o Maths.o Matrix.o \
+Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
+HEADERS = object.h lodepng.h plane.h shaderec.h sphere.h world.h \
+Constants.h Maths.h Matrix.h Normal.h Point3D.h Ray.h RGBColor.h Vector3D.h
 
 default: $(TARGET)
 
@@ -17,19 +19,20 @@ $(TARGET).o: $(TARGET).cpp $(HEADERS)
 lodepng.o: lodepng.cpp lodepng.h
 	$(CC) -c lodepng.cpp $(CFLAGS)
 
-object.o: object.cpp object.h
+object.o: object.cpp object.h shaderec.h Ray.h RGBColor.h
 	$(CC) -c object.cpp $(CFLAGS)
 
-plane.o: plane.cpp plane.h Normal.h Point3D.h Ray.h Vector3D.h
+plane.o: plane.cpp plane.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
 	$(CC) -c plane.cpp $(CFLAGS)
 
-shaderec.o: Point3D.h Normal.h world.h
+shaderec.o: object.h Constants.h Point3D.h Normal.h
 	$(CC) -c shaderec.cpp $(CFLAGS)
 
-sphere.o: sphere.cpp sphere.h object.h
+sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \
+	Vector3D.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-world.o: object.h shaderec.h RGBColor.h
+world.o: object.h plane.h shaderec.h sphere.h Ray.h RGBColor.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----

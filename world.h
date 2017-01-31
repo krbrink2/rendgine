@@ -1,16 +1,20 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "shaderec.h"
+#include <vector>
 #include "object.h"
+#include "plane.h"
+#include "shaderec.h"
+#include "sphere.h"
+#include "Ray.h"
 #include "RGBColor.h"
 
 class World{
 public:
-	RGBColor backgroundColor;
 	double s;
 	int hres, vres;
-	vector<Object*> objects;
+	RGBColor backgroundColor;
+		std::vector<Object*> objects;
 
 	World(void);
 	World(const World& w);

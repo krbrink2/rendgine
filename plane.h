@@ -1,6 +1,7 @@
 #ifndef PLANE_H
 #define PLANE_H
 #include "object.h"
+#include "shaderec.h"
 #include "Constants.h"
 #include "Normal.h"
 #include "Point3D.h"

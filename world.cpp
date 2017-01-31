@@ -7,13 +7,13 @@ World::World(void){
 
 // ---- Copy constructor ----
 World::World(const World& w):
-	.s(w.s),
-	.hres(w.hres),
-	.vres(w.vres),
+	s(w.s),
+	hres(w.hres),
+	vres(w.vres),
 	backgroundColor(w.backgroundColor)
 {
 	for(size_t i = 0; i < w.objects.size(); i++){
-		objects.pushBack(new Object(w.objects[i]));
+		objects.push_back(new Object(w.objects[i]));
 	}
 }
 
@@ -24,7 +24,7 @@ World& World::operator=(const World& w){
 	vres = w.vres;
 	hres = w.hres;
 	for(size_t i = 0; i < w.objects.size(); i++){
-		objects.pushBack(new Object(w.objects[i]));
+		objects.push_back(new Object(w.objects[i]));
 	}
 	return *this;
 }
@@ -60,13 +60,14 @@ void World::renderScene(void){
 
 	// For each pixel...
 	for(int y = 0; y < vres; y++)
-		for(int x = 0; x < hres; x++){
-			RGBColor c = computePixel(int x, int y);
-			image[4*hres*y + 4*x + 0] = c.r;
-			image[4*hres*y + 4*x + 1] = c.g;
-			image[4*hres*y + 4*x + 2] = c.b;
-			image[4*hres*y + 4*x + 3] = 255;
-		}
+	for(int x = 0; x < hres; x++){
+		RGBColor c = computePixel(int x, int y);
+		image[4*hres*y + 4*x + 0] = c.r;
+		image[4*hres*y + 4*x + 1] = c.g;
+		image[4*hres*y + 4*x + 2] = c.b;
+		image[4*hres*y + 4*x + 3] = 255;
+	}
+	encodeOneStep(pngName, image, hres, vres);
 }
 
 RGBColor World::computePixel(const int x, const int y){

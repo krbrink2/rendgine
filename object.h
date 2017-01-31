@@ -10,7 +10,7 @@ public:
 	Object();
 	virtual ~Object();
 	virtual bool hit(const Ray& ray, double& t) = 0;
-	virtual bool hit(const Ray& ray, Shaderec& sr) = 0;
+	virtual bool hit(const Ray& ray, ShadeRec& sr) = 0;
 
 	RGBColor color;	
 

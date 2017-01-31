@@ -49,8 +49,8 @@ bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 	if(disc < 0){
 		return false;
 	}
-	t0 = (-B + sqrt(disc))/(2*A);
-	t1 = (-B - sqrt(disc))/(2*A);
+	double t0 = (-B + sqrt(disc))/(2*A);
+	double t1 = (-B - sqrt(disc))/(2*A);
 	double newt;
 	if(t0 < 0 && t1 < 0){
 		return false;
@@ -69,7 +69,7 @@ bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 		// Register hit
 		sr.hitObject = true;
 		sr.t = newt;
-		sr.hitPoint = ray.o + t*ray.d;
+		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = sr.hitPoint - c;
 		sr.hitNormal.normalize();
 		sr.hitColor = color;

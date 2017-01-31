@@ -3,7 +3,9 @@
 #include "lodepng.h"
 #include "object.h"
 #include "plane.h"
+#include "shaderec.h"
 #include "sphere.h"
+#include "world.h"
 
 #include "Constants.h"
 #include "Normal.h"
@@ -13,13 +15,17 @@
 using namespace std;
 
 // ---- Global variable declarations ----
-double s;
+/*double s;
 int hres, vres;
-vector<Object*> objects;
+vector<Object*> objects;*/
 World* worldPtr;
 
 // ---- Function declarations ----
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);
+
+int foo(void){
+	return 0;
+}
 
 // ---- Main funciton ----
 int main(int argc, char* argv[]){
@@ -29,6 +35,7 @@ int main(int argc, char* argv[]){
 	worldPtr->renderScene();
 	return 0;
 
+	/*
 	// Initialize global variables
 	hres = vres = 512;
 	s = .1;
@@ -79,13 +86,6 @@ int main(int argc, char* argv[]){
 			}
 
 		}
-
-  		/*image[4 * hres * y + 4 * x + 0] = 255 * !(x & y);
-  		image[4 * hres * y + 4 * x + 1] = x ^ y;
-  		image[4 * hres * y + 4 * x + 2] = x | y;
-  		image[4 * hres * y + 4 * x + 3] = 255;*/
-
-
 	}
 
 	// Destroy objects
@@ -97,11 +97,11 @@ int main(int argc, char* argv[]){
 
  	encodeOneStep(pngName, image, hres, vres);
 
-
 	return 0;
+	*/
 }
 
-// ---- Function defintions
+// ---- Function defintions ----
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres)
 {
 	unsigned error = lodepng::encode(filename, image, hres, vres);

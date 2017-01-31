@@ -43,9 +43,9 @@ bool Plane::hit(const Ray& ray, ShadeRec& sr){
 		// register hit
 		sr.hitObject = true;
 		sr.t = newt;
-		sr.hitPoint = ray.o + t*ray.d;
+		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = n;
-		hitColor = color;
+		sr.hitColor = color;
 		return true;
 	}
 	else
