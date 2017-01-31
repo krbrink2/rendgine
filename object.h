@@ -9,6 +9,7 @@ class Object
 public:
 	Object();
 	Object(const Object& obj);
+	virtual Object& operator=(const Object& rhs);
 	virtual ~Object() = 0;
 	virtual Object* clone() = 0;
 	virtual bool hit(const Ray& ray, double& t) = 0;
@@ -17,7 +18,6 @@ public:
 	RGBColor color;	
 
 protected:
-	virtual Object& operator=(Object& rhs);
 
 };
 

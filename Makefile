@@ -22,7 +22,7 @@ lodepng.o: lodepng.cpp lodepng.h
 object.o: object.cpp object.h shaderec.h Ray.h RGBColor.h
 	$(CC) -c object.cpp $(CFLAGS)
 
-plane.o: plane.cpp plane.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
+plane.o: plane.cpp plane.h object.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
 	$(CC) -c plane.cpp $(CFLAGS)
 
 shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Point3D.h Normal.h

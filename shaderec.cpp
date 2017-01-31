@@ -31,3 +31,6 @@ ShadeRec& ShadeRec::operator=(const ShadeRec& rhs){
 	hitColor = rhs.hitColor;
 	return *this;
 }
+
+// ---- Destructor ----
+ShadeRec::~ShadeRec(void){}
