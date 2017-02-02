@@ -1,9 +1,9 @@
 CC = g++
 CFLAGS = -g -Wall -Werror
 TARGET = rendgine
-OBJS = lodepng.o object.o plane.o shaderec.o sphere.o world.o Maths.o Matrix.o \
+OBJS = lodepng.o object.o plane.o shader.o shaderec.o sphere.o world.o Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  lodepng.h object.h plane.h shaderec.h sphere.h world.h \
+HEADERS =  lodepng.h object.h plane.h shader.h shaderec.h sphere.h world.h \
 Constants.h Maths.h Matrix.h Normal.h Point3D.h Ray.h RGBColor.h Vector3D.h
 
 default: $(TARGET)
@@ -24,6 +24,9 @@ object.o: object.cpp object.h shaderec.h Ray.h RGBColor.h
 
 plane.o: plane.cpp plane.h object.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
 	$(CC) -c plane.cpp $(CFLAGS)
+
+shader.o: shader.cpp shader.h world.h RGBColor.h
+	$(CC) -c shader.cpp $(CFLAGS)
 
 shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Point3D.h Normal.h
 	$(CC) -c shaderec.cpp $(CFLAGS)
