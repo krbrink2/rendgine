@@ -19,13 +19,13 @@ $(TARGET).o: $(TARGET).cpp $(HEADERS)
 lodepng.o: lodepng.cpp lodepng.h
 	$(CC) -c lodepng.cpp $(CFLAGS)
 
-object.o: object.cpp object.h shaderec.h Ray.h RGBColor.h
+object.o: object.cpp object.h shader.h shaderec.h Ray.h RGBColor.h
 	$(CC) -c object.cpp $(CFLAGS)
 
 plane.o: plane.cpp plane.h object.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
 	$(CC) -c plane.cpp $(CFLAGS)
 
-shader.o: shader.cpp shader.h world.h RGBColor.h
+shader.o: shader.cpp shader.h object.h shaderec.h world.h Ray.h RGBColor.h
 	$(CC) -c shader.cpp $(CFLAGS)
 
 shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Point3D.h Normal.h

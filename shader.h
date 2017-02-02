@@ -1,8 +1,16 @@
 #ifndef SHADER_H
 #define SHADER_H
-#include "world.h"
+//#include "object.h"
+//#include "shaderec.h"
+// World forward-declared
+//#include "Ray.h"
 #include "RGBColor.h"
 
+// ---- Forward decalrations ----
+
+class World;
+
+// ---- Class declaration ----
 class Shader{
 public:
 	Shader();
@@ -10,7 +18,7 @@ public:
 	Shader& operator=(const Shader& rhs);
 	~Shader();
 
-	virtual RGBColor shade(World& w) = 0;
+	virtual RGBColor shade(const World& w);
 
 
 protected:

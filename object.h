@@ -1,5 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
+#include "shader.h"
 #include "shaderec.h"
 #include "Ray.h"
 #include "RGBColor.h"
@@ -16,6 +17,7 @@ public:
 	virtual bool hit(const Ray& ray, ShadeRec& sr) = 0;
 
 	RGBColor color;	
+	Shader sdr;
 
 protected:
 
