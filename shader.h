@@ -1,9 +1,5 @@
 #ifndef SHADER_H
 #define SHADER_H
-//#include "object.h"
-//#include "shaderec.h"
-// World forward-declared
-//#include "Ray.h"
 #include "RGBColor.h"
 
 // ---- Forward decalrations ----
