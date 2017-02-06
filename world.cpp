@@ -89,7 +89,7 @@ void World::renderScene(void) const{
 RGBColor World::computePixel(const int x, const int y) const{
 	// Create ray
 	double wx = s*(x - hres/2 + .5);
-	double wy = -s*(y - vres/2 + .5);
+	double wy = s*(y - vres/2 + .5);
 	Point3D o = Point3D(wx, wy, 0);
 	Vector3D d = Vector3D(0, 0, -1);
 	Ray ray = Ray(o, d);

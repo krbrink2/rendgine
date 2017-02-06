@@ -12,9 +12,26 @@ Plane::Plane(Point3D _a, Normal _n): a(_a), n(_n) {
 	sdr = Shader();
 }
 
-Plane::~Plane(){
+/*
+// ---- Copy constructor ----
+Plane::Plane(const Plane& p):
+	object(p),
+	a(a),
+	n(n)
+{}
 
+// ---- Assignment operator ----
+Plane& Plane::operator=(const Plane& rhs){
+	a = rhs.a;
+	n = rhs.n
+
+	return *this;
 }
+
+// ---- Destructor ----
+Plane::~Plane(){
+}
+*/
 
 Plane* Plane::clone(void){
 	return new Plane(*this);
@@ -49,7 +66,6 @@ bool Plane::hit(const Ray& ray, ShadeRec& sr){
 		sr.t = newt;
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = n;
-		sr.hitColor = color;
 		sr.hitShader = &sdr;
 		return true;
 	}

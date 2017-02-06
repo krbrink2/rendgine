@@ -16,7 +16,6 @@ public:
 	virtual bool hit(const Ray& ray, double& t) = 0;
 	virtual bool hit(const Ray& ray, ShadeRec& sr) = 0;
 
-	RGBColor color;	
 	Shader sdr;
 
 protected:

@@ -1,10 +1,14 @@
 CC = g++
-CFLAGS = -g -Wall -Werror
+CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter
 TARGET = rendgine
-OBJS = light.o lodepng.o object.o plane.o shader.o shaderec.o sphere.o world.o Maths.o Matrix.o \
+OBJS = light.o lodepng.o object.o plane.o shader.o \
+shaderec.o sphere.o world.o triangle.o \
+Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  light.h lodepng.h object.h plane.h shader.h shaderec.h sphere.h world.h \
-Constants.h Maths.h Matrix.h Normal.h Point3D.h Ray.h RGBColor.h Vector3D.h
+HEADERS =  light.h lodepng.h object.h plane.h \
+shader.h shaderec.h sphere.h triangle.h world.h \
+Constants.h Maths.h Matrix.h Normal.h \
+Point3D.h Ray.h RGBColor.h Vector3D.h
 
 default: $(TARGET)
 
@@ -37,6 +41,9 @@ shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Maths.h Point3D.h Norma
 sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \
 	Vector3D.h
 	$(CC) -c sphere.cpp $(CFLAGS)
+
+triangle.o: triangle.cpp triangle.h object.h
+	$(CC) -c triangle.cpp $(CFLAGS)
 
 world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h Point3D.h Ray.h RGBColor.h
 	$(CC) -c world.cpp $(CFLAGS)

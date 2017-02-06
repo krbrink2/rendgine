@@ -14,8 +14,10 @@ Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c){
 	sdr = Shader();
 }
 
+/*
 // ---- Copy constructor ----
 Sphere::Sphere(const Sphere& s):
+	object(s),
 	r(s.r),
 	c(s.c){
 	sdr = Shader();
@@ -32,8 +34,8 @@ Sphere& Sphere::operator=(const Sphere& rhs){
 
 // ---- Destructor ----
 Sphere::~Sphere(){
-
 }
+*/
 
 Sphere* Sphere::clone(void){
 	return new Sphere(*this);
@@ -93,7 +95,6 @@ bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = sr.hitPoint - c;
 		sr.hitNormal.normalize();
-		sr.hitColor = color;
 		sr.hitShader = &sdr;
 
 		// Push hitPoint away from surface slightly

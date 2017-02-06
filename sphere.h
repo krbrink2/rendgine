@@ -12,9 +12,11 @@ class Sphere: public Object
 public:
 	Sphere();
 	Sphere(double _r, Point3D _c);
+	/*
 	Sphere(const Sphere& s);
 	Sphere& operator=(const Sphere& rhs);
 	~Sphere();
+	*/
 
 	Sphere* clone(void);
 	bool hit(const Ray& ray, double& t);

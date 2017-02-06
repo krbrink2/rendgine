@@ -35,70 +35,7 @@ int main(int argc, char* argv[]){
 	worldPtr->renderScene();
 	return 0;
 
-	/*
-	// Initialize global variables
-	hres = vres = 512;
-	s = .1;
 
-	// Add objects
-	Normal n(-1, 1, 1);
-	n.normalize();
-	objects.push_back(new Plane(Point3D(0, 0, -10), n));
-	objects[0]->color = RGBColor(255, 0, 0);
-	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
-	objects[1]->color = RGBColor(0, 255, 0);
-
-	//generate some image
-	const char* pngName = "image.png";
-	std::vector<unsigned char> image;
-	image.resize(hres * vres * 4);
-
-	// For each pixel...
-	for(int y = 0; y < vres; y++)
-	for(int x = 0; x < hres; x++)
-	{
-
-		// Set to default color
-		image[4*hres*y + 4*x + 0] = 0;
-		image[4*hres*y + 4*x + 1] = 0;
-		image[4*hres*y + 4*x + 2] = 0; 
-		image[4*hres*y + 4*x + 3] = 255;
-
-
-		// Create ray
-		double wx = s*(x - hres/2 + .5);
-		double wy = s*(y - vres/2 + .5);
-		Point3D o = Point3D(wx, wy, 0);
-		Vector3D d = Vector3D(0, 0, -1);
-		Ray ray = Ray(o, d);
-
-		double tmin = kHugeValue;
-
-		// For each object:
-		for(size_t i = 0; i < objects.size(); i++){
-			// Test for ray-object intersection
-			if(objects[i]->hit(ray, tmin)){
-				// If intersection, color this pixel
-				image[4*hres*y + 4*x + 0] = objects[i]->color.r;
-				image[4*hres*y + 4*x + 1] = objects[i]->color.g;
-				image[4*hres*y + 4*x + 2] = objects[i]->color.b;
-				image[4*hres*y + 4*x + 3] = 255;
-			}
-
-		}
-	}
-
-	// Destroy objects
-	for(size_t i = 0; i < objects.size(); i++){
-		delete objects[i];
-		objects[i] = NULL;
-	}
-	objects.clear();
-
- 	encodeOneStep(pngName, image, hres, vres);
-
-	return 0;
-	*/
 }
 
 // ---- Function defintions ----

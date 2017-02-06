@@ -1,13 +1,16 @@
 #include "object.h"
 
-Object::Object(){}
+Object::Object():
+	sdr()
+{}
 
-Object::Object(const Object& obj){}
+Object::Object(const Object& obj):
+	sdr(obj.sdr)
+{}
 
 Object& Object::operator=(const Object& rhs){
-	color = rhs.color;
+	sdr = rhs.sdr;
 	return *this;
 }
 
 Object::~Object(){}
-
