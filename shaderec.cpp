@@ -16,6 +16,7 @@ ShadeRec::ShadeRec(const RGBColor& c):
 	hitShader(NULL)
 	{}
 
+/*
 // ---- Copy constructor ----
 ShadeRec::ShadeRec(const ShadeRec& sr):
 	hitObject(sr.hitObject),
@@ -39,3 +40,4 @@ ShadeRec& ShadeRec::operator=(const ShadeRec& rhs){
 
 // ---- Destructor ----
 ShadeRec::~ShadeRec(void){}
+*/
