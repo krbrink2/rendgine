@@ -92,7 +92,12 @@ RGBColor World::computePixel(const int x, const int y) const{
 	// Trace ray
 	ShadeRec sr(backgroundColor);
 	traceRay(ray, sr);
-	return sr.hitShader->shade(*this, sr.hitNormal);
+	if(sr.hitObject){
+		return sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
+	} else{
+		return backgroundColor;
+	}
+
 }
 
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{

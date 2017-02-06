@@ -29,7 +29,7 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 	// Get E and L from worldPtr.
 
 	RGBColor accum(0, 0, 0);
-	Vector3D E = worldPtr->E;
+	//Vector3D& E = worldPtr->E;
 
 	for(size_t i = 0; i < worldPtr->lights.size(); i++){
 		// May want to put this in another function.
@@ -37,6 +37,7 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 		accum += c * (N * L);
 	}
 
+	return RGBColor(1, 1, 1);
 	return accum;
 
 	
