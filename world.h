@@ -2,10 +2,12 @@
 #define WORLD_H
 
 #include <vector>
+#include "light.h"
 #include "object.h"
 #include "plane.h"
 #include "shaderec.h"
 #include "sphere.h"
+#include "Point3D.h"
 #include "Ray.h"
 #include "RGBColor.h"
 
@@ -15,6 +17,8 @@ public:
 	int hres, vres;
 	RGBColor backgroundColor;
 	std::vector<Object*> objects;
+	std::vector<Light> lights;
+	Point3D E;
 
 	World(void);
 	World(const World& w);

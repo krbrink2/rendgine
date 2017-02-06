@@ -5,13 +5,16 @@ ShadeRec::ShadeRec(void){
 	hitObject = false;
 	t = kHugeValue;
 	hitColor = RGBColor(0, 0, 0);
+	hitShader = NULL;
 }
 
 // ---- Constructor ----
 ShadeRec::ShadeRec(const RGBColor& c):
 	hitObject(false),
 	t(kHugeValue),
-	hitColor(c) {}
+	hitColor(c),
+	hitShader(NULL)
+	{}
 
 // ---- Copy constructor ----
 ShadeRec::ShadeRec(const ShadeRec& sr):
@@ -19,7 +22,8 @@ ShadeRec::ShadeRec(const ShadeRec& sr):
 	t(sr.t),
 	hitPoint(sr.hitPoint),
 	hitNormal(sr.hitNormal),
-	hitColor(sr.hitColor)
+	hitColor(sr.hitColor),
+	hitShader(sr.hitShader)
 {}
 
 // ---- Assignment Operator ----
@@ -29,6 +33,7 @@ ShadeRec& ShadeRec::operator=(const ShadeRec& rhs){
 	hitPoint = rhs.hitPoint;
 	hitNormal = rhs.hitNormal;
 	hitColor = rhs.hitColor;
+	hitShader = rhs.hitShader;
 	return *this;
 }
 

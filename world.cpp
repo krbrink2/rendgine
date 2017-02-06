@@ -45,14 +45,22 @@ void World::build(void){
 	hres = vres = 512;
 	s = .1;
 	backgroundColor = RGBColor(0, 0, 0);
+	E = Point3D(0, 0, 100);
 
 	// Add objects
 	Normal n(-1, 1, 1);
 	n.normalize();
 	objects.push_back(new Plane(Point3D(0, 0, -10), n));
-	objects[0]->color = RGBColor(255, 0, 0);
+	objects[0]->color = RGBColor(255, 0, 0);	// Replace with shaders
 	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
 	objects[1]->color = RGBColor(0, 255, 0);	
+
+    // Add lights
+    Light l;
+    Vector3D dir(1, 1, -1);
+	dir.normalize();
+	l.dir = dir;
+	lights.push_back(l); 
 }
 
 void World::renderScene(void) const{
@@ -84,7 +92,7 @@ RGBColor World::computePixel(const int x, const int y) const{
 	// Trace ray
 	ShadeRec sr(backgroundColor);
 	traceRay(ray, sr);
-	return sr.hitColor;
+	return sr.hitShader->shade(*this, sr.hitNormal);
 }
 
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{

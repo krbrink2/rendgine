@@ -21,11 +21,15 @@ Light& Light::operator=(const Light& rhs){
 Light::~Light(){}
 
 Vector3D Light::getDirection(Point3D pnt){
-	// vect = p - pnt;
-	Vector3D vect;
+	Vector3D vect = p - pnt;
+	vect.normalize();
 	return vect;
 }
 
 bool Light::testPath(Point3D pnt){
 	return false;
+}
+
+void Light::setPoint(Point3D pnt){
+	p = pnt;
 }

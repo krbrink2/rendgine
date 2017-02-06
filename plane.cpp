@@ -4,12 +4,12 @@
 
 // ---- Default Constructor ----
 Plane::Plane(): a(Point3D()), n(Normal()) {
-
+	sdr = Shader();
 }
 
 // ---- Constructor ----
 Plane::Plane(Point3D _a, Normal _n): a(_a), n(_n) {
-
+	sdr = Shader();
 }
 
 Plane::~Plane(){
@@ -50,6 +50,7 @@ bool Plane::hit(const Ray& ray, ShadeRec& sr){
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = n;
 		sr.hitColor = color;
+		sr.hitShader = &sdr;
 		return true;
 	}
 	else

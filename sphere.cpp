@@ -5,13 +5,20 @@
 using namespace std;
 
 // ---- Default Constructor ----
-Sphere::Sphere(): r(1), c(Point3D()) {
-
+Sphere::Sphere(): r(1), c(Point3D()){
+	sdr = Shader();
 }
 
 // ---- Constructor ----
-Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c) {
+Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c){
+	sdr = Shader();
+}
 
+// ---- Copy constructor ----
+Sphere::Sphere(const Sphere& s):
+	r(s.r),
+	c(s.c){
+	sdr = Shader();
 }
 
 // ---- Assignment operator ----
@@ -19,6 +26,7 @@ Sphere& Sphere::operator=(const Sphere& rhs){
 	color = rhs.color;
 	r = rhs.r;
 	c = rhs.c;
+	sdr = rhs.sdr;
 	return *this;
 }
 
@@ -86,6 +94,7 @@ bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 		sr.hitNormal = sr.hitPoint - c;
 		sr.hitNormal.normalize();
 		sr.hitColor = color;
+		sr.hitShader = &sdr;
 		return true;
 	}
 	// Not a closer hit

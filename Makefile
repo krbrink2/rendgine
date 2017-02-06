@@ -38,7 +38,7 @@ sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \
 	Vector3D.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h Ray.h RGBColor.h
+world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h Point3D.h Ray.h RGBColor.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----
