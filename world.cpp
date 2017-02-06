@@ -48,17 +48,21 @@ void World::build(void){
 	E = Point3D(0, 0, 100);
 
 	// Add objects
+	// Plane
 	Normal n(-1, 1, 1);
 	n.normalize();
-	objects.push_back(new Plane(Point3D(0, 0, -10), n));
+	objects.push_back(new Plane(Point3D(0, 0, -100), n));
 	objects[0]->sdr.c = RGBColor(255, 0, 0);
-
-	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
+	// Sphere 0
+	objects.push_back(new Sphere(5, Point3D(0, 0, -100)));
 	objects[1]->sdr.c = RGBColor(0, 255, 0);	
+	// Spehre 1
+	objects.push_back(new Sphere(6, Point3D(-10, 12, -100)));
+	objects[2]->sdr.c = RGBColor(0, 0, 255);	
 
     // Add lights
     Light l;
-    Vector3D dir(1, 1, -1);
+    Vector3D dir(1, 0, -1);
 	dir.normalize();
 	l.dir = dir;
 	lights.push_back(l); 
@@ -85,7 +89,7 @@ void World::renderScene(void) const{
 RGBColor World::computePixel(const int x, const int y) const{
 	// Create ray
 	double wx = s*(x - hres/2 + .5);
-	double wy = s*(y - vres/2 + .5);
+	double wy = -s*(y - vres/2 + .5);
 	Point3D o = Point3D(wx, wy, 0);
 	Vector3D d = Vector3D(0, 0, -1);
 	Ray ray = Ray(o, d);

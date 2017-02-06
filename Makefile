@@ -31,7 +31,7 @@ plane.o: plane.cpp plane.h object.h shaderec.h Normal.h Point3D.h Ray.h Vector3D
 shader.o: shader.cpp shader.h object.h shaderec.h world.h Ray.h RGBColor.h
 	$(CC) -c shader.cpp $(CFLAGS)
 
-shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Point3D.h Normal.h
+shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Maths.h Point3D.h Normal.h
 	$(CC) -c shaderec.cpp $(CFLAGS)
 
 sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \

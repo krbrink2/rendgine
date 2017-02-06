@@ -33,11 +33,11 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 
 	for(size_t i = 0; i < worldPtr->lights.size(); i++){
 		// May want to put this in another function.
-		Vector3D L = worldPtr->lights[i].dir;
-		accum += c * (N * L);
+		Vector3D L = -(worldPtr->lights[i].dir);
+		double NDotL = clamp((N * L), 0, 1);
+		accum += c * NDotL;
 	}
 
-	return RGBColor(255, 255, 255);
 	return accum;
 
 	

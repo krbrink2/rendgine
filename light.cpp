@@ -8,12 +8,14 @@ Light::Light(){
 }
 
 // ---- Copy Constructor ----
-Light::Light(const Light& l){
-	
-}
+Light::Light(const Light& l):
+	c(l.c),
+	dir(l.dir){}
 
 // ---- Assignment operator ----
 Light& Light::operator=(const Light& rhs){
+	c = rhs.c;
+	dir = rhs.dir;
 	return *this;
 }
 

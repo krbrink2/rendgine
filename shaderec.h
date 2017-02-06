@@ -3,6 +3,7 @@
 
 #include "shader.h"
 #include "Constants.h"
+#include "Maths.h"
 #include "Normal.h"
 #include "Point3D.h"
 #include "RGBColor.h"
