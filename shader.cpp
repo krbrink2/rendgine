@@ -37,7 +37,7 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 		accum += c * (N * L);
 	}
 
-	return RGBColor(1, 1, 1);
+	return RGBColor(255, 255, 255);
 	return accum;
 
 	

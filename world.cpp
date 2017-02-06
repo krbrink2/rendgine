@@ -51,9 +51,10 @@ void World::build(void){
 	Normal n(-1, 1, 1);
 	n.normalize();
 	objects.push_back(new Plane(Point3D(0, 0, -10), n));
-	objects[0]->color = RGBColor(255, 0, 0);	// Replace with shaders
+	objects[0]->sdr.c = RGBColor(255, 0, 0);
+
 	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
-	objects[1]->color = RGBColor(0, 255, 0);	
+	objects[1]->sdr.c = RGBColor(0, 255, 0);	
 
     // Add lights
     Light l;
@@ -93,7 +94,8 @@ RGBColor World::computePixel(const int x, const int y) const{
 	ShadeRec sr(backgroundColor);
 	traceRay(ray, sr);
 	if(sr.hitObject){
-		return sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
+		RGBColor retval = sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
+		return retval;
 	} else{
 		return backgroundColor;
 	}
