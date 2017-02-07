@@ -42,7 +42,7 @@ sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \
 	Vector3D.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-triangle.o: triangle.cpp triangle.h object.h Normal.h Point3D.h
+triangle.o: triangle.cpp triangle.h object.h Normal.h Point3D.h Ray.h
 	$(CC) -c triangle.cpp $(CFLAGS)
 
 world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h Point3D.h Ray.h RGBColor.h
