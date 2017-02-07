@@ -61,9 +61,9 @@ void World::build(void){
 	objects[2]->sdr.c = RGBColor(0, 0, 255);	
 	// Triangle
 	objects.push_back(new Triangle(
-		Point3D(8, 0, -100),
-		Point3D(4, 8, -100),
-		Point3D(0, 0, -100)));
+		Point3D(0, 0, -100),
+		Point3D(-10, 12, -100),
+		Point3D(-10, -12, -100)));
 	objects[3]->sdr.c = RGBColor(0, 255, 255);
 
     // Add lights
@@ -95,7 +95,7 @@ void World::renderScene(void) const{
 RGBColor World::computePixel(const int x, const int y) const{
 	// Create ray
 	double wx = s*(x - hres/2 + .5);
-	double wy = s*(y - vres/2 + .5);
+	double wy = -s*(y - vres/2 + .5);
 	Point3D o = Point3D(wx, wy, 0);
 	Vector3D d = Vector3D(0, 0, -1);
 	Ray ray = Ray(o, d);
