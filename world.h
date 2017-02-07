@@ -7,6 +7,7 @@
 #include "plane.h"
 #include "shaderec.h"
 #include "sphere.h"
+#include "triangle.h"
 #include "Point3D.h"
 #include "Ray.h"
 #include "RGBColor.h"

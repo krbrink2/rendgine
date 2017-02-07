@@ -59,6 +59,12 @@ void World::build(void){
 	// Spehre 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -100)));
 	objects[2]->sdr.c = RGBColor(0, 0, 255);	
+	// Triangle
+	objects.push_back(new Triangle(
+		Point3D(8, 0, -100),
+		Point3D(4, 8, -100),
+		Point3D(0, 0, -100)));
+	objects[3]->sdr.c = RGBColor(0, 255, 255);
 
     // Add lights
     Light l;
