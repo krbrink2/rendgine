@@ -1,6 +1,7 @@
 #include "world.h"
 #include <math.h>
 #include <assert.h>
+#include <iostream>
 
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
@@ -104,43 +105,80 @@ void World::renderScene(void) const{
 }
 
 RGBColor World::computePixelOrtho(const int x, const int y) const{
-	//bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};
-	return RGBColor();
-	RGBColor colorAccum(0, 0, 0);
+	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
+	RGBColor accum(0, 0, 0);
 
-	for(size_t i = 0; i < SQRT_NUM_SAMPLES; i++){
-		for(size_t j = 0; j < SQRT_NUM_SAMPLES; j++){
-			// Choose fineBox - make sure no conflicts
+	// For each sample...
+	for(size_t coarsei = 0; coarsei < SQRT_NUM_SAMPLES; coarsei++){
+		for(size_t coarsej = 0; coarsej < SQRT_NUM_SAMPLES; coarsej++){
+
+			// The flow control here is super wonky.
+			// 	May want to fix it.
+			
+			// Choose an arbitrary fineBox - make sure no conflicts.
+			// 	Randomly choose a fineBoxIndex
+			int finei = rand_int(0, SQRT_NUM_SAMPLES);
+			int finej = rand_int(0, SQRT_NUM_SAMPLES);
+			int indexi, indexj;
+			bool lookForFineBox = true;
+			while(lookForFineBox){
+				indexi = coarsei*SQRT_NUM_SAMPLES + finei;
+				indexj = coarsej*SQRT_NUM_SAMPLES + finej;
+				lookForFineBox = false; // Innocent until proven guilty
+				// Check if its a good index
+				for(size_t a = 0; a < NUM_SAMPLES; a++){
+					if( fineBoxes[a][indexj] || fineBoxes[indexi][a] ){
+						// Its taken. Try next one.
+						lookForFineBox = true;	// Proven guilty.
+						break;
+					}
+				}
+
+				if(!lookForFineBox)
+					// Innocent. Not proven guilty.
+					break;
+
+
+				// Guilty, so try the next one.
+				finej++;
+				finej %= SQRT_NUM_SAMPLES;
+				if(finej == 0){
+					finei++;
+					finei %= SQRT_NUM_SAMPLES;
+				}
+				// Loop back to top
+			}
+
 			// Mark as used
-			// Generate origin
-			// Generate direction
-			// Trace ray
-			// Extract shaded color, get to colorAccum
-
-
-
+			fineBoxes[indexi][indexj] = true;
 
 
 			// Create ray
-			double wx = s*(x - hres/2 + .5);
-			double wy = -s*(y - vres/2 + .5);
+			// Generate orthographic origin
+			double wx = s*(x - hres/2) + \
+				mjCoarseWidth*(coarsej - SQRT_NUM_SAMPLES/2) + \
+				mjFineWidth*(finej - SQRT_NUM_SAMPLES/2 + .5);
+			double wy = -( s*(y - vres/2 + .5) + \
+				mjCoarseWidth*(coarsei - SQRT_NUM_SAMPLES/2) + \
+				mjFineWidth*(finei - SQRT_NUM_SAMPLES/2 + .5) );
 			Point3D o = Point3D(wx, wy, 0);
+			// Generate direction
 			Vector3D d = Vector3D(0, 0, -1);
-			Ray ray = Ray(o, d);
-
+			// Create ray
+			Ray ray(o, d);
 			// Trace ray
 			ShadeRec sr(backgroundColor);
 			traceRay(ray, sr);
 			if(sr.hitObject){
-				RGBColor retval = sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
-				return retval;
+				accum += sr.hitShader->shade(*this, sr.hitNormal);
 			} else{
-				return backgroundColor;
+				accum += backgroundColor;
 			}
 		}
 	}
 
-
+	accum /= NUM_SAMPLES;
+	return accum;
 }
 
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{
@@ -151,3 +189,11 @@ void World::traceRay(const Ray& ray, ShadeRec& sr) const{
 		objects[i]->hit(ray, sr);
 	}
 }
+
+Point3D World::getOrigin(int x, int y) const{
+	return Point3D();	//@TODO
+}
+
+
+
+

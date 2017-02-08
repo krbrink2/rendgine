@@ -23,10 +23,6 @@ World* worldPtr;
 // ---- Function declarations ----
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);
 
-int foo(void){
-	return 0;
-}
-
 // ---- Main funciton ----
 int main(int argc, char* argv[]){
 

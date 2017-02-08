@@ -1,6 +1,8 @@
 CC = g++
-CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter
+CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
 TARGET = rendgine
+UTILS = Constants.h Maths.h Matrix.h Normal.h \
+Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = light.o lodepng.o object.o plane.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
@@ -20,32 +22,31 @@ $(TARGET): $(TARGET).o $(OBJS)
 $(TARGET).o: $(TARGET).cpp $(HEADERS)
 	$(CC) -c $(TARGET).cpp $(CFLAGS)
 
-light.o: light.cpp light.h Point3D.h RGBColor.h Vector3D.h
+light.o: light.cpp light.h utils.h
 	$(CC) -c light.cpp $(CFLAGS)
 
 lodepng.o: lodepng.cpp lodepng.h
 	$(CC) -c lodepng.cpp $(CFLAGS)
 
-object.o: object.cpp object.h shader.h shaderec.h Ray.h RGBColor.h
+object.o: object.cpp object.h utils.h shader.h shaderec.h utils.h
 	$(CC) -c object.cpp $(CFLAGS)
 
-plane.o: plane.cpp plane.h object.h shaderec.h Normal.h Point3D.h Ray.h Vector3D.h
+plane.o: plane.cpp plane.h object.h shaderec.h utils.h
 	$(CC) -c plane.cpp $(CFLAGS)
 
-shader.o: shader.cpp shader.h object.h shaderec.h world.h Ray.h RGBColor.h
+shader.o: shader.cpp shader.h object.h shaderec.h world.h utils.h
 	$(CC) -c shader.cpp $(CFLAGS)
 
-shaderec.o: shaderec.cpp shaderec.h object.h Constants.h Maths.h Point3D.h Normal.h
+shaderec.o: shaderec.cpp shaderec.h object.h utils.h
 	$(CC) -c shaderec.cpp $(CFLAGS)
 
-sphere.o: sphere.cpp sphere.h shaderec.h object.h Normal.h Point3D.h Ray.h \
-	Vector3D.h
+sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-triangle.o: triangle.cpp triangle.h object.h Normal.h Point3D.h Ray.h
+triangle.o: triangle.cpp triangle.h object.h utils.h
 	$(CC) -c triangle.cpp $(CFLAGS)
 
-world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h triangle.h Point3D.h Ray.h RGBColor.h
+world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h triangle.h utils.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----

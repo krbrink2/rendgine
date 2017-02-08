@@ -8,12 +8,14 @@
 #include "shaderec.h"
 #include "sphere.h"
 #include "triangle.h"
+#include "utils.h"
+/*
 #include "Point3D.h"
 #include "Ray.h"
-#include "RGBColor.h"
+#include "RGBColor.h"*/
 
-#define NUM_SAMPLES 		16
-#define SQRT_NUM_SAMPLES	4
+#define NUM_SAMPLES 		4
+#define SQRT_NUM_SAMPLES	2
 
 class World{
 public:
@@ -37,6 +39,7 @@ public:
 	RGBColor computePixelOrtho(const int x, const int y) const;
 	RGBColor computePixelPerspec(const int x, const int y) const;
 	void traceRay(const Ray& ray, ShadeRec& sr) const;
+	Point3D getOrigin(int x, int y) const;
 };
 
 #endif
