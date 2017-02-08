@@ -14,15 +14,14 @@
 #include "Ray.h"
 #include "RGBColor.h"*/
 
-#define NUM_SAMPLES 		4
-#define SQRT_NUM_SAMPLES	2
-#define	HRES 				768
+#define NUM_SAMPLES 		16
+#define SQRT_NUM_SAMPLES	4
+#define	HRES 				512
 #define VRES 				512
 
 class World{
 public:
 	double s;
-	double mjCoarseWidth;
 	double mjFineWidth;
 	int hres, vres;
 	RGBColor backgroundColor;

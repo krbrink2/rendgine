@@ -47,10 +47,10 @@ World::~World(){
 }
 
 void World::build(void){
-	hres = vres = HRES;
-	s = .1;
-	mjCoarseWidth = (int)(s/SQRT_NUM_SAMPLES);
-	mjFineWidth = (int)(s/NUM_SAMPLES);
+	hres = HRES;
+	vres = VRES;
+	s = .05;
+	mjFineWidth = (double) s/NUM_SAMPLES;
 
 	backgroundColor = RGBColor(0, 0, 0);
 	E = Point3D(0, 0, 0);
@@ -115,9 +115,12 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
 	RGBColor accum(0, 0, 0);
 
+	int count = 0;
+
 	// For each sample...
 	for(size_t coarsei = 0; coarsei < SQRT_NUM_SAMPLES; coarsei++){
 		for(size_t coarsej = 0; coarsej < SQRT_NUM_SAMPLES; coarsej++){
+			count++;
 
 			// The flow control here is super wonky.
 			// 	May want to fix it.
@@ -162,12 +165,8 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 
 			// Create ray
 			// Generate orthographic origin
-			double wx = s*(x - hres/2) + \
-				mjCoarseWidth*(coarsej - SQRT_NUM_SAMPLES/2) + \
-				mjFineWidth*(finej - SQRT_NUM_SAMPLES/2 + .5);
-			double wy = -( s*(y - vres/2 + .5) + \
-				mjCoarseWidth*(coarsei - SQRT_NUM_SAMPLES/2) + \
-				mjFineWidth*(finei - SQRT_NUM_SAMPLES/2 + .5) );
+			double wx = s*(x - hres/2) + mjFineWidth*(indexj - NUM_SAMPLES/2 + .5);
+			double wy = -( s*(y - vres/2 + .5) + mjFineWidth*(indexi - NUM_SAMPLES + .5) );
 			Point3D o = Point3D(wx, wy, 0);
 			// Generate direction
 			Vector3D d = Vector3D(0, 0, -1);
@@ -179,11 +178,14 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr.hitNormal);
 			} else{
+				//@BUG this is happening even when hitting objects.
+				cout << "    " << wy << ", " << wy << endl;
 				accum += backgroundColor;
 			}
 			// Loop back, generate next sample.
 		}
 	}
+
 
 	accum /= NUM_SAMPLES;
 	return accum;
