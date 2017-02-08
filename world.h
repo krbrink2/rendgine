@@ -12,14 +12,20 @@
 #include "Ray.h"
 #include "RGBColor.h"
 
+#define NUM_SAMPLES 		16
+#define SQRT_NUM_SAMPLES	4
+
 class World{
 public:
 	double s;
+	double mjCoarseWidth;
+	double mjFineWidth;
 	int hres, vres;
 	RGBColor backgroundColor;
 	std::vector<Object*> objects;
 	std::vector<Light> lights;
 	Point3D E;
+	bool orthographic;
 
 	World(void);
 	World(const World& w);
@@ -28,7 +34,8 @@ public:
 
 	void build(void);
 	void renderScene(void) const;
-	RGBColor computePixel(const int x, const int y) const;
+	RGBColor computePixelOrtho(const int x, const int y) const;
+	RGBColor computePixelPerspec(const int x, const int y) const;
 	void traceRay(const Ray& ray, ShadeRec& sr) const;
 };
 

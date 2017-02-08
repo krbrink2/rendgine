@@ -1,4 +1,6 @@
 #include "world.h"
+#include <math.h>
+#include <assert.h>
 
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
@@ -44,8 +46,12 @@ World::~World(){
 void World::build(void){
 	hres = vres = 512;
 	s = .1;
+	mjCoarseWidth = (int)(s/SQRT_NUM_SAMPLES);
+	mjFineWidth = (int)(s/NUM_SAMPLES);
+
 	backgroundColor = RGBColor(0, 0, 0);
-	E = Point3D(0, 0, 100);
+	E = Point3D(0, 0, 0);
+	orthographic = true;
 
 	// Add objects
 	// Plane
@@ -83,7 +89,12 @@ void World::renderScene(void) const{
 	// For each pixel...
 	for(int y = 0; y < vres; y++)
 	for(int x = 0; x < hres; x++){
-		RGBColor c = computePixel(x, y);
+		RGBColor c;
+		if(orthographic)
+			c = computePixelOrtho(x, y);
+		else
+			// Change for perspective
+			c = computePixelOrtho(x, y);
 		image[4*hres*y + 4*x + 0] = c.r;
 		image[4*hres*y + 4*x + 1] = c.g;
 		image[4*hres*y + 4*x + 2] = c.b;
@@ -92,23 +103,42 @@ void World::renderScene(void) const{
 	encodeOneStep(pngName, image, hres, vres);
 }
 
-RGBColor World::computePixel(const int x, const int y) const{
-	// Create ray
-	double wx = s*(x - hres/2 + .5);
-	double wy = -s*(y - vres/2 + .5);
-	Point3D o = Point3D(wx, wy, 0);
-	Vector3D d = Vector3D(0, 0, -1);
-	Ray ray = Ray(o, d);
+RGBColor World::computePixelOrtho(const int x, const int y) const{
+	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};
+	RGBColor colorAccum(0, 0, 0);
 
-	// Trace ray
-	ShadeRec sr(backgroundColor);
-	traceRay(ray, sr);
-	if(sr.hitObject){
-		RGBColor retval = sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
-		return retval;
-	} else{
-		return backgroundColor;
+	for(size_t i = 0; i < SQRT_NUM_SAMPLES; i++){
+		for(size_t j = 0; j < SQRT_NUM_SAMPLES; j++){
+			// Choose fineBox - make sure no conflicts
+			// Mark as used
+			// Generate origin
+			// Generate direction
+			// Trace ray
+			// Extract shaded color, get to colorAccum
+
+
+
+
+
+			// Create ray
+			double wx = s*(x - hres/2 + .5);
+			double wy = -s*(y - vres/2 + .5);
+			Point3D o = Point3D(wx, wy, 0);
+			Vector3D d = Vector3D(0, 0, -1);
+			Ray ray = Ray(o, d);
+
+			// Trace ray
+			ShadeRec sr(backgroundColor);
+			traceRay(ray, sr);
+			if(sr.hitObject){
+				RGBColor retval = sr.hitShader->shade(*this, sr.hitNormal);	// Segfault
+				return retval;
+			} else{
+				return backgroundColor;
+			}
+		}
 	}
+
 
 }
 
