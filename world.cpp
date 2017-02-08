@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <iostream>
 
+using namespace std;
+
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
 
@@ -45,7 +47,7 @@ World::~World(){
 }
 
 void World::build(void){
-	hres = vres = 512;
+	hres = vres = HRES;
 	s = .1;
 	mjCoarseWidth = (int)(s/SQRT_NUM_SAMPLES);
 	mjFineWidth = (int)(s/NUM_SAMPLES);
@@ -88,18 +90,23 @@ void World::renderScene(void) const{
 	image.resize(hres * vres * 4);
 
 	// For each pixel...
-	for(int y = 0; y < vres; y++)
-	for(int x = 0; x < hres; x++){
-		RGBColor c;
-		if(orthographic)
-			c = computePixelOrtho(x, y);
-		else
-			// Change for perspective
-			c = computePixelOrtho(x, y);
-		image[4*hres*y + 4*x + 0] = c.r;
-		image[4*hres*y + 4*x + 1] = c.g;
-		image[4*hres*y + 4*x + 2] = c.b;
-		image[4*hres*y + 4*x + 3] = 255;
+	for(int y = 0; y < vres; y++){
+		for(int x = 0; x < hres; x++){
+			RGBColor c;
+			if(orthographic)
+				c = computePixelOrtho(x, y);
+			else
+				// Change for perspective
+				c = computePixelOrtho(x, y);
+			image[4*hres*y + 4*x + 0] = c.r;
+			image[4*hres*y + 4*x + 1] = c.g;
+			image[4*hres*y + 4*x + 2] = c.b;
+			image[4*hres*y + 4*x + 3] = 255;
+		}
+		// Report status
+		if(y % 20 == 0){
+			std::cout << "  >>" << ((float)y/VRES) << "%" << endl;
+		}
 	}
 	encodeOneStep(pngName, image, hres, vres);
 }
@@ -117,8 +124,8 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			
 			// Choose an arbitrary fineBox - make sure no conflicts.
 			// 	Randomly choose a fineBoxIndex
-			int finei = rand_int(0, SQRT_NUM_SAMPLES);
-			int finej = rand_int(0, SQRT_NUM_SAMPLES);
+			int finei = rand_int(0, SQRT_NUM_SAMPLES-1);
+			int finej = rand_int(0, SQRT_NUM_SAMPLES-1);
 			int indexi, indexj;
 			bool lookForFineBox = true;
 			while(lookForFineBox){
@@ -174,6 +181,7 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			} else{
 				accum += backgroundColor;
 			}
+			// Loop back, generate next sample.
 		}
 	}
 

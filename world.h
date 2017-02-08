@@ -16,6 +16,8 @@
 
 #define NUM_SAMPLES 		4
 #define SQRT_NUM_SAMPLES	2
+#define	HRES 				768
+#define VRES 				512
 
 class World{
 public:
