@@ -104,7 +104,8 @@ void World::renderScene(void) const{
 }
 
 RGBColor World::computePixelOrtho(const int x, const int y) const{
-	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};
+	//bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};
+	return RGBColor();
 	RGBColor colorAccum(0, 0, 0);
 
 	for(size_t i = 0; i < SQRT_NUM_SAMPLES; i++){
