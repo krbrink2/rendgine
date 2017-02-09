@@ -52,3 +52,12 @@ void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsi
 	unsigned error = lodepng::encode(filename, image, hres, vres);
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
+
+
+
+
+// Function name:		
+// Function purpose:	
+// Parameters:			
+// Return value:		
+// Any other output:	

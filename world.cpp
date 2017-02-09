@@ -236,11 +236,13 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 	return accum;
 }
 
-// Function name:		
-// Function purpose:	
+// Function name:		computePixelPerspec
+// Function purpose:	Compute single pixel value in perspective projection
 // Parameters:			
-// Return value:		
-// Any other output:	
+//		x:			x location of pixel
+//		y:			y locatino of pixel
+// Return value:		RGB pixel value
+// Any other output:	None
 RGBColor World::computePixelPerspec(const int x, const int y) const{
 	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
 	RGBColor accum(0, 0, 0);
