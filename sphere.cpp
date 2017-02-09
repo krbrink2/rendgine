@@ -14,55 +14,22 @@ Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c){
 	sdr = Shader();
 }
 
-/*
-// ---- Copy constructor ----
-Sphere::Sphere(const Sphere& s):
-	object(s),
-	r(s.r),
-	c(s.c){
-	sdr = Shader();
-}
-
-// ---- Assignment operator ----
-Sphere& Sphere::operator=(const Sphere& rhs){
-	color = rhs.color;
-	r = rhs.r;
-	c = rhs.c;
-	sdr = rhs.sdr;
-	return *this;
-}
-
-// ---- Destructor ----
-Sphere::~Sphere(){
-}
-*/
-
+// Function name:		clone
+// Function purpose:	Allocated identical sphere
+// Parameters:			None
+// Return value:		Pointer to new sphere
+// Any other output:	None
 Sphere* Sphere::clone(void){
 	return new Sphere(*this);
 }
 
-bool Sphere::hit(const Ray& ray, double& t){
-	double A = ray.d * ray.d;
-	double B = 2*(ray.o - c) * ray.d;
-	double C = (ray.o - c) * (ray.o - c) - r*r;
-	double disc = B*B - 4*A*C;
-
-
-	if(disc < 0){
-		return false;
-	}
-	else{
-		return true;
-	}
-
-
-	//@TODO
-	if(fabs(disc) < kEpsilon){
-
-	}
-	
-}
-
+// Function name:		hit
+// Function purpose:	Tests intersection for ray, records shading info is hits.
+// Parameters:			
+//		ray:		Ray being traced
+//		sr:			ShadeRec to store info
+// Return value:		True if intersects
+// Any other output:	None
 bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 	double A = ray.d * ray.d;
 	double B = 2*(ray.o - c) * ray.d;

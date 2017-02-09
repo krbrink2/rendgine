@@ -319,8 +319,14 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 	return accum;
 }
 
+// Function name:		traceRay
+// Function purpose:	Trace ray through scene, keeping track of hits in ShadeRec
+// Parameters:			
+//		ray:		The ray to trace
+// 		sr:			A repository of hit and shading information
+// Return value:		None (returns information thru sr)
+// Any other output:	None
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{
-
 	// Let every object check against this ray,
 	//	using sr to record information.
 	for(size_t i = 0; i < objects.size(); i++){
@@ -328,9 +334,7 @@ void World::traceRay(const Ray& ray, ShadeRec& sr) const{
 	}
 }
 
-Point3D World::getOrigin(int x, int y) const{
-	return Point3D();	//@TODO
-}
+
 
 
 

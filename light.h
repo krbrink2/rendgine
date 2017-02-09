@@ -14,7 +14,7 @@ public:
 	~Light();
 
 	virtual Vector3D getDirection(Point3D pnt);
-	virtual bool testPath(Point3D pnt);
+	//virtual bool testPath(Point3D pnt);
 	virtual void setPoint(Point3D pnt);
 
 	Vector3D dir;

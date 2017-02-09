@@ -1,16 +1,14 @@
 #include "object.h"
 
+// ---- Default constructor ----
 Object::Object():
 	sdr()
 {}
 
+// ---- Copy constructor ----
 Object::Object(const Object& obj):
 	sdr(obj.sdr)
 {}
 
-Object& Object::operator=(const Object& rhs){
-	sdr = rhs.sdr;
-	return *this;
-}
-
+// ---- Destructor ----
 Object::~Object(){}

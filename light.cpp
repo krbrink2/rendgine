@@ -1,7 +1,5 @@
 #include "light.h"
 
-//@TODO: all of this
-
 // ---- Default constructor ----
 Light::Light(){
 	
@@ -22,16 +20,30 @@ Light& Light::operator=(const Light& rhs){
 // ---- Destructor ----
 Light::~Light(){}
 
+// Function name:		getDirection
+// Function purpose:	Get direction from a point to this light
+// Parameters:			
+//		pnt: 		 A point to get direction from
+// Return value:		Direcition to this light
+// Any other output:	None
 Vector3D Light::getDirection(Point3D pnt){
 	Vector3D vect = p - pnt;
 	vect.normalize();
 	return vect;
 }
 
+// Under construction below...
+/*
 bool Light::testPath(Point3D pnt){
 	return false;
-}
+}*/
 
+
+// Function name:		setPoint
+// Function purpose:	Set value for pnt member
+// Parameters:			Value to set pnt as
+// Return value:		None
+// Any other output:	None
 void Light::setPoint(Point3D pnt){
 	p = pnt;
 }

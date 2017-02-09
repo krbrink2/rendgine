@@ -22,6 +22,13 @@ Shader& Shader::operator=(const Shader& rhs){
 // ---- Destructor ----
 Shader::~Shader(){}
 
+// Function name:		shade
+// Function purpose:	Lambertian BRDF
+// Parameters:			
+//		w:			Scene info including eye, lights, and other objects
+//		n:			Normal
+// Return value:		Computed value
+// Any other output:	None
 RGBColor Shader::shade(const World& w, const Normal& N){
 	// Shader already has material + color.
 	// BRDF also needs N, E, and L.
@@ -43,6 +50,11 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 	
 }
 
+// Function name:		"()" operator
+// Function purpose:	Allows this shader to act like a functor. Wrapper for shade function.
+// Parameters:			Same as shade function.
+// Return value:		Computed shader value
+// Any other output:	None
 RGBColor Shader::operator()(const World& w, const Normal& N){
 	return shade(w, N);
 }

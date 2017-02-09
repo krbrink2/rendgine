@@ -20,11 +20,6 @@ class ShadeRec{
 
 		ShadeRec();									// Constructor
 		ShadeRec(const RGBColor& c);
-		/*
-		ShadeRec(const ShadeRec& sr);				// Copy constructor
-		ShadeRec& operator=(const ShadeRec& rhs);	// Assignment operator
-		~ShadeRec(void);							// Destructor
-		*/
 };
 
 

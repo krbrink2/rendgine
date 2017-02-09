@@ -13,14 +13,8 @@ class Plane: public Object
 public:
 	Plane();
 	Plane(Point3D _a, Normal _n);
-	/*
-	Plane(const Plane& p);
-	Plane& operator=(const Plane& rhs);
-	~Plane();
-	*/
 
 	Plane* clone(void);
-	bool hit(const Ray& ray, double& t);
 	bool hit(const Ray& ray, ShadeRec& sr);
 
 protected:

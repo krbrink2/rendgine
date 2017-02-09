@@ -20,43 +20,24 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 	n.normalize();
 }
 
-/*
-// ---- Copy constructor ----
-Triangle::Triangle(const Triangle& t):
-	Object(t),
-	v0(t.v0),
-	v1(t.v1),
-	v2(t.v2),
-	n(t.n)
-{}
-
-// ---- Assignment operator ----
-Triangle& Triangle::operator=(const Triangle& rhs){
-	v0 = rhs.v0;
-	v1 = rhs.v1;
-	v2 = rhs.v2;
-	n = rhs.n;
-	
-	return *this;
-}
-*/
-
+// Function name:		clone
+// Function purpose:	Allocate identical triangle
+// Parameters:			None
+// Return value:		Pointer to identical triangle
+// Any other output:	None
 Triangle* Triangle::clone(void){
 	return new Triangle(*this);
 }
 
+// Function name:		hit
+// Function purpose:	Test if ray hits triangle, record info if so.
+// Parameters:			
+//		ray:		Ray being traced
+//		sr:			ShadeRec to store values
+// Return value:		True if ray hits
+// Any other output:	Writes to sr
 bool Triangle::hit(const Ray& ray, ShadeRec& sr){
-	/*double dDotn = ray.d * n;
-	if(fabs(dDotn) < kEpsilon){
-		return false;
-	}
-
-	double newt = ((v0 - ray.o) * n)/dDotn;
-	if(newt < 0 || newt > sr.t)
-		return false;*/
-
-
-	//@TODO MARK AS SUFFERN'S
+	// The below math is courtesy of Suffern's Ray Tracing from the Ground Up
 	double	a = v0.x - v1.x,
 			b = v0.x - v2.x,
 			c = ray.d.x,

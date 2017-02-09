@@ -10,7 +10,6 @@ class Object
 public:
 	Object();
 	Object(const Object& obj);
-	virtual Object& operator=(const Object& rhs);
 	virtual ~Object();
 	virtual Object* clone() = 0;
 	//virtual bool hit(const Ray& ray, double& t) = 0;

@@ -12,47 +12,22 @@ Plane::Plane(Point3D _a, Normal _n): a(_a), n(_n) {
 	sdr = Shader();
 }
 
-/*
-// ---- Copy constructor ----
-Plane::Plane(const Plane& p):
-	object(p),
-	a(a),
-	n(n)
-{}
-
-// ---- Assignment operator ----
-Plane& Plane::operator=(const Plane& rhs){
-	a = rhs.a;
-	n = rhs.n
-
-	return *this;
-}
-
-// ---- Destructor ----
-Plane::~Plane(){
-}
-*/
-
+// Function name:		clone
+// Function purpose:	Allocate identical sphere
+// Parameters:			None
+// Return value:		Pointer to new sphere
+// Any other output:	None
 Plane* Plane::clone(void){
 	return new Plane(*this);
 }
 
-bool Plane::hit(const Ray& ray, double& t){
-	double dDotn = ray.d * n;
-	if(fabs(dDotn) < kEpsilon){
-		return false;
-	}
-	
-	double newt = ((a - ray.o)*n)/dDotn;
-	if(newt > 0 && newt < t){
-		t = newt;
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-
+// Function name:		hit
+// Function purpose:	Test ray intersection
+// Parameters:			
+// 		ray:		Ray being traced
+//		sr:			ShadeRec to record values
+// Return value:		True if intersects
+// Any other output:	Writes to sr
 bool Plane::hit(const Ray& ray, ShadeRec& sr){
 	double dDotn = ray.d * n;
 	if(fabs(dDotn) < kEpsilon){	// parallel
