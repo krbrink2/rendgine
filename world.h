@@ -36,6 +36,7 @@ public:
 	~World(void);
 
 	void build(void);
+	void addDefaultObjects(void);
 	void setViewCoords(void);
 	void renderScene(void) const;
 	RGBColor computePixelOrtho(const int x, const int y) const;

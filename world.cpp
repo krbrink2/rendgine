@@ -8,6 +8,7 @@ using namespace std;
 
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
+extern void addDefaultObjects(void);
 
 // ---- Constructor ----
 World::World(void){
@@ -54,17 +55,26 @@ void World::build(void){
 	mjFineWidth = (double) s/NUM_SAMPLES;
 
 	backgroundColor = RGBColor(0, 0, 0);
-	E = Point3D(-2, 0, 0);
-	lookat = Point3D(0, 0, -10);
-	Vector3D upVect = Vector3D(1, 5, 1);
+	E = EYE;
+	lookat = LOOKAT;
+	Vector3D upVect = UP;
 	upVect.normalize();
 	up = upVect;
 	d = D;
 	orthographic = ORTHO;
 
 	setViewCoords();
+	addDefaultObjects();
 
-	// Add objects
+    // Add lights
+    Light l;
+    Vector3D dir(1, 0, -1);
+	dir.normalize();
+	l.dir = dir;
+	lights.push_back(l); 
+}
+
+void World::addDefaultObjects(void){
 	// Plane
 	Normal n(-1, 1, 4);
 	n.normalize();
@@ -82,13 +92,6 @@ void World::build(void){
 		Point3D(-10, 12, -10),
 		Point3D(-10, -12, -10)));
 	objects[3]->sdr.c = RGBColor(0, 255, 255);
-
-    // Add lights
-    Light l;
-    Vector3D dir(1, 0, -1);
-	dir.normalize();
-	l.dir = dir;
-	lights.push_back(l); 
 }
 
 void World::setViewCoords(void){
@@ -250,7 +253,8 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 			Point3D o = E;//Point3D(wx, wy, 0);
 			// Find point on viewplane
 			double wx = s*(x - hres/2) + mjFineWidth*(indexj - NUM_SAMPLES/2 + .5);
-			double wy = -( s*(y - vres/2 + .5) + mjFineWidth*(indexi - NUM_SAMPLES + .5) );
+			// Why ain't wy negative?
+			double wy = ( s*(y - vres/2 + .5) + mjFineWidth*(indexi - NUM_SAMPLES + .5) );
 			Vector3D vpp = E;
 			vpp += (d * -vz);
 			vpp += wx * vx;
