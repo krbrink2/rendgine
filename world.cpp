@@ -48,6 +48,11 @@ World::~World(){
 	objects.clear();
 }
 
+// Function name:		build
+// Function purpose:	Fill scene with objects, set up rendering params
+// Parameters:			None
+// Return value:		None
+// Any other output:	None
 void World::build(void){
 	hres = HRES;
 	vres = VRES;
@@ -74,6 +79,11 @@ void World::build(void){
 	lights.push_back(l); 
 }
 
+// Function name:		addDefaultObjects
+// Function purpose:	Puts some triangles and spheres into scene
+// Parameters:			None
+// Return value:		None
+// Any other output:	None
 void World::addDefaultObjects(void){
 	// Plane
 	Normal n(-1, 1, 5.2);
@@ -100,6 +110,11 @@ void World::addDefaultObjects(void){
 	objects[4]->sdr.c = RGBColor(255, 0, 255);
 }
 
+// Function name:		setViewCoords
+// Function purpose:	Sets camera's orthonormal basis
+// Parameters:			None
+// Return value:		None
+// Any other output:	None
 void World::setViewCoords(void){
 	vz = E - lookat;
 	vz.normalize();
@@ -110,6 +125,11 @@ void World::setViewCoords(void){
 	vy = vx ^ vz;
 }
 
+// Function name:		renderScene
+// Function purpose:	Render scene to file "image.png"
+// Parameters:			None
+// Return value:		None
+// Any other output:	Writes image file to disk
 void World::renderScene(void) const{
 	//generate some image
 	const char* pngName = "image.png";
@@ -138,6 +158,13 @@ void World::renderScene(void) const{
 	encodeOneStep(pngName, image, hres, vres);
 }
 
+// Function name:		computePixelOrtho
+// Function purpose:	Evaluates a single pixel value in orthographic perspective
+// Parameters:			
+//		x:			x location of pixel
+//		y:			y location of pixel
+// Return value:		Pixel color
+// Any other output:	None
 RGBColor World::computePixelOrtho(const int x, const int y) const{
 	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
 	RGBColor accum(0, 0, 0);
@@ -209,6 +236,11 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 	return accum;
 }
 
+// Function name:		
+// Function purpose:	
+// Parameters:			
+// Return value:		
+// Any other output:	
 RGBColor World::computePixelPerspec(const int x, const int y) const{
 	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
 	RGBColor accum(0, 0, 0);

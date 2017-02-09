@@ -15,15 +15,27 @@
 using namespace std;
 
 // ---- Global variable declarations ----
-/*double s;
-int hres, vres;
-vector<Object*> objects;*/
-World* worldPtr;
+World* worldPtr;		// Pointer to active World object.
 
 // ---- Function declarations ----
+
+// Function name:		encodeOneStep
+// Function purpose:	Write image to disk.
+// Parameters:
+//	filename:		Name of file to write
+//	image:			Vector of RGBA values
+//	hres, vres:		Horizontal and vertical resolutions
+// Return value:		None
+// Any other output:	Writes png file
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);
 
 // ---- Main funciton ----
+
+// Function name:		main
+// Function purpose:	Begin execution
+// Parameters:			Command line parameters (unused)
+// Return value:		0 on success
+// Any other output:	Writes file "image.png" to disk
 int main(int argc, char* argv[]){
 
 	worldPtr = new World();
