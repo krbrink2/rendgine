@@ -76,7 +76,7 @@ void World::build(void){
 
 void World::addDefaultObjects(void){
 	// Plane
-	Normal n(-1, 1, 4);
+	Normal n(-1, 1, 5.2);
 	n.normalize();
 	objects.push_back(new Plane(Point3D(0, 0, -10), n));
 	objects[0]->sdr.c = RGBColor(255, 0, 0);
@@ -86,12 +86,18 @@ void World::addDefaultObjects(void){
 	// Spehre 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
 	objects[2]->sdr.c = RGBColor(0, 0, 255);	
-	// Triangle
+	// Triangle0
 	objects.push_back(new Triangle(
 		Point3D(0, 0, -10),
 		Point3D(-10, 12, -10),
 		Point3D(-10, -12, -10)));
 	objects[3]->sdr.c = RGBColor(0, 255, 255);
+	// Triangle1
+	objects.push_back(new Triangle(
+		Point3D(4, 4, -10),
+		Point3D(15, 10, -10),
+		Point3D(0, 15, -10)));
+	objects[4]->sdr.c = RGBColor(255, 0, 255);
 }
 
 void World::setViewCoords(void){
