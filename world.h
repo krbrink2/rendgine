@@ -14,11 +14,6 @@
 #include "Ray.h"
 #include "RGBColor.h"*/
 
-#define NUM_SAMPLES 		16
-#define SQRT_NUM_SAMPLES	4
-#define	HRES 				512
-#define VRES 				512
-
 class World{
 public:
 	double s;
@@ -28,7 +23,12 @@ public:
 	std::vector<Object*> objects;
 	std::vector<Light> lights;
 	Point3D E;
+	Point3D lookat;
+	Vector3D up;
+	double d;
 	bool orthographic;
+
+	Vector3D vx, vy, vz;			// Viewing coordinate system
 
 	World(void);
 	World(const World& w);
@@ -36,6 +36,7 @@ public:
 	~World(void);
 
 	void build(void);
+	void setViewCoords(void);
 	void renderScene(void) const;
 	RGBColor computePixelOrtho(const int x, const int y) const;
 	RGBColor computePixelPerspec(const int x, const int y) const;

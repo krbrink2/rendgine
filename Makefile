@@ -7,7 +7,7 @@ OBJS = light.o lodepng.o object.o plane.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  light.h lodepng.h object.h plane.h \
+HEADERS =  controls.h light.h lodepng.h object.h plane.h \
 shader.h shaderec.h sphere.h triangle.h world.h \
 Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
@@ -46,7 +46,7 @@ sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 triangle.o: triangle.cpp triangle.h object.h utils.h
 	$(CC) -c triangle.cpp $(CFLAGS)
 
-world.o: world.cpp world.h object.h plane.h shaderec.h sphere.h triangle.h utils.h
+world.o: world.cpp world.h controls.h object.h plane.h shaderec.h sphere.h triangle.h utils.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----

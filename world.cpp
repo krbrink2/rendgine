@@ -2,6 +2,7 @@
 #include <math.h>
 #include <assert.h>
 #include <iostream>
+#include "controls.h"
 
 using namespace std;
 
@@ -49,30 +50,37 @@ World::~World(){
 void World::build(void){
 	hres = HRES;
 	vres = VRES;
-	s = .05;
+	s = S;
 	mjFineWidth = (double) s/NUM_SAMPLES;
 
 	backgroundColor = RGBColor(0, 0, 0);
-	E = Point3D(0, 0, 0);
-	orthographic = true;
+	E = Point3D(-2, 0, 0);
+	lookat = Point3D(0, 0, -10);
+	Vector3D upVect = Vector3D(1, 5, 1);
+	upVect.normalize();
+	up = upVect;
+	d = D;
+	orthographic = ORTHO;
+
+	setViewCoords();
 
 	// Add objects
 	// Plane
-	Normal n(-1, 1, 1);
+	Normal n(-1, 1, 4);
 	n.normalize();
-	objects.push_back(new Plane(Point3D(0, 0, -100), n));
+	objects.push_back(new Plane(Point3D(0, 0, -10), n));
 	objects[0]->sdr.c = RGBColor(255, 0, 0);
 	// Sphere 0
-	objects.push_back(new Sphere(5, Point3D(0, 0, -100)));
+	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
 	objects[1]->sdr.c = RGBColor(0, 255, 0);	
 	// Spehre 1
-	objects.push_back(new Sphere(6, Point3D(-10, 12, -100)));
+	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
 	objects[2]->sdr.c = RGBColor(0, 0, 255);	
 	// Triangle
 	objects.push_back(new Triangle(
-		Point3D(0, 0, -100),
-		Point3D(-10, 12, -100),
-		Point3D(-10, -12, -100)));
+		Point3D(0, 0, -10),
+		Point3D(-10, 12, -10),
+		Point3D(-10, -12, -10)));
 	objects[3]->sdr.c = RGBColor(0, 255, 255);
 
     // Add lights
@@ -81,6 +89,16 @@ void World::build(void){
 	dir.normalize();
 	l.dir = dir;
 	lights.push_back(l); 
+}
+
+void World::setViewCoords(void){
+	vz = E - lookat;
+	vz.normalize();
+
+	vx = up ^ vz;
+	vx.normalize();
+
+	vy = vx ^ vz;
 }
 
 void World::renderScene(void) const{
@@ -97,7 +115,7 @@ void World::renderScene(void) const{
 				c = computePixelOrtho(x, y);
 			else
 				// Change for perspective
-				c = computePixelOrtho(x, y);
+				c = computePixelPerspec(x, y);
 			image[4*hres*y + 4*x + 0] = c.r;
 			image[4*hres*y + 4*x + 1] = c.g;
 			image[4*hres*y + 4*x + 2] = c.b;
@@ -115,18 +133,14 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
 	RGBColor accum(0, 0, 0);
 
-	int count = 0;
 
 	// For each sample...
 	for(size_t coarsei = 0; coarsei < SQRT_NUM_SAMPLES; coarsei++){
 		for(size_t coarsej = 0; coarsej < SQRT_NUM_SAMPLES; coarsej++){
-			count++;
-
 			// The flow control here is super wonky.
 			// 	May want to fix it.
 			
 			// Choose an arbitrary fineBox - make sure no conflicts.
-			// 	Randomly choose a fineBoxIndex
 			int finei = rand_int(0, SQRT_NUM_SAMPLES-1);
 			int finej = rand_int(0, SQRT_NUM_SAMPLES-1);
 			int indexi, indexj;
@@ -148,7 +162,6 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 					// Innocent. Not proven guilty.
 					break;
 
-
 				// Guilty, so try the next one.
 				finej++;
 				finej %= SQRT_NUM_SAMPLES;
@@ -161,7 +174,6 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 
 			// Mark as used
 			fineBoxes[indexi][indexj] = true;
-
 
 			// Create ray
 			// Generate orthographic origin
@@ -178,14 +190,86 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr.hitNormal);
 			} else{
-				//@BUG this is happening even when hitting objects.
-				cout << "    " << wy << ", " << wy << endl;
 				accum += backgroundColor;
 			}
 			// Loop back, generate next sample.
 		}
 	}
 
+	accum /= NUM_SAMPLES;
+	return accum;
+}
+
+RGBColor World::computePixelPerspec(const int x, const int y) const{
+	bool fineBoxes[NUM_SAMPLES][NUM_SAMPLES] = {0};	// True if occupied
+	RGBColor accum(0, 0, 0);
+
+	// For each sample...
+	for(size_t coarsei = 0; coarsei < SQRT_NUM_SAMPLES; coarsei++){
+		for(size_t coarsej = 0; coarsej < SQRT_NUM_SAMPLES; coarsej++){
+			// The flow control here is super wonky.
+			// 	May want to fix it.
+			
+			// Choose an arbitrary fineBox - make sure no conflicts.
+			int finei = rand_int(0, SQRT_NUM_SAMPLES-1);
+			int finej = rand_int(0, SQRT_NUM_SAMPLES-1);
+			int indexi, indexj;
+			bool lookForFineBox = true;
+			while(lookForFineBox){
+				indexi = coarsei*SQRT_NUM_SAMPLES + finei;
+				indexj = coarsej*SQRT_NUM_SAMPLES + finej;
+				lookForFineBox = false; // Innocent until proven guilty
+				// Check if its a good index
+				for(size_t a = 0; a < NUM_SAMPLES; a++){
+					if( fineBoxes[a][indexj] || fineBoxes[indexi][a] ){
+						// Its taken. Try next one.
+						lookForFineBox = true;	// Proven guilty.
+						break;
+					}
+				}
+
+				if(!lookForFineBox)
+					// Innocent. Not proven guilty.
+					break;
+
+				// Guilty, so try the next one.
+				finej++;
+				finej %= SQRT_NUM_SAMPLES;
+				if(finej == 0){
+					finei++;
+					finei %= SQRT_NUM_SAMPLES;
+				}
+				// Loop back to top
+			}
+
+			// Mark as used
+			fineBoxes[indexi][indexj] = true;
+
+			// Create ray
+			// Find ray origin
+			Point3D o = E;//Point3D(wx, wy, 0);
+			// Find point on viewplane
+			double wx = s*(x - hres/2) + mjFineWidth*(indexj - NUM_SAMPLES/2 + .5);
+			double wy = -( s*(y - vres/2 + .5) + mjFineWidth*(indexi - NUM_SAMPLES + .5) );
+			Vector3D vpp = E;
+			vpp += (d * -vz);
+			vpp += wx * vx;
+			vpp += wy * vy;
+			// Generate direction
+			Vector3D d = vpp - E;
+			// Create ray
+			Ray ray(o, d);
+			// Trace ray
+			ShadeRec sr(backgroundColor);
+			traceRay(ray, sr);
+			if(sr.hitObject){
+				accum += sr.hitShader->shade(*this, sr.hitNormal);
+			} else{
+				accum += backgroundColor;
+			}
+			// Loop back, generate next sample.
+		}
+	}
 
 	accum /= NUM_SAMPLES;
 	return accum;
