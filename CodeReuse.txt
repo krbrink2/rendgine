@@ -1,4 +1,15 @@
-Kyle Brinker
 
-Code Reuse
+lodepng.h
+1 1762 lodev.org/lodepng/
 
+lodepng.cpp
+1 6231 lodev.org/lodepng/
+
+Most of Triangle::hit
+1 41 www.raytracegroundup.com/downloads.html
+
+A subset of Kevin Suffern's Utilities library. All c++ code starting with a capital letter is his. This does not include the ShadeRec class.
+1 1710 www.raytracegroundup.com/downloads.html
+
+The main function was inspired by Suffern.
+1 9 www.raytracegroundup.com/downloads.html
