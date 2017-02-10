@@ -1,3 +1,4 @@
 #!/bin/bash
-make && ./rendgine && eog image.png
+make && ./MP_1_TEST && eog image.png
+
 
