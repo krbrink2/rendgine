@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
-TARGET = rendgine
+TARGET = MP_1_TEST
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = light.o lodepng.o object.o plane.o shader.o \
@@ -16,11 +16,11 @@ default: $(TARGET)
 
 # ---- Mine ----
 
-$(TARGET): $(TARGET).o $(OBJS)
-	$(CC) -o $(TARGET) $(TARGET).o $(OBJS) $(CFLAGS)
+$(TARGET): rendgine.o $(OBJS)
+	$(CC) -o $(TARGET) rendgine.o $(OBJS) $(CFLAGS)
 
-$(TARGET).o: $(TARGET).cpp $(HEADERS)
-	$(CC) -c $(TARGET).cpp $(CFLAGS)
+rendgine.o: rendgine.cpp $(HEADERS)
+	$(CC) -c rendgine.cpp $(CFLAGS)
 
 light.o: light.cpp light.h utils.h
 	$(CC) -c light.cpp $(CFLAGS)
