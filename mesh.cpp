@@ -1,5 +1,5 @@
 #include "mesh.h"
-#include <ifstream>
+#include <fstream>
 
 // ---- Constructor ----
 Mesh::Mesh(): p(Point3D()) {
@@ -13,8 +13,8 @@ Mesh::Mesh(const char* filename, const Point3D _p) : p(_p) {
 }
 
 // ---- Copy Constructor ----
-Mesh::Mesh(const Mesh& mesh): p(mesh.p) {
-	sdr = mesh.sdr();
+Mesh::Mesh(const Mesh& mesh): Object(mesh), p(mesh.p) {
+	sdr = mesh.sdr;
 	for(size_t i = 0; i < mesh.faces.size(); i++)
 		faces.push_back(mesh.faces[i]->clone());
 }
@@ -38,8 +38,9 @@ Mesh* Mesh::clone(){
 	return new Mesh(*this);
 }
 
-bool Mesh::hit(const Ray& ray, ShadeRed& sr){
+bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	//@TODO
+	return false;
 }
 
 // Helper function
@@ -53,7 +54,9 @@ void Mesh::clear(void){
 
 bool Mesh::load(const char* filename){
 	clear(); 		// Clear faces
-	
+
+
+	return false;
 }
 
 

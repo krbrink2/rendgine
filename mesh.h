@@ -4,12 +4,13 @@
 #include "object.h"
 #include "triangle.h"
 #include "Point3D.h"
+#include <vector>
 
 class Mesh : public Object{
 	Mesh();
 	Mesh(const char* filename, Point3D _p);
 	Mesh(const Mesh& mesh);
-	Mesh& operator=(constMesh& rhs);
+	Mesh& operator=(const Mesh& rhs);
 	virtual ~Mesh();
 	Mesh* clone();
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
@@ -17,9 +18,9 @@ class Mesh : public Object{
 	bool load(const char* filename);
 
 	Point3D p;
-	vector<Triangle*> faces;
+	std::vector<Triangle*> faces;
 
-}
+};
 
 
 

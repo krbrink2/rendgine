@@ -1,13 +1,13 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
-TARGET = MP_1_TEST
+TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = light.o lodepng.o object.o plane.o shader.o \
+OBJS = light.o lodepng.o mesh.o object.o plane.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  controls.h light.h lodepng.h object.h plane.h \
+HEADERS =  controls.h light.h lodepng.h mesh.h object.h plane.h \
 shader.h shaderec.h sphere.h triangle.h world.h \
 Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
@@ -27,6 +27,9 @@ light.o: light.cpp light.h utils.h
 
 lodepng.o: lodepng.cpp lodepng.h
 	$(CC) -c lodepng.cpp $(CFLAGS)
+
+mesh.o: mesh.cpp mesh.h object.h utils.h triangle.h
+	$(CC) -c mesh.cpp $(CFLAGS)
 
 object.o: object.cpp object.h utils.h shader.h shaderec.h utils.h
 	$(CC) -c object.cpp $(CFLAGS)
@@ -74,4 +77,4 @@ Vector3D.o: Vector3D.cpp Vector3D.h Normal.h Point3D.h
 
 
 clean:
-	$(RM) $(TARGET) *.o *~
+	$(RM) $(TARGET) rendgine *.o *~
