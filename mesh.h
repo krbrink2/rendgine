@@ -4,9 +4,11 @@
 #include "object.h"
 #include "triangle.h"
 #include "Point3D.h"
+#include "Vector3D.h"
 #include <vector>
 
 class Mesh : public Object{
+public:
 	Mesh();
 	Mesh(const char* filename, Point3D _p);
 	Mesh(const Mesh& mesh);
@@ -18,8 +20,18 @@ class Mesh : public Object{
 	bool load(const char* filename);
 
 	Point3D p;
+	bool loaded;
 	std::vector<Triangle*> faces;
 
+
+private:
+	bool Mesh::dataPass(FILE* file; std::vector<Point3D>& vertices, 
+		std::vector<Normal>& normals);
+	bool Mesh::facePass(FILE* file; std::vector<Point3D>& vertices, 
+		std::vector<Normal>& normals);
+	Vector3D maxs;
+	Vector3D mins;
+	int numTriangles;
 };
 
 
