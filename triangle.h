@@ -16,10 +16,11 @@ public:
 	virtual Triangle& operator=(const Triangle& rhs);
 	virtual ~Triangle();
 	*/
-
 	virtual Triangle* clone(void);
 	//virtual bool hit(const Ray& ray, double& t) = 0;
 	virtual bool hit(const Ray& ray, ShadeRec& sr);
+	void generateNormal(void);
+
 
 	Point3D v0, v1, v2;
 	Normal n;

@@ -16,7 +16,7 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 	v1(_v1),
 	v2(_v2)
 {
-	n = (v1 - v0) ^ (v2 - v0);
+	generateNormal();
 	n.normalize();
 }
 
@@ -98,6 +98,10 @@ bool Triangle::hit(const Ray& ray, ShadeRec& sr){
 		return false;
 }
 
+void Triangle::generateNormal(void){
+	n = (v1 - v0) ^ (v2 - v0);
+	n.normalize();
+}
 
 
 

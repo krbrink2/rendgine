@@ -102,8 +102,98 @@ bool Mesh::dataPass(FILE* file, std::vector<Point3D>& vertices,
 }
 
 
-bool Mesh::facePass(FILE* file, std::vector<Point3D>& vertices, 
+bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices, 
 	std::vector<Normal>& normals){
+
+	numTriangles = 0;
+
+	char line[2048];
+	while(fgets(line, sizeof(line), file)){
+		// Strip trailing newline
+		char* end = &line[strlen(line) - 1];
+		if(*end == '\n')
+			*end = '\0';
+
+		// Face
+		if(line[0] == 'f' &&* line[1] == ' '){
+			int numVerts = 0;
+            int numNorms = 0;
+            int normIndices[MAX_VERTICES_PER_FACE];
+            int vertIndices[MAX_VERTICES_PER_FACE];
+
+            int vertidx,texidx,normidx;
+            const char* cp = &line[2];
+            while (*cp == ' ') cp++;
+            while (sscanf(cp, "%d//%d", &vertidx, &normidx) == 2) {
+                if( numVerts >= MAX_VERTICES_PER_FACE || vertidx > (int)vertices.size() - 0 ||
+                    numNorms >= MAX_VERTICES_PER_FACE || normidx > (int)normals.size() - 0 )
+                    return false;
+                vertIndices[numVerts++] = vertidx;
+                normIndices[numNorms++] = normidx;
+                while (*cp && *cp != ' ') cp++;
+                while (*cp == ' ') cp++;
+            }
+            while (sscanf(cp, "%d/%d/%d", &vertidx, &texidx, &normidx) == 3) {
+                if( numVerts >= MAX_VERTICES_PER_FACE || vertidx > (int)vertices.size() - 0 ||
+                    numNorms >= MAX_VERTICES_PER_FACE || normidx > (int)normals.size() - 0 )
+                    return false;
+                vertIndices[numVerts++] = vertidx;
+                normIndices[numNorms++] = normidx;
+                while (*cp && *cp != ' ') cp++;
+                while (*cp == ' ') cp++;
+            }
+            while (sscanf(cp, "%d/%d", &vertidx, &texidx) == 2) {
+                if( numVerts >= MAX_VERTICES_PER_FACE || vertidx > (int)vertices.size() - 0 )
+                    return false;
+                vertIndices[numVerts++] = vertidx;
+                while (*cp && *cp != ' ') cp++;
+                while (*cp == ' ') cp++;
+            }
+            while (sscanf(cp, "%d", &vertidx) == 1) {
+                if( numVerts >= MAX_VERTICES_PER_FACE || vertidx > (int)vertices.size() - 0 )
+                    return false;
+                vertIndices[numVerts++] = vertidx;
+                while (*cp && *cp != ' ') cp++;
+                while (*cp == ' ') cp++;
+            }
+
+            if (*cp)
+                return false;
+
+            // world's most naive trianglization
+            for( int i = 1; i < numVerts - 1; i++ ) {
+            	/*
+                vertexData.push_back( vertices[vertIndices[0] - 1] );
+                vertexData.push_back( vertices[vertIndices[i] - 1] );               
+                vertexData.push_back( vertices[vertIndices[i+1] - 1] );*/
+
+                /*
+                // if we have a normal for each vertex, use them. Otherwise generate some
+                // ugly facety normals just so we have something.
+                if( numVerts == numNorms ) {
+                    normalData.push_back( normals[normIndices[0] - 1] );
+                    normalData.push_back( normals[normIndices[i] - 1] );
+                    normalData.push_back( normals[normIndices[i+1] - 1] );      
+                } else {
+                    float3 v1 = vertices[vertIndices[0] - 1] - vertices[vertIndices[i] - 1];
+                    float3 v2 = vertices[vertIndices[0] - 1] - vertices[vertIndices[i+1] - 1];
+                    float3 n = v1.cross(v2).getNormalized();
+
+                    normalData.push_back( n );
+                    normalData.push_back( n );
+                    normalData.push_back( n );
+                }*/
+
+                numTriangles++;
+		}
+
+
+
+	}
+
+
+
+
 
 
 
