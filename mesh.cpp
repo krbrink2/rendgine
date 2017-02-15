@@ -1,6 +1,4 @@
 #include "mesh.h"
-#include <fstream>
-#include <float.h>
 
 const int MAX_VERTICES_PER_FACE = 255;
 
@@ -60,7 +58,7 @@ void Mesh::clear(void){
 	numTriangles = 0;
 }
 
-bool Mesh::dataPass(const FILE* file; std::vector<Point3D>& vertices, \
+bool Mesh::dataPass(FILE* file, std::vector<Point3D>& vertices, 
 	std::vector<Normal>& normals){
 	maxs = Vector3D(-FLT_MAX);
 	mins = Vector3D(FLT_MAX);
@@ -74,13 +72,13 @@ bool Mesh::dataPass(const FILE* file; std::vector<Point3D>& vertices, \
 
 		// Strip trialing newline
 		char* end = &line[strlen(line) - 1];
-		if(*end == '\n ')
+		if(*end == '\n')
 			*end = '\0';
 
 		// Vertices
 		if(line[0] == 'v' && line[1] == ' '){
 			Point3D data;
-			if(sscanf(line, "v %f %f %f", %data.x, %data.y, %data.z) == 3){
+			if(sscanf(line, "v %lf %lf %lf", &data.x, &data.y, &data.z) == 3){
 				maxs.x = max(maxs.x, data.x);
 				mins.x = min(mins.x, data.x);
 				maxs.y = max(maxs.y, data.y);
@@ -95,7 +93,7 @@ bool Mesh::dataPass(const FILE* file; std::vector<Point3D>& vertices, \
 		// Normals
 		if(line[0] == 'v' && line[1] == 'n'){
 			Normal data;
-			if(sscanf(line, "vn %f %f %f", &data.x, &data.y, &data.z) == 3){
+			if(sscanf(line, "vn %lf %lf %lf", &data.x, &data.y, &data.z) == 3){
 				normals.push_back(data);
 			}
 		}
@@ -104,7 +102,7 @@ bool Mesh::dataPass(const FILE* file; std::vector<Point3D>& vertices, \
 }
 
 
-bool Mesh::facePass(const FILE* file; std::vector<Point3D>& vertices, \
+bool Mesh::facePass(FILE* file, std::vector<Point3D>& vertices, 
 	std::vector<Normal>& normals){
 
 

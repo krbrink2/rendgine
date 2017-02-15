@@ -6,6 +6,9 @@
 #include "Point3D.h"
 #include "Vector3D.h"
 #include <vector>
+#include <fstream>
+#include <float.h>
+#include <string.h>
 
 class Mesh : public Object{
 public:
@@ -25,9 +28,9 @@ public:
 
 
 private:
-	bool Mesh::dataPass(FILE* file; std::vector<Point3D>& vertices, 
+	bool dataPass(FILE* file, std::vector<Point3D>& vertices, 
 		std::vector<Normal>& normals);
-	bool Mesh::facePass(FILE* file; std::vector<Point3D>& vertices, 
+	bool facePass(FILE* file, std::vector<Point3D>& vertices, 
 		std::vector<Normal>& normals);
 	Vector3D maxs;
 	Vector3D mins;
