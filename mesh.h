@@ -9,13 +9,15 @@ class Mesh : public Object{
 	Mesh();
 	Mesh(const char* filename, Point3D _p);
 	Mesh(const Mesh& mesh);
-	operator=(constMesh& rhs);
+	Mesh& operator=(constMesh& rhs);
 	virtual ~Mesh();
 	Mesh* clone();
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
+	void clear(void);
+	bool load(const char* filename);
 
 	Point3D p;
-	vector<Triangle*> triangles;
+	vector<Triangle*> faces;
 
 }
 
