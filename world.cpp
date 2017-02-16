@@ -65,6 +65,9 @@ void World::build(void){
 	setViewCoords();
 	//addDefaultObjects();
 	addBunny();
+	//objects.push_back(new Sphere());
+	//objects[1]->sdr.c = RGBColor(1, 0, 0);
+	//addDefaultObjects();
 
     // Add lights
     Light l;

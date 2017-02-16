@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include <iostream>
 
 const int MAX_VERTICES_PER_FACE = 255;
 
@@ -8,7 +9,7 @@ Mesh::Mesh(): p(Point3D()), loaded(false), numTriangles(0) {
 }
 
 // ---- Constructor ----
-Mesh::Mesh(const char* filename, const Point3D _p) : p(_p), loaded(false) {
+Mesh::Mesh(const char* filename, const Point3D _p) : p(_p) {
 	sdr = Shader();
 	load(filename);
 
@@ -43,8 +44,13 @@ Mesh* Mesh::clone(){
 }
 
 bool Mesh::hit(const Ray& ray, ShadeRec& sr){
-	//@TODO
-	return false;
+	for(size_t i = 0; i < faces.size(); i++){
+		faces[i]->hit(ray, sr);
+	}
+	if(sr.hitObject && sr.hitNormal.z > 0){
+		 return sr.hitObject;
+	}
+	return sr.hitObject;
 }
 
 // Helper function
@@ -99,6 +105,7 @@ bool Mesh::dataPass(FILE* file, std::vector<Point3D>& vertices,
 			}
 		}
 	}
+	//std::cout << maxs.x << " " << maxs.y << " " << maxs.z << std::endl;
 	return true;
 }
 
@@ -194,7 +201,7 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
             }
 		}
 	}
-	return false;
+	return true;
 }
 
 
@@ -223,7 +230,7 @@ bool Mesh::load(const char* filename){
 	loaded = true;
 
 
-	return false;
+	return true;
 }
 
 
