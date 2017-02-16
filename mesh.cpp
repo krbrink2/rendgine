@@ -9,7 +9,8 @@ Mesh::Mesh(): p(Point3D()), loaded(false), numTriangles(0) {
 
 // ---- Constructor ----
 Mesh::Mesh(const char* filename, const Point3D _p) : p(_p), loaded(false) {
-	//@TODO make this load
+	sdr = Shader();
+	load(filename);
 
 }
 

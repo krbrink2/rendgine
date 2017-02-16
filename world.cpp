@@ -2,13 +2,11 @@
 #include <math.h>
 #include <assert.h>
 #include <iostream>
-#include "controls.h"
 
 using namespace std;
 
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
-extern void addDefaultObjects(void);
 
 // ---- Constructor ----
 World::World(void){
@@ -41,11 +39,7 @@ World& World::operator=(const World& w){
 
 // ---- Destuctor ----
 World::~World(){
-	for(size_t i = 0; i < objects.size(); i++){
-		delete objects[i];
-		objects[i] = NULL;
-	}
-	objects.clear();
+	clearObjects();
 }
 
 // Function name:		build
@@ -69,7 +63,8 @@ void World::build(void){
 	orthographic = ORTHO;
 
 	setViewCoords();
-	addDefaultObjects();
+	//addDefaultObjects();
+	addBunny();
 
     // Add lights
     Light l;
@@ -79,12 +74,21 @@ void World::build(void){
 	lights.push_back(l); 
 }
 
+void World::clearObjects(void){
+	for(size_t i = 0; i < objects.size(); i++){
+		delete objects[i];
+		objects[i] = NULL;
+	}
+	objects.clear();
+}
+
 // Function name:		addDefaultObjects
 // Function purpose:	Puts some triangles and spheres into scene
 // Parameters:			None
 // Return value:		None
 // Any other output:	None
 void World::addDefaultObjects(void){
+	clearObjects();
 	// Plane
 	Normal n(-1, 1, 5.2);
 	n.normalize();
@@ -109,6 +113,19 @@ void World::addDefaultObjects(void){
 		Point3D(0, 15, -10)));
 	objects[4]->sdr.c = RGBColor(255, 0, 255);
 }
+
+void World::addBunny(void){
+	clearObjects();
+	const char bunny[128] = "bunny.obj";
+	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
+	bunnyPtr->sdr.c = RGBColor(226, 114, 91);
+	if(!bunnyPtr->loaded){
+		cout << "Not loaded!!!" << endl;
+	}
+	else
+		objects.push_back(bunnyPtr);
+}
+
 
 // Function name:		setViewCoords
 // Function purpose:	Sets camera's orthonormal basis

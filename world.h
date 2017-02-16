@@ -2,7 +2,9 @@
 #define WORLD_H
 
 #include <vector>
+#include "controls.h"
 #include "light.h"
+#include "mesh.h"
 #include "object.h"
 #include "plane.h"
 #include "shaderec.h"
@@ -37,6 +39,8 @@ public:
 
 	void build(void);
 	void addDefaultObjects(void);
+	void addBunny(void);
+	void clearObjects();
 	void setViewCoords(void);
 	void renderScene(void) const;
 	RGBColor computePixelOrtho(const int x, const int y) const;
