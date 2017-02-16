@@ -15,11 +15,11 @@ class ShadeRec{
 		double t;
 		Point3D hitPoint;
 		Normal hitNormal;
-		RGBColor hitColor;
+		//RGBColor hitColor;
 		Shader* hitShader;
 
 		ShadeRec();									// Constructor
-		ShadeRec(const RGBColor& c);
+		//ShadeRec(const RGBColor& c);
 };
 
 

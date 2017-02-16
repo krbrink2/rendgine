@@ -241,7 +241,7 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			// Create ray
 			Ray ray(o, d);
 			// Trace ray
-			ShadeRec sr(backgroundColor);
+			ShadeRec sr;
 			traceRay(ray, sr);
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr.hitNormal);
@@ -324,7 +324,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 			// Create ray
 			Ray ray(o, d);
 			// Trace ray
-			ShadeRec sr(backgroundColor);
+			ShadeRec sr;
 			traceRay(ray, sr);
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr.hitNormal);
