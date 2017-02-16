@@ -21,6 +21,7 @@ public:
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
 	void clear(void);
 	bool load(const char* filename);
+	void setShader(const Shader& _sdr);
 
 	Point3D p;
 	bool loaded;

@@ -7,8 +7,9 @@ Triangle::Triangle():
 	v0(0, 0, 0),
 	v1(0, 0, 1),
 	v2(1, 0, 0),
-	n(0, 1, 0)
-{}
+	n(0, 1, 0){
+	sdr = Shader();
+}
 
 Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 	Object(),
@@ -18,6 +19,7 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 {
 	generateNormal();
 	n.normalize();
+	sdr = Shader();
 }
 
 // Function name:		clone

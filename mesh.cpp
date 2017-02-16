@@ -233,6 +233,13 @@ bool Mesh::load(const char* filename){
 	return true;
 }
 
+void Mesh::setShader(const Shader& _sdr){
+	sdr  = _sdr;
+	for(size_t i = 0; i < faces.size(); i++){
+		faces[i]->sdr = _sdr;
+	}
+}
+
 
 
 

@@ -121,7 +121,9 @@ void World::addBunny(void){
 	clearObjects();
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
-	bunnyPtr->sdr.c = RGBColor(226, 114, 91);
+	Shader sdr;
+	sdr.c = RGBColor(226, 114, 91);
+	bunnyPtr->setShader(sdr);
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 	}
