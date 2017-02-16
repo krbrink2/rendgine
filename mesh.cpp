@@ -115,10 +115,10 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
 			*end = '\0';
 
 		// Face
-		if(line[0] == 'f' &&* line[1] == ' '){
+		if(line[0] == 'f' && line[1] == ' '){
 			int numVerts = 0;
             int numNorms = 0;
-            int normIndices[MAX_VERTICES_PER_FACE];
+            //int normIndices[MAX_VERTICES_PER_FACE];
             int vertIndices[MAX_VERTICES_PER_FACE];
 
             int vertidx,texidx,normidx;
@@ -129,7 +129,7 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
                     numNorms >= MAX_VERTICES_PER_FACE || normidx > (int)normals.size() - 0 )
                     return false;
                 vertIndices[numVerts++] = vertidx;
-                normIndices[numNorms++] = normidx;
+                //normIndices[numNorms++] = normidx;
                 while (*cp && *cp != ' ') cp++;
                 while (*cp == ' ') cp++;
             }
@@ -138,7 +138,7 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
                     numNorms >= MAX_VERTICES_PER_FACE || normidx > (int)normals.size() - 0 )
                     return false;
                 vertIndices[numVerts++] = vertidx;
-                normIndices[numNorms++] = normidx;
+                //normIndices[numNorms++] = normidx;
                 while (*cp && *cp != ' ') cp++;
                 while (*cp == ' ') cp++;
             }
@@ -190,18 +190,9 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
                 faces.back()->generateNormal();
 
                 numTriangles++;
+            }
 		}
-
-
-
 	}
-
-
-
-
-
-
-
 	return false;
 }
 
