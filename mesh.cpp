@@ -166,6 +166,10 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
                 vertexData.push_back( vertices[vertIndices[0] - 1] );
                 vertexData.push_back( vertices[vertIndices[i] - 1] );               
                 vertexData.push_back( vertices[vertIndices[i+1] - 1] );*/
+                faces.push_back(new Triangle(	vertices[vertIndices[0] - 1],
+                								vertices[vertIndices[i] - 1],
+                								vertices[vertIndices[i+1] - 1]));
+
 
                 /*
                 // if we have a normal for each vertex, use them. Otherwise generate some
@@ -183,6 +187,7 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
                     normalData.push_back( n );
                     normalData.push_back( n );
                 }*/
+                faces.back()->generateNormal();
 
                 numTriangles++;
 		}
