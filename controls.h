@@ -5,8 +5,8 @@
 */
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(9)
-#define SQRT_NUM_SAMPLES	(3)
+#define NUM_SAMPLES 		(1)
+#define SQRT_NUM_SAMPLES	(1)
 // Resolution
 #define	HRES 				(500)	// 1366,	1920
 #define VRES 				(500)	// 768,		1080

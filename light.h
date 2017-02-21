@@ -10,7 +10,7 @@ public:
 	//Light(const Light& l);
 	//virtual Light& operator=(const Light& rhs);
 	//~Light();
-	RGBColor getIrradiance(Point3D p) = 0;
+	virtual RGBColor getIrradiance(Point3D p) = 0;
 
 	RGBColor color;
 

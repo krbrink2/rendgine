@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "controls.h"
+#include "dirlight.h"
 #include "light.h"
 #include "mesh.h"
 #include "object.h"
