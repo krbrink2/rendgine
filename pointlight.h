@@ -5,7 +5,9 @@
 class PointLight: public Light{
 public:
 	PointLight();
-	RGBColor getIrradiance(Point3D p);
+	PointLight(const Point3D& p);
+	RGBColor getIrradiance(const Point3D& p);
+	Vector3D getDirection(const Point3D& p);
 	Point3D point;
 };
 

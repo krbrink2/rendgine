@@ -1,5 +1,6 @@
 #include "shader.h"
 #include "world.h"
+#include "shaderec.h"
 
 extern World* worldPtr;
 
@@ -29,7 +30,7 @@ Shader::~Shader(){}
 //		n:			Normal
 // Return value:		Computed value
 // Any other output:	None
-RGBColor Shader::shade(const World& w, const Normal& N){
+RGBColor Shader::shade(const World& w, const ShadeRec& sr){
 	// Shader already has material + color.
 	// BRDF also needs N, E, and L.
 	// Pass in N.
@@ -40,9 +41,9 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 
 	for(size_t i = 0; i < worldPtr->lights.size(); i++){
 		// May want to put this in another function.
-		Vector3D L = -(worldPtr->lights[i].direction);
-		double NDotL = clamp((N * L), 0, 1);
-		accum += c * NDotL;
+		Vector3D L = worldPtr->lights[i]->getDirection(sr.hitPoint);
+		double NDotL = clamp((sr.hitNormal * L), 0, 1);
+		accum += c * worldPtr->lights[i]->color * NDotL;
 	}
 
 	return accum;
@@ -55,8 +56,8 @@ RGBColor Shader::shade(const World& w, const Normal& N){
 // Parameters:			Same as shade function.
 // Return value:		Computed shader value
 // Any other output:	None
-RGBColor Shader::operator()(const World& w, const Normal& N){
-	return shade(w, N);
+RGBColor Shader::operator()(const World& w, const ShadeRec& sr){
+	return shade(w, sr);
 }
 
 

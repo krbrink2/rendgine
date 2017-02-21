@@ -63,18 +63,20 @@ void World::build(void){
 	orthographic = ORTHO;
 
 	setViewCoords();
-	//addDefaultObjects();
-	addBunny();
+	addDefaultObjects();
+	//addBunny();
 	//objects.push_back(new Sphere());
 	//objects[1]->sdr.c = RGBColor(1, 0, 0);
 	//addDefaultObjects();
 
     // Add lights
-    DirLight l;
+ /*   DirLight l;
     Vector3D dir(1, 0, -1);
 	dir.normalize();
 	l.direction = dir;
-	lights.push_back(l); 
+	lights.push_back(l); */
+
+	lights.push_back(new DirLight(Vector3D(0, 0, -1)));
 }
 
 void World::clearObjects(void){
@@ -83,6 +85,11 @@ void World::clearObjects(void){
 		objects[i] = NULL;
 	}
 	objects.clear();
+	for(size_t i = 0; i < lights.size(); i++){
+		delete lights[i];
+		lights[i] = NULL;
+	}
+	lights.clear();
 }
 
 // Function name:		addDefaultObjects
@@ -246,7 +253,7 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			ShadeRec sr;
 			traceRay(ray, sr);
 			if(sr.hitObject){
-				accum += sr.hitShader->shade(*this, sr.hitNormal);
+				accum += sr.hitShader->shade(*this, sr);
 			} else{
 				accum += backgroundColor;
 			}
@@ -329,7 +336,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 			ShadeRec sr;
 			traceRay(ray, sr);
 			if(sr.hitObject){
-				accum += sr.hitShader->shade(*this, sr.hitNormal);
+				accum += sr.hitShader->shade(*this, sr);
 			} else{
 				accum += backgroundColor;
 			}

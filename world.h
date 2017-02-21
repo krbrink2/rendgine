@@ -24,7 +24,7 @@ public:
 	int hres, vres;
 	RGBColor backgroundColor;
 	std::vector<Object*> objects;
-	std::vector<DirLight> lights;
+	std::vector<Light*> lights;
 	Point3D E;
 	Point3D lookat;
 	Vector3D up;

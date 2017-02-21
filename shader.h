@@ -6,6 +6,7 @@
 // ---- Forward decalrations ----
 
 class World;
+class ShadeRec;
 
 // ---- Class declaration ----
 class Shader{
@@ -15,8 +16,8 @@ public:
 	Shader& operator=(const Shader& rhs);
 	~Shader();
 
-	virtual RGBColor shade(const World& w, const Normal& N);
-	virtual RGBColor operator()(const World& w, const Normal& N);
+	virtual RGBColor shade(const World& w, const ShadeRec& sr);
+	virtual RGBColor operator()(const World& w, const ShadeRec& sr);
 
 	RGBColor c;
 

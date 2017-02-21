@@ -7,10 +7,9 @@
 class Light{
 public:
 	Light();
-	//Light(const Light& l);
-	//virtual Light& operator=(const Light& rhs);
-	//~Light();
-	virtual RGBColor getIrradiance(Point3D p) = 0;
+	virtual ~Light();
+	virtual RGBColor getIrradiance(const Point3D& p) = 0;
+	virtual Vector3D getDirection(const Point3D& p) = 0;
 
 	RGBColor color;
 
