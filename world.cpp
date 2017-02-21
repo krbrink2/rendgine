@@ -70,10 +70,10 @@ void World::build(void){
 	//addDefaultObjects();
 
     // Add lights
-    Light l;
+    DirLight l;
     Vector3D dir(1, 0, -1);
 	dir.normalize();
-	l.dir = dir;
+	l.direction = dir;
 	lights.push_back(l); 
 }
 

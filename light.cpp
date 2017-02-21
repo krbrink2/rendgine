@@ -1,10 +1,11 @@
 #include "light.h"
 
 // ---- Default constructor ----
-Light::Light(){
-	
-}
+Light::Light():
+	color(RGBColor(255, 255, 255))
+{}
 
+/*
 // ---- Copy Constructor ----
 Light::Light(const Light& l):
 	c(l.c),
@@ -31,6 +32,7 @@ Vector3D Light::getDirection(Point3D pnt){
 	vect.normalize();
 	return vect;
 }
+*/
 
 // Under construction below...
 /*
@@ -44,6 +46,6 @@ bool Light::testPath(Point3D pnt){
 // Parameters:			Value to set pnt as
 // Return value:		None
 // Any other output:	None
-void Light::setPoint(Point3D pnt){
+/*void Light::setPoint(Point3D pnt){
 	p = pnt;
-}
+}*/
