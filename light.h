@@ -6,21 +6,13 @@
 
 class Light{
 public:
-	RGBColor c;
-
 	Light();
-	Light(const Light& l);
-	virtual Light& operator=(const Light& rhs);
-	~Light();
+	//Light(const Light& l);
+	//virtual Light& operator=(const Light& rhs);
+	//~Light();
+	RGBColor getIrradiance(Point3D p) = 0;
 
-	virtual Vector3D getDirection(Point3D pnt);
-	//virtual bool testPath(Point3D pnt);
-	virtual void setPoint(Point3D pnt);
-
-	Vector3D dir;
-
-protected:
-	Point3D p;
+	RGBColor color;
 
 
 };
