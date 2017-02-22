@@ -23,6 +23,7 @@ RGBColor DirLight::getIrradiance(const Point3D& p){
 	Ray ray;
 	ray.o = p;
 	ray.d = direction;
+	ray.d.normalize();
 	ShadeRec sr;
 	worldPtr->traceRay(ray, sr);
 

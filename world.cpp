@@ -77,8 +77,9 @@ void World::build(void){
 	lights.push_back(l); */
 
 	//@luces
-	//lights.push_back(new PointLight(Point3D(-1, 7, 1)));
+	lights.push_back(new PointLight(Point3D(-1, 7, 1)));
 	lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
+	lights[1]->color = RGBColor(40, 30, 30);
 	
 }
 

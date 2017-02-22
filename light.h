@@ -9,6 +9,9 @@
 // Forward declarations
 class World;
 
+// Globals
+extern World* worldPtr;
+
 class Light{
 public:
 	Light();
