@@ -76,7 +76,7 @@ void World::build(void){
 	l.direction = dir;
 	lights.push_back(l); */
 
-	lights.push_back(new DirLight(Vector3D(0, 0, -1)));
+	lights.push_back(new DirLight(Vector3D(-1, 5, 1)));
 }
 
 void World::clearObjects(void){
@@ -106,7 +106,7 @@ void World::addDefaultObjects(void){
 	objects[0]->sdr.c = RGBColor(255, 0, 0);
 	// Sphere 0
 	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
-	objects[1]->sdr.c = RGBColor(0, 255, 0);	
+	objects[1]->sdr.c = RGBColor(50, 155, 0);	
 	// Spehre 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
 	objects[2]->sdr.c = RGBColor(0, 0, 255);	

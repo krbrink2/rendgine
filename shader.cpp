@@ -43,7 +43,7 @@ RGBColor Shader::shade(const World& w, const ShadeRec& sr){
 		// May want to put this in another function.
 		Vector3D L = worldPtr->lights[i]->getDirection(sr.hitPoint);
 		double NDotL = clamp((sr.hitNormal * L), 0, 1);
-		accum += c * worldPtr->lights[i]->color * NDotL;
+		accum += c * NDotL; // * worldPtr->lights[i]->color;
 	}
 
 	return accum;

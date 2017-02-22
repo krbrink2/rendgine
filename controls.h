@@ -8,17 +8,29 @@
 #define NUM_SAMPLES 		(1)
 #define SQRT_NUM_SAMPLES	(1)
 // Resolution
-#define	HRES 				(500)	// 1366,	1920
-#define VRES 				(500)	// 768,		1080
-#define S 					(.002)
+#define	HRES 				(5000)	// 1366,	1920
+#define VRES 				(5000)	// 768,		1080
+#define S 					(.025)
 // Camera
 #define	ORTHO				(false)
-#define EYE					Point3D(0, .15, .8)
+#define EYE					Point3D(0, 0, 10)
 #define LOOKAT 				Point3D(-.025, .065, 0)
 #define UP 					Vector3D(0, 1, 0)
-#define	D 					(3)
+#define	D 					(7)
 
-// Good for perspec comparison for ortho: E 5, LOOKAT 0 0 -10, D 15
+/* Bunny:
+S 		.002
+EYE 	0 .15 .8
+LOOKAT 	-.025, .065, 0
+D 		3
+*/
+
+/* Defaults:
+S 		
+EYE
+LOOKAT
+D
+*/
 
 
 

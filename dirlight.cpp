@@ -19,6 +19,5 @@ RGBColor DirLight::getIrradiance(const Point3D& p){
 }
 
 Vector3D DirLight::getDirection(const Point3D& p){
-	//Vector3D foo = -direction;
-	return -direction;//foo;
+	return direction;
 }
