@@ -1,6 +1,7 @@
 #include "shader.h"
 #include "world.h"
 #include "shaderec.h"
+#include <iostream>
 
 extern World* worldPtr;
 
@@ -43,13 +44,15 @@ RGBColor Shader::shade(const World& w, const ShadeRec& sr){
 		// May want to put this in another function.
 		Vector3D L = worldPtr->lights[i]->getDirection(sr.hitPoint);
 		double NDotL = clamp((sr.hitNormal * L), 0, 1);
-		accum += c * NDotL * worldPtr->lights[i]->color;
-		accum /= 256;
+		accum += (c * NDotL * worldPtr->lights[i]->color)/256;
 	}
 
-	return accum;
+	// Clamp color
+	accum.r = clamp(accum.r, 0, 255);
+	accum.g = clamp(accum.g, 0, 255);
+	accum.b = clamp(accum.b, 0, 255);
 
-	
+	return accum;
 }
 
 // Function name:		"()" operator
