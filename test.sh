@@ -1,4 +1,4 @@
 #!/bin/bash
-make && ./rendgine && eog image.png
+make && ./rendgine && xdg-open image.png
 
 

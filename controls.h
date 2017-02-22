@@ -5,11 +5,11 @@
 */
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(1)
-#define SQRT_NUM_SAMPLES	(1)
+#define NUM_SAMPLES 		(4)
+#define SQRT_NUM_SAMPLES	(2)
 // Resolution
-#define	HRES 				(5000)	// 1366,	1920
-#define VRES 				(5000)	// 768,		1080
+#define	HRES 				(500)	// 1366,	1920
+#define VRES 				(500)	// 768,		1080
 #define S 					(.025)
 // Camera
 #define	ORTHO				(false)
