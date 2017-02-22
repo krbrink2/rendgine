@@ -76,8 +76,9 @@ void World::build(void){
 	l.direction = dir;
 	lights.push_back(l); */
 
-	lights.push_back(new PointLight(Point3D(-1, 7, 1)));
-	//lights.push_back(new DirLight(Vector3D(0, 0, 1)));
+	//@luces
+	//lights.push_back(new PointLight(Point3D(-1, 7, 1)));
+	lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	
 }
 

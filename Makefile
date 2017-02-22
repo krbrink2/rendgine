@@ -25,7 +25,7 @@ rendgine.o: rendgine.cpp $(HEADERS)
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)
 
-light.o: light.cpp light.h utils.h
+light.o: light.cpp light.h shaderec.h utils.h
 	$(CC) -c light.cpp $(CFLAGS)
 
 lodepng.o: lodepng.cpp lodepng.h

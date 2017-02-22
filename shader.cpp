@@ -44,7 +44,7 @@ RGBColor Shader::shade(const World& w, const ShadeRec& sr){
 		// May want to put this in another function.
 		Vector3D L = worldPtr->lights[i]->getDirection(sr.hitPoint);
 		double NDotL = clamp((sr.hitNormal * L), 0, 1);
-		accum += (c * NDotL * worldPtr->lights[i]->color)/256;
+		accum += (c * NDotL * worldPtr->lights[i]->getIrradiance(sr.hitPoint))/256;
 	}
 
 	// Clamp color

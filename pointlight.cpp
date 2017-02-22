@@ -1,4 +1,5 @@
 #include "pointlight.h"
+#include "world.h"
 
 // ---- Default constructor ----
 PointLight::PointLight():
@@ -13,6 +14,8 @@ PointLight::PointLight(const Point3D& p):
 {}
 
 RGBColor PointLight::getIrradiance(const Point3D& p){
+	// Check to see if this point is in shadow.
+
 	return color;
 }
 

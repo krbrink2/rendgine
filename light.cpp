@@ -1,4 +1,5 @@
 #include "light.h"
+#include "world.h"
 
 // ---- Default constructor ----
 Light::Light():

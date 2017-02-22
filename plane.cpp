@@ -42,6 +42,12 @@ bool Plane::hit(const Ray& ray, ShadeRec& sr){
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = n;
 		sr.hitShader = &sdr;
+
+		// Push hitPoint away from surface slightly
+		sr.hitPoint.x += sr.hitNormal.x * .000001;
+		sr.hitPoint.y += sr.hitNormal.y * .000001;
+		sr.hitPoint.z += sr.hitNormal.z * .000001;
+		
 		return true;
 	}
 	else

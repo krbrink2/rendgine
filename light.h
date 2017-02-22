@@ -1,8 +1,13 @@
 #ifndef LIGHT_H
 #define LIGHT_H
+#include "shaderec.h"
 #include "Point3D.h"
+#include "Ray.h"
 #include "RGBColor.h"
 #include "Vector3D.h"
+
+// Forward declarations
+class World;
 
 class Light{
 public:
