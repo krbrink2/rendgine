@@ -8,6 +8,9 @@
 class World;
 class ShadeRec;
 
+// ---- Globals ----
+extern World* worldPtr;
+
 // ---- Class declaration ----
 class Shader{
 public:

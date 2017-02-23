@@ -3,11 +3,11 @@ CFLAGS = -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
 TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = dirlight.o light.o lodepng.o mesh.o object.o plane.o pointlight.o shader.o \
+OBJS = ashikhmin.o dirlight.o light.o lodepng.o mesh.o object.o plane.o pointlight.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  dirlight.h controls.h light.h lodepng.h mesh.h object.h plane.h pointlight.h \
+HEADERS =  ashikhmin.h dirlight.h controls.h light.h lodepng.h mesh.h object.h plane.h pointlight.h \
 shader.h shaderec.h sphere.h triangle.h world.h \
 Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
@@ -21,6 +21,9 @@ $(TARGET): rendgine.o $(OBJS)
 
 rendgine.o: rendgine.cpp $(HEADERS)
 	$(CC) -c rendgine.cpp $(CFLAGS)
+
+ashikhmin.o: ashikhmin.cpp ashikhin.h shader.h world.h shaderec.h $(UTILS)
+	$(CC) -c ashikhmin.cpp $(CFLAGS)
 
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)
