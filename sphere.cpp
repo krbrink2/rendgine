@@ -5,14 +5,18 @@
 using namespace std;
 
 // ---- Default Constructor ----
-Sphere::Sphere(): r(1), c(Point3D()){
-	sdr = Shader();
-}
+Sphere::Sphere():
+	Object(),
+	r(1),
+	c(Point3D())
+{}
 
 // ---- Constructor ----
-Sphere::Sphere(double _r, Point3D _c): r(_r), c(_c){
-	sdr = Shader();
-}
+Sphere::Sphere(double _r, Point3D _c):
+	Object(),
+	r(_r),
+	c(_c)
+{}
 
 // Function name:		clone
 // Function purpose:	Allocated identical sphere
@@ -62,7 +66,7 @@ bool Sphere::hit(const Ray& ray, ShadeRec& sr){
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = sr.hitPoint - c;
 		sr.hitNormal.normalize();
-		sr.hitShader = &sdr;
+		sr.hitShader = sdr;
 
 		// Push hitPoint away from surface slightly
 		sr.hitPoint.x += sr.hitNormal.x * .000001;

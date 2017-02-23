@@ -64,4 +64,6 @@ RGBColor Shader::operator()(const World& w, const ShadeRec& sr){
 	return shade(w, sr);
 }
 
-
+Shader* Shader::clone() const{
+	return new Shader(*this);
+}

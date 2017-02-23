@@ -4,27 +4,36 @@
 const int MAX_VERTICES_PER_FACE = 255;
 
 // ---- Constructor ----
-Mesh::Mesh(): p(Point3D()), loaded(false), numTriangles(0) {
-	sdr = Shader();
-}
+Mesh::Mesh():
+	Object(),
+	p(Point3D()),
+	loaded(false),
+	numTriangles(0)
+{}
 
 // ---- Constructor ----
-Mesh::Mesh(const char* filename, const Point3D _p) : p(_p) {
-	sdr = Shader();
+Mesh::Mesh(const char* filename, const Point3D _p):
+	Object(),
+	p(_p)
+{
 	load(filename);
 
 }
 
 // ---- Copy Constructor ----
-Mesh::Mesh(const Mesh& mesh): Object(mesh), p(mesh.p), loaded(mesh.loaded), numTriangles(mesh.numTriangles) {
-	sdr = mesh.sdr;
+Mesh::Mesh(const Mesh& mesh):
+	Object(mesh),
+	p(mesh.p),
+	loaded(mesh.loaded),
+	numTriangles(mesh.numTriangles) 
+{
 	for(size_t i = 0; i < mesh.faces.size(); i++)
 		faces.push_back(mesh.faces[i]->clone());
 }
 
 // ---- Assignment operator ----
 Mesh& Mesh::operator=(const Mesh& rhs){
-	sdr = rhs.sdr;
+	sdr = rhs.sdr->clone();
 	p = rhs.p;
 	loaded = rhs.loaded;
 	numTriangles = rhs.numTriangles;
@@ -37,6 +46,7 @@ Mesh& Mesh::operator=(const Mesh& rhs){
 // ---- Destructor ----
 Mesh::~Mesh(){
 	clear();
+	delete sdr;
 }
 
 Mesh* Mesh::clone(){
@@ -234,9 +244,9 @@ bool Mesh::load(const char* filename){
 }
 
 void Mesh::setShader(const Shader& _sdr){
-	sdr  = _sdr;
+	sdr  = _sdr.clone();
 	for(size_t i = 0; i < faces.size(); i++){
-		faces[i]->sdr = _sdr;
+		faces[i]->sdr = _sdr.clone();
 	}
 }
 

@@ -17,10 +17,11 @@ public:
 	Shader();
 	Shader(const Shader& sdr);
 	Shader& operator=(const Shader& rhs);
-	~Shader();
+	virtual ~Shader();
 
 	virtual RGBColor shade(const World& w, const ShadeRec& sr);
 	virtual RGBColor operator()(const World& w, const ShadeRec& sr);
+	virtual Shader* clone() const;
 
 	RGBColor c;
 

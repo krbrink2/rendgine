@@ -8,7 +8,6 @@ Triangle::Triangle():
 	v1(0, 0, 1),
 	v2(1, 0, 0),
 	n(0, 1, 0){
-	sdr = Shader();
 }
 
 Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
@@ -19,7 +18,6 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 {
 	generateNormal();
 	n.normalize();
-	sdr = Shader();
 }
 
 // Function name:		clone
@@ -88,7 +86,7 @@ bool Triangle::hit(const Ray& ray, ShadeRec& sr){
 		sr.t = newt;
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = this->n;
-		sr.hitShader = &sdr;
+		sr.hitShader = sdr;
 
 		// Push hitPoint away from surface slightly
 		sr.hitPoint.x += sr.hitNormal.x * .000001;

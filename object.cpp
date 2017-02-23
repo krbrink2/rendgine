@@ -2,13 +2,16 @@
 
 // ---- Default constructor ----
 Object::Object():
-	sdr()
+	sdr(new Shader())
 {}
 
 // ---- Copy constructor ----
 Object::Object(const Object& obj):
-	sdr(obj.sdr)
+	sdr(obj.sdr->clone())
 {}
 
 // ---- Destructor ----
-Object::~Object(){}
+Object::~Object(){
+	if(sdr != NULL)
+		delete sdr;
+}

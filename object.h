@@ -15,7 +15,7 @@ public:
 	//virtual bool hit(const Ray& ray, double& t) = 0;
 	virtual bool hit(const Ray& ray, ShadeRec& sr) = 0;
 
-	Shader sdr;
+	Shader* sdr;
 
 protected:
 

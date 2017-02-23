@@ -3,14 +3,18 @@
 #include "plane.h"
 
 // ---- Default Constructor ----
-Plane::Plane(): a(Point3D()), n(Normal()) {
-	sdr = Shader();
-}
+Plane::Plane():
+	Object(),
+	a(Point3D()),
+	n(Normal())
+{}
 
 // ---- Constructor ----
-Plane::Plane(Point3D _a, Normal _n): a(_a), n(_n) {
-	sdr = Shader();
-}
+Plane::Plane(Point3D _a, Normal _n):
+	Object(),
+	a(_a),
+	n(_n)
+{}
 
 // Function name:		clone
 // Function purpose:	Allocate identical sphere
@@ -41,7 +45,7 @@ bool Plane::hit(const Ray& ray, ShadeRec& sr){
 		sr.t = newt;
 		sr.hitPoint = ray.o + newt*ray.d;
 		sr.hitNormal = n;
-		sr.hitShader = &sdr;
+		sr.hitShader = sdr;
 
 		// Push hitPoint away from surface slightly
 		sr.hitPoint.x += sr.hitNormal.x * .000001;

@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <vector>
+#include "ashikhmin.h"
 #include "controls.h"
 #include "dirlight.h"
 #include "light.h"
