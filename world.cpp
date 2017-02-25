@@ -114,6 +114,10 @@ void World::addDefaultObjects(void){
 	objects[1]->sdr->c = RGBColor(50, 155, 0);	
 	Ashikhmin ash;
 	objects[1]->sdr = ash.clone();
+	Ashikhmin* ashPtr = (Ashikhmin*)objects[1]->sdr;
+	ashPtr->kdiff = 1.0;
+	ashPtr->kspec = 0.0;
+
 	// Spehre 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
 	objects[2]->sdr->c = RGBColor(0, 0, 255);	

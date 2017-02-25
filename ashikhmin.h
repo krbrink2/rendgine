@@ -13,8 +13,9 @@ public:
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	Ashikhmin* clone();
 
-private:
 	int exp;
+	double kdiff, kspec;
+private:
 
 };
 
