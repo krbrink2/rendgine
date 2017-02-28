@@ -13,8 +13,9 @@
 #define S 					(.025)
 // Camera
 #define	ORTHO				(false)
-#define EYE					Point3D(0, 0, 10)
-#define LOOKAT 				Point3D(-.025, .065, 0)
+#define EYE					Point3D(0, 1, 5)
+#define LOOKAT 				Point3D(0, 0, 0)
+//#define LOOKAT 				Point3D(-.025, .065, 0)
 #define UP 					Vector3D(0, 1, 0)
 #define	D 					(7)
 

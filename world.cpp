@@ -62,24 +62,22 @@ void World::build(void){
 	d = D;
 	orthographic = ORTHO;
 
+	// Add objects
 	setViewCoords();
-	addDefaultObjects();
-	//addBunny();
-	//objects.push_back(new Sphere());
-	//objects[1]->sdr.c = RGBColor(1, 0, 0);
 	//addDefaultObjects();
-
-    // Add lights
- /*   DirLight l;
-    Vector3D dir(1, 0, -1);
-	dir.normalize();
-	l.direction = dir;
-	lights.push_back(l); */
+	//addBunny();
+	objects.push_back(new Sphere(1, Point3D(0, 0, 0)));
+	Ashikhmin ash;
+	objects[0]->sdr = ash.clone();
+	Ashikhmin* ashPtr = (Ashikhmin*)objects[0]->sdr;
+	ashPtr->kdiff = 1;
+	ashPtr->kspec = 1;
+	objects[0]->sdr->c = RGBColor(200, 125, 20);
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(-1, 7, 1)));
-	lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
-	lights[1]->color = RGBColor(40, 30, 30);
+	lights.push_back(new PointLight(Point3D(0, 3, 0)));
+	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
+	//lights[1]->color = RGBColor(40, 30, 30);
 	
 }
 
@@ -110,15 +108,15 @@ void World::addDefaultObjects(void){
 	objects[0]->sdr->c = RGBColor(255, 0, 0);
 
 	// Sphere 0
-	objects.push_back(new Sphere(5, Point3D(0, 0, -10)));
+	objects.push_back(new Sphere(5, Point3D(0, 0, 0)));
 	objects[1]->sdr->c = RGBColor(50, 155, 0);	
 	Ashikhmin ash;
 	objects[1]->sdr = ash.clone();
 	Ashikhmin* ashPtr = (Ashikhmin*)objects[1]->sdr;
-	ashPtr->kdiff = 1.0;
-	ashPtr->kspec = 0.0;
+	ashPtr->kdiff = .8;
+	ashPtr->kspec = .1;
 
-	// Spehre 1
+	// Sphere 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
 	objects[2]->sdr->c = RGBColor(0, 0, 255);	
 
