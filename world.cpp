@@ -65,18 +65,16 @@ void World::build(void){
 	// Add objects
 	setViewCoords();
 	//addDefaultObjects();
-	//addBunny();
-	objects.push_back(new Sphere(1, Point3D(0, 0, 0)));
-	Ashikhmin ash;
-	objects[0]->sdr = ash.clone();
-	Ashikhmin* ashPtr = (Ashikhmin*)objects[0]->sdr;
-	ashPtr->kdiff = .5;
-	ashPtr->kspec = .5;
-	objects[0]->sdr->c = RGBColor(200, 125, 20);
+	addBunny();
+	// objects.push_back(new Sphere(1, Point3D(0, 0, 0)));
+	// Ashikhmin ash;
+	// ash.kdiff = ash.kspec = .5;
+	// ash.c = RGBColor(255, 100, 100);
+	// objects.back()->sdr = ash.clone();
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(0, 100, 0)));
-	lights[0]->color = RGBColor(255, 100, 100);
+	lights.push_back(new PointLight(Point3D(-15, 15, 15)));
+	lights[0]->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights[1]->color = RGBColor(40, 30, 30);
 	
@@ -106,16 +104,14 @@ void World::addDefaultObjects(void){
 	Normal n(-1, 1, 5.2);
 	n.normalize();
 	objects.push_back(new Plane(Point3D(0, 0, -10), n));
-	objects[0]->sdr->c = RGBColor(255, 0, 0);
+	objects.back()->sdr->c = RGBColor(255, 0, 0);
 
 	// Sphere 0
 	objects.push_back(new Sphere(5, Point3D(0, 0, 0)));
-	objects[1]->sdr->c = RGBColor(50, 155, 0);	
 	Ashikhmin ash;
-	objects[1]->sdr = ash.clone();
-	Ashikhmin* ashPtr = (Ashikhmin*)objects[1]->sdr;
-	ashPtr->kdiff = .8;
-	ashPtr->kspec = .1;
+	ash.kspec = ash.kdiff = .5;
+	ash.c = RGBColor(255, 80, 20);
+	objects.back()->sdr = ash.clone();
 
 	// Sphere 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
@@ -139,9 +135,11 @@ void World::addBunny(void){
 	clearObjects();
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
-	Shader sdr;
-	sdr.c = RGBColor(226, 114, 91);
-	bunnyPtr->setShader(sdr);
+	Ashikhmin ash;
+	ash.kdiff = .8;
+	ash.kspec = .4;
+	ash.c = RGBColor(226, 114, 91);
+	bunnyPtr->setShader(ash);
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 	}
