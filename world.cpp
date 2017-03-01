@@ -75,7 +75,7 @@ void World::build(void){
 	objects[0]->sdr->c = RGBColor(200, 125, 20);
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(0, 100, 100)));
+	lights.push_back(new PointLight(Point3D(0, 100, 0)));
 	lights[0]->color = RGBColor(255, 100, 100);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights[1]->color = RGBColor(40, 30, 30);
