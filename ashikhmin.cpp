@@ -45,7 +45,8 @@ RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 		Vector3D E = worldPtr->E - sr.hitPoint;
 		E.normalize();
 		const Normal& N = sr.hitNormal;
-		Vector3D H = (L + E)/2;
+		Vector3D H = L + E;
+		H.normalize();
 
 		if(N*L < 0)
 			continue;
