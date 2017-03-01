@@ -5,7 +5,7 @@
 class Ashikhmin: public Shader{
 public:
 	Ashikhmin();
-	Ashikhmin(int _exp, int _nu, int _nv);
+	Ashikhmin(int _nu, int _nv);
 	Ashikhmin(const Ashikhmin& ash);
 	Ashikhmin& operator=(const Ashikhmin& rhs);
 	~Ashikhmin();
@@ -13,7 +13,7 @@ public:
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	Ashikhmin* clone();
 
-	int exp, nu, nv;
+	int nu, nv;
 	double kdiff, kspec;
 private:
 

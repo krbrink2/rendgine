@@ -70,12 +70,13 @@ void World::build(void){
 	Ashikhmin ash;
 	objects[0]->sdr = ash.clone();
 	Ashikhmin* ashPtr = (Ashikhmin*)objects[0]->sdr;
-	ashPtr->kdiff = 1;
-	ashPtr->kspec = 1;
+	ashPtr->kdiff = .5;
+	ashPtr->kspec = .5;
 	objects[0]->sdr->c = RGBColor(200, 125, 20);
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(0, 3, 0)));
+	lights.push_back(new PointLight(Point3D(0, 100, 100)));
+	lights[0]->color = RGBColor(255, 100, 100);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights[1]->color = RGBColor(40, 30, 30);
 	

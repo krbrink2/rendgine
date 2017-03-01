@@ -6,15 +6,13 @@
 // ---- Default constructor ----
 Ashikhmin::Ashikhmin():
 	Shader(),
-	exp(100),
 	nu(100),
 	nv(100)
 {}
 
 // ---- Constructor ----
-Ashikhmin::Ashikhmin(int _exp, int _nu, int _nv):
+Ashikhmin::Ashikhmin(int _nu, int _nv):
 	Shader(),
-	exp(_exp),
 	nu(_nu),
 	nv(_nv)
 {}
@@ -22,7 +20,6 @@ Ashikhmin::Ashikhmin(int _exp, int _nu, int _nv):
 // ---- Copy consructor ----
 Ashikhmin::Ashikhmin(const Ashikhmin& ash):
 	Shader(ash),
-	exp(ash.exp),
 	nu(ash.nu),
 	nv(ash.nv)
 {}
@@ -30,7 +27,6 @@ Ashikhmin::Ashikhmin(const Ashikhmin& ash):
 // ---- Assignment operator ----
 Ashikhmin& Ashikhmin::operator=(const Ashikhmin& rhs){
 	c = rhs.c;
-	exp = rhs.exp;
 	nu = rhs.nu;
 	nv = rhs.nv;
 	return *this;
@@ -65,19 +61,23 @@ RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 		accum += ashDiffuse;
 
 		// Specular
-		float ashSpecNorm	= std::sqrt((nu + 1)*(nv + 1))/(8*PI);
-		float ashSpecExp	= exp;
-		float ashSpecDenom	= H*L*max(N*L, N*E);
-		float ashSpecFres	= kspec + (1 - kspec)*std::pow(1 - L*H, 5); //@RESUME
-		RGBColor ashSpec = irradiance*kspec*ashSpecNorm*std::pow(max(N*H, 0), ashSpecExp)
+		//float ashSpecNorm	= std::sqrt((nu + 1)*(nv + 1))/(8*PI);
+		float ashSpecNorm	= 1;//(nu+1)/(8*PI);
+		float ashSpecExp	= nu;
+		float ashSpecDenom	= 1;//H*L*max(N*L, N*E);
+		float ashSpecFres	= 1;//kspec + (1 - kspec)*std::pow(1 - L*H, 5);
+		RGBColor ashSpec = irradiance*ashSpecNorm*std::pow(max(N*H, 0), ashSpecExp)
 			*ashSpecFres/ashSpecDenom;
 		accum += ashSpec;
 	}
 
-
+	// Clamp color
+	accum.r = clamp(accum.r, 0, 255);
+	accum.g = clamp(accum.g, 0, 255);
+	accum.b = clamp(accum.b, 0, 255);
 	return accum;
 }
 
 Ashikhmin* Ashikhmin::clone(){
 	return new Ashikhmin(*this);
-}
+}	
