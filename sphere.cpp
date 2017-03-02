@@ -1,7 +1,6 @@
 #include <iostream>
 #include <math.h>
 #include "sphere.h"
-#include "Constants.h"
 using namespace std;
 
 // ---- Default Constructor ----

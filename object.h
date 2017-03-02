@@ -3,9 +3,7 @@
 #include <vector>
 #include "shader.h"
 #include "shaderec.h"
-#include "Point3D.h"
-#include "Ray.h"
-#include "RGBColor.h"
+#include "utils.h"
 
 class Object
 {

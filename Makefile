@@ -25,8 +25,8 @@ rendgine.o: rendgine.cpp $(HEADERS)
 ashikhmin.o: ashikhmin.cpp ashikhmin.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c ashikhmin.cpp $(CFLAGS)
 
-bvhnode.o: bvhnode.cpp bvhnode.h object.h utils.h
-	$(CC) bvhnode.cpp $(CFLAGS)
+bvhnode.o: bvhnode.cpp bvhnode.h object.h shaderec.h utils.h
+	$(CC) -c bvhnode.cpp $(CFLAGS)
 
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)

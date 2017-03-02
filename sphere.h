@@ -3,10 +3,7 @@
 #include <vector>
 #include "object.h"
 #include "shaderec.h"
-#include "Normal.h"
-#include "Point3D.h"
-#include "Ray.h"
-#include "Vector3D.h"
+#include "utils.h"
 
 class Sphere: public Object
 {

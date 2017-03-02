@@ -6,12 +6,7 @@
 #include "shaderec.h"
 #include "sphere.h"
 #include "world.h"
-
-#include "Constants.h"
-#include "Normal.h"
-#include "Point3D.h"
-#include "Ray.h"
-#include "Vector3D.h"
+#include "utils.h"
 using namespace std;
 
 // ---- Global variable declarations ----

@@ -1,7 +1,6 @@
 #ifndef SHADER_H
 #define SHADER_H
-#include "Normal.h"
-#include "RGBColor.h"
+#include "utils.h"
 
 // ---- Forward decalrations ----
 

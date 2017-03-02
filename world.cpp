@@ -1,4 +1,3 @@
-#include "bvhnode.h"
 #include "world.h"
 #include <math.h>
 #include <assert.h>
