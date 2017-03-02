@@ -27,6 +27,18 @@ Sphere* Sphere::clone(void){
 	return new Sphere(*this);
 }
 
+Point3D Sphere::getMinPoint(){
+	return Point3D(c.x-r, c.y-r, c.z-r);
+}
+
+Point3D Sphere::getMaxPoint(){
+	return Point3D(c.x+r, c.y+r, c.z+r);
+}
+
+Point3D Sphere::getMedPoint(){
+	return c;
+}
+
 // Function name:		hit
 // Function purpose:	Tests intersection for ray, records shading info is hits.
 // Parameters:			

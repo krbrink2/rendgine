@@ -5,12 +5,12 @@
 */
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(1)
-#define SQRT_NUM_SAMPLES	(1)
+#define NUM_SAMPLES 		(9)
+#define SQRT_NUM_SAMPLES	(3)
 // Resolution
 #define	HRES 				(500)	// 1366,	1920
 #define VRES 				(500)	// 768,		1080
-#define S 					(.0025)
+#define S 					(.002)
 // Camera
 #define	ORTHO				(false)
 #define EYE					Point3D(0, .15, .8)

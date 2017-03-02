@@ -29,6 +29,24 @@ Triangle* Triangle::clone(void){
 	return new Triangle(*this);
 }
 
+Point3D Triangle::getMinPoint(){
+	double x = min(v0.x, min(v1.x, v2.x));
+	double y = min(v0.y, min(v1.y, v2.y));
+	double z = min(v0.z, min(v1.z, v2.z));
+	return Point3D(x, y, z);
+}
+
+Point3D Triangle::getMaxPoint(){
+	double x = max(v0.x, max(v1.x, v2.x));
+	double y = max(v0.y, max(v1.y, v2.y));
+	double z = max(v0.z, max(v1.z, v2.z));
+	return Point3D(x, y, z);
+}
+
+Point3D Triangle::getMedPoint(){
+	return (getMinPoint() + getMaxPoint())*.5;
+}
+
 // Function name:		hit
 // Function purpose:	Test if ray hits triangle, record info if so.
 // Parameters:			

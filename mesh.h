@@ -18,6 +18,9 @@ public:
 	Mesh& operator=(const Mesh& rhs);
 	virtual ~Mesh();
 	Mesh* clone();
+	Point3D getMaxPoint();
+	Point3D getMinPoint();
+	Point3D getMedPoint();
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
 	void clear(void);
 	bool load(const char* filename);

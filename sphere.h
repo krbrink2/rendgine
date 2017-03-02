@@ -14,6 +14,9 @@ public:
 	Sphere(double _r, Point3D _c);
 
 	Sphere* clone(void);
+	Point3D getMaxPoint();
+	Point3D getMinPoint();
+	Point3D getMedPoint();
 	bool hit(const Ray& ray, ShadeRec& sr);
 
 	double r;

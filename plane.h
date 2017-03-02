@@ -15,6 +15,9 @@ public:
 	Plane(Point3D _a, Normal _n);
 
 	Plane* clone(void);
+	Point3D getMaxPoint();
+	Point3D getMinPoint();
+	Point3D getMedPoint();
 	bool hit(const Ray& ray, ShadeRec& sr);
 
 protected:

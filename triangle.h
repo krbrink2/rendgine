@@ -18,6 +18,9 @@ public:
 	*/
 	virtual Triangle* clone(void);
 	//virtual bool hit(const Ray& ray, double& t) = 0;
+	Point3D getMaxPoint();
+	Point3D getMinPoint();
+	Point3D getMedPoint();
 	virtual bool hit(const Ray& ray, ShadeRec& sr);
 	void generateNormal(void);
 

@@ -25,6 +25,18 @@ Plane* Plane::clone(void){
 	return new Plane(*this);
 }
 
+Point3D Plane::getMinPoint(){
+	return Point3D(-kHugeValue, -kHugeValue, -kHugeValue);
+}
+
+Point3D Plane::getMaxPoint(){
+	return Point3D(kHugeValue, kHugeValue, kHugeValue);
+}
+
+Point3D Plane::getMedPoint(){
+	return Point3D(0,0,0);
+}
+
 // Function name:		hit
 // Function purpose:	Test ray intersection
 // Parameters:			

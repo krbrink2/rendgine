@@ -53,6 +53,32 @@ Mesh* Mesh::clone(){
 	return new Mesh(*this);
 }
 
+Point3D Mesh::getMinPoint(){
+	Point3D minPoint;
+	for(size_t i = 0; i < faces.size(); i++){
+		Point3D testPoint = faces[i]->getMinPoint();
+		minPoint.x = min(minPoint.x, testPoint.x);
+		minPoint.y = min(minPoint.y, testPoint.y);
+		minPoint.z = min(minPoint.z, testPoint.z);
+	}
+	return minPoint;
+}
+
+Point3D Mesh::getMaxPoint(){
+	Point3D maxPoint;
+	for(size_t i = 0; i < faces.size(); i++){
+		Point3D testPoint = faces[i]->getMaxPoint();
+		maxPoint.x = max(maxPoint.x, testPoint.x);
+		maxPoint.y = max(maxPoint.y, testPoint.y);
+		maxPoint.z = max(maxPoint.z, testPoint.z);
+	}
+	return maxPoint;
+}
+
+Point3D Mesh::getMedPoint(){
+	return (getMinPoint() + getMaxPoint())*.5;
+}
+
 bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->hit(ray, sr);
