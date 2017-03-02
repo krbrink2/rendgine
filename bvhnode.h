@@ -5,7 +5,11 @@
 #include "shaderec.h"
 #include "utils.h"
 
-#define NUM_BVH_TESTS	(3)
+#define NUM_BVH_TESTS		(3)
+#define TERMINATE_NUMBER	(8)
+
+class World;
+
 
 class BVHNode{
 public:

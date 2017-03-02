@@ -1,4 +1,7 @@
 #include "bvhnode.h"
+#include "world.h"
+
+extern World* worldPtr;
 
 BVHNode::BVHNode()
 {}
@@ -69,12 +72,16 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		else{
 			right.primitives.push_back(primitives[i]);
 		}
-		minVal = maxVal = minVal;
 	}
 }
 
 void BVHNode::build(){
-	// You've got a bunch of primitives in your vector.
+	// You've got a bunch of primitives in your vector already.
+
+	// Terminate build at constant number.
+	if(primitives.size() < TERMINATE_NUMBER)
+		return;
+
 	BVHNode xLefts[NUM_BVH_TESTS*2 + 1];
 	BVHNode xRights[NUM_BVH_TESTS*2 + 1];
 	BVHNode yLefts[NUM_BVH_TESTS*2 + 1];
@@ -111,11 +118,58 @@ void BVHNode::build(){
 		buildTestChildren(zLefts[medianIdx + 1 + i], zRights[medianIdx + 1 + i], medianPoint.z + i*zInc, 'z');
 	}
 
+	// Find best test children
+	double bestScore = kHugeValue;
+	char bestDim = 'x';
+	int bestIndex = 0;
+	for(size_t i = 0; i < NUM_BVH_TESTS*2 + 1; i++){
+		double testScore = xLefts[i].getSAH() + xRights[i].getSAH();
+		if(testScore < bestScore){
+			bestScore = testScore;
+			bestDim = 'x';
+			bestIndex = i;
+		}
+		testScore = yLefts[i].getSAH() + yRights[i].getSAH();
+		if(testScore < bestScore){
+			bestScore = testScore;
+			bestDim = 'y';
+			bestIndex = i;
+		}
+		testScore = zLefts[i].getSAH() + zRights[i].getSAH();
+		if(testScore < bestScore){
+			bestScore = testScore;
+			bestDim = 'z';
+			bestIndex = i;
+		}
+	}
+	// What if none is better?
+	if(bestScore >= getSAH){
+		// Terminate!
+		return;
+		leftChild = rightChild = NULL;
+	}
+	// One of them is better!
+	if(bestDim == 'x'){
+		worldPtr->bvh.push_back(xLefts[bestIndex]);
+		//@RESUME
+	}
+	
+	leftChild = &(worldPtr->bvh.back());
 
 	return;
 }
 
 
 double BVHNode::getSAH(){
-	return 1;
+	double val = 0;
+	for(auto itr = primitives.begin(); itr != primitives.end(); itr++){
+		Point3D maxPoint = itr->getMaxPoint();
+		Point3D minPoint = itr->getMinPoint();
+		val += 2*(maxPoint.x - minPoint.x)*(maxPoint.y - minPoint.y);
+		val += 2*(maxPoint.y - minPoint.y)*(maxPoint.z - minPoint.z);
+		val += 2*(maxPoint.z - minPoint.z)*(maxPoint.x - minPoint.x);
+	}
+	return primitives.size()*val;
 }
+
+
