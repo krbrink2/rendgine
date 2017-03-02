@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <vector>
+#include "bvhnode.h"
 #include "ashikhmin.h"
 #include "controls.h"
 #include "dirlight.h"
@@ -34,6 +35,8 @@ public:
 	bool orthographic;
 
 	Vector3D vx, vy, vz;			// Viewing coordinate system
+
+	std::vector<BVHNode> bvh;
 
 	World(void);
 	World(const World& w);

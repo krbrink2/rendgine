@@ -4,7 +4,7 @@ BVHNode::BVHNode(){
 
 }
 
-bool BVHNode::hit(const Ray& ray, ShadeREc& sr){
+bool BVHNode::hit(const Ray& ray, ShadeRec& sr){
 	return false;
 }
 
@@ -31,5 +31,16 @@ double BVHNode::getSurfaceArea(){
 }
 
 void BVHNode::build(){
+	// You've got a bunch of primitives in your vector.
+
+	BVHNode xLefts[NUM_BVH_TESTS*2 + 1];
+	BVHNode xRights[NUM_BVH_TESTS*2 + 1];
+	BVHNode yLefts[NUM_BVH_TESTS*2 + 1];
+	BVHNode yRights[NUM_BVH_TESTS*2 + 1];
+	BVHNode zLefts[NUM_BVH_TESTS*2 + 1];
+	BVHNode zRights[NUM_BVH_TESTS*2 + 1];
+
+
+
 	return;
 }

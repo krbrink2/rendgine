@@ -2,7 +2,10 @@
 #define BVHNODE_H
 #include <vector>
 #include "object.h"
-#include "Point3D.h"
+#include "shaderec.h"
+#include "utils.h"
+
+#define NUM_BVH_TESTS	(4)
 
 class BVHNode{
 public:
@@ -21,8 +24,8 @@ public:
 	std::vector<Object*> primitives;
 
 protected:
-	computePoints();
+	void computePoints();
 	Point3D minPoint, maxPoint;
-}
+};
 
 #endif

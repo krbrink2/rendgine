@@ -89,9 +89,6 @@ bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->hit(ray, sr);
 	}
-	if(sr.hitObject && sr.hitNormal.z > 0){	// For debugging
-		 return sr.hitObject;
-	}
 	return sr.hitObject;
 }
 

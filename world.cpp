@@ -1,3 +1,4 @@
+#include "bvhnode.h"
 #include "world.h"
 #include <math.h>
 #include <assert.h>
@@ -77,6 +78,13 @@ void World::build(void){
 	lights[0]->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights[1]->color = RGBColor(40, 30, 30);
+
+	// Build BVH
+	bvh.push_back(BVHNode());
+	for(size_t i = 0; i < objects.size(); i++){
+		// Have this object add its primitives to the bvh root
+		objects[i]->addPrimitives(bvh.back().primitives);
+	}
 	
 }
 
