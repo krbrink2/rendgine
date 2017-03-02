@@ -5,7 +5,7 @@
 #include "shaderec.h"
 #include "utils.h"
 
-#define NUM_BVH_TESTS	(4)
+#define NUM_BVH_TESTS	(3)
 
 class BVHNode{
 public:
@@ -26,6 +26,7 @@ public:
 
 protected:
 	Point3D minPoint, maxPoint;
+	void buildTestChild(BVHNode& left, BVHNode& right, float bound, char dim);
 };
 
 #endif

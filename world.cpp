@@ -85,6 +85,7 @@ void World::build(void){
 		objects[i]->addPrimitives(bvh.back().primitives);
 	}
 	bvh.back().computePoints();
+	bvh.back().build();
 	
 }
 
