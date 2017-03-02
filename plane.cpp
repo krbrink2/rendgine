@@ -37,6 +37,10 @@ Point3D Plane::getMedPoint(){
 	return Point3D(0,0,0);
 }
 
+void Plane::addPrimitives(std::vector<Object*>& vect){
+	vect.push_back(this);
+}
+
 // Function name:		hit
 // Function purpose:	Test ray intersection
 // Parameters:			

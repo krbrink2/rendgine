@@ -1,5 +1,6 @@
 #ifndef PLANE_H
 #define PLANE_H
+#include <vector>
 #include "object.h"
 #include "shaderec.h"
 #include "Constants.h"
@@ -18,6 +19,7 @@ public:
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();
+	void addPrimitives(std::vector<Object*>& vect);
 	bool hit(const Ray& ray, ShadeRec& sr);
 
 protected:

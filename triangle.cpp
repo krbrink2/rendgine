@@ -47,6 +47,10 @@ Point3D Triangle::getMedPoint(){
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
+void Triangle::addPrimitives(std::vector<Object*>& vect){
+	vect.push_back(this);
+}
+
 // Function name:		hit
 // Function purpose:	Test if ray hits triangle, record info if so.
 // Parameters:			

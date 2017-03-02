@@ -1,5 +1,6 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
+#include <vector>
 #include "object.h"
 #include "Constants.h"
 #include "Normal.h"
@@ -21,6 +22,7 @@ public:
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();
+	void addPrimitives(std::vector<Object*>& vect);
 	virtual bool hit(const Ray& ray, ShadeRec& sr);
 	void generateNormal(void);
 

@@ -1,6 +1,6 @@
 #ifndef MESH_H
 #define MESH_H
-
+#include <vector>
 #include "object.h"
 #include "triangle.h"
 #include "Point3D.h"
@@ -21,6 +21,7 @@ public:
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();
+	void addPrimitives(std::vector<Object*>& vect);
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
 	void clear(void);
 	bool load(const char* filename);

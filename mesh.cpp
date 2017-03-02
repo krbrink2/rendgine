@@ -79,6 +79,12 @@ Point3D Mesh::getMedPoint(){
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
+void Mesh::addPrimitives(std::vector<Object*>& vect){
+	for(size_t i = 0; i < faces.size(); i++){
+		faces[i]->addPrimitives(vect);
+	}
+}
+
 bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->hit(ray, sr);

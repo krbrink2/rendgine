@@ -1,5 +1,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
+#include <vector>
 #include "shader.h"
 #include "shaderec.h"
 #include "Point3D.h"
@@ -18,6 +19,7 @@ public:
 	virtual Point3D getMaxPoint() = 0;
 	virtual Point3D getMinPoint() = 0;
 	virtual Point3D getMedPoint() = 0;
+	virtual void addPrimitives(std::vector<Object*>& vect) = 0;
 
 	Shader* sdr;
 

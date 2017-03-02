@@ -39,6 +39,10 @@ Point3D Sphere::getMedPoint(){
 	return c;
 }
 
+void Sphere::addPrimitives(std::vector<Object*>& vect){
+	vect.push_back(this);
+}
+
 // Function name:		hit
 // Function purpose:	Tests intersection for ray, records shading info is hits.
 // Parameters:			
