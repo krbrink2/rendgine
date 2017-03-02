@@ -19,6 +19,7 @@ public:
 	double getSurfaceArea();
 	void computePoints();
 	void build();
+	double getSAH();
 
 	BVHNode* leftChild;
 	BVHNode* rightChild;
@@ -26,7 +27,7 @@ public:
 
 protected:
 	Point3D minPoint, maxPoint;
-	void buildTestChild(BVHNode& left, BVHNode& right, float bound, char dim);
+	void buildTestChildren(BVHNode& left, BVHNode& right, float bound, char dim);
 };
 
 #endif

@@ -51,16 +51,16 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		// If this primitive is on the left, put it into left child.
 		double minVal, maxVal;
 		if(dim == 'x'){
-			minVal = primitives[i].getMinPoint().x;
-			maxVal = primitives[i].getMaxPoint().x;
+			minVal = primitives[i]->getMinPoint().x;
+			maxVal = primitives[i]->getMaxPoint().x;
 		}
 		else if(dim == 'y'){
-			minVal = primitives[i].getMinPoint().y;
-			maxVal = primitives[i].getMaxPoint().y;
+			minVal = primitives[i]->getMinPoint().y;
+			maxVal = primitives[i]->getMaxPoint().y;
 		}
 		else{
-			minVal = primitives[i].getMinPoint().z;
-			maxVal = primitives[i].getMaxPoint().z;
+			minVal = primitives[i]->getMinPoint().z;
+			maxVal = primitives[i]->getMaxPoint().z;
 		}
 
 		if(maxVal < bound){
@@ -69,6 +69,7 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		else{
 			right.primitives.push_back(primitives[i]);
 		}
+		minVal = maxVal = minVal;
 	}
 }
 
@@ -83,7 +84,7 @@ void BVHNode::build(){
 	int medianIdx = NUM_BVH_TESTS;
 	Point3D medianPoint(0,0,0);
 	for(size_t i = 0; i < primitives.size(); i++){
-		medianPoint += primitives[i].getMedPoint();
+		medianPoint = medianPoint + primitives[i]->getMedPoint();
 	}
 	medianPoint.x /= (float)(primitives.size());
 	medianPoint.y /= (float)(primitives.size());
@@ -93,12 +94,28 @@ void BVHNode::build(){
 	buildTestChildren(xLefts[medianIdx], xRights[medianIdx], medianPoint.x, 'x');
 	buildTestChildren(yLefts[medianIdx], yRights[medianIdx], medianPoint.y, 'y');
 	buildTestChildren(zLefts[medianIdx], zRights[medianIdx], medianPoint.z, 'z');
-	// Other x's
-	double xInc = (maxPoint.x - minPoint.x)/(2*NUM_BVH_TESTS + 2);
-	double yInc = (maxPoint.y - minPoint.y)/(2*NUM_BVH_TESTS + 2);
-	double zInc = (maxPoint.z - minPoint.z)/(2*NUM_BVH_TESTS + 2);
-	//for(size_t i = 0; i < )
+	double xInc = (medianPoint.x - minPoint.x)/(2*NUM_BVH_TESTS + 2);
+	double yInc = (medianPoint.y - minPoint.y)/(2*NUM_BVH_TESTS + 2);
+	double zInc = (medianPoint.z - minPoint.z)/(2*NUM_BVH_TESTS + 2);
+	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
+		buildTestChildren(xLefts[i], xRights[i], minPoint.x + i*xInc, 'x');
+		buildTestChildren(yLefts[i], yRights[i], minPoint.y + i*yInc, 'y');
+		buildTestChildren(zLefts[i], zRights[i], minPoint.z + i*zInc, 'z');
+	}
+	xInc = (maxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
+	yInc = (maxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
+	zInc = (maxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
+	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
+		buildTestChildren(xLefts[medianIdx + 1 + i], xRights[medianIdx + 1 + i], medianPoint.x + i*xInc, 'x');
+		buildTestChildren(yLefts[medianIdx + 1 + i], yRights[medianIdx + 1 + i], medianPoint.y + i*yInc, 'y');
+		buildTestChildren(zLefts[medianIdx + 1 + i], zRights[medianIdx + 1 + i], medianPoint.z + i*zInc, 'z');
+	}
 
 
 	return;
+}
+
+
+double BVHNode::getSAH(){
+	return 1;
 }
