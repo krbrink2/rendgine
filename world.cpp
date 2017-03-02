@@ -84,6 +84,7 @@ void World::build(void){
 		// Have this object add its primitives to the bvh root
 		objects[i]->addPrimitives(bvh.back().primitives);
 	}
+	bvh.back().computePoints();
 	
 }
 

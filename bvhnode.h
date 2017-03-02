@@ -17,6 +17,7 @@ public:
 	Point3D getMinPoint();
 	Point3D getMedPoint();
 	double getSurfaceArea();
+	void computePoints();
 	void build();
 
 	BVHNode* leftChild;
@@ -24,7 +25,6 @@ public:
 	std::vector<Object*> primitives;
 
 protected:
-	void computePoints();
 	Point3D minPoint, maxPoint;
 };
 

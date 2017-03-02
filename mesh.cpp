@@ -54,7 +54,7 @@ Mesh* Mesh::clone(){
 }
 
 Point3D Mesh::getMinPoint(){
-	Point3D minPoint;
+	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
 	for(size_t i = 0; i < faces.size(); i++){
 		Point3D testPoint = faces[i]->getMinPoint();
 		minPoint.x = min(minPoint.x, testPoint.x);
@@ -65,7 +65,7 @@ Point3D Mesh::getMinPoint(){
 }
 
 Point3D Mesh::getMaxPoint(){
-	Point3D maxPoint;
+	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
 	for(size_t i = 0; i < faces.size(); i++){
 		Point3D testPoint = faces[i]->getMaxPoint();
 		maxPoint.x = max(maxPoint.x, testPoint.x);
