@@ -12,6 +12,8 @@ bool BVHNode::hit(const Ray& ray, ShadeRec& sr){
 
 bool BVHNode::hitBB(const Ray& ray){
 	return false;
+	//@RESUME
+	// Then do hit(...)
 }
 
 Point3D BVHNode::getMaxPoint(){
