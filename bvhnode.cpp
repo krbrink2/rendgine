@@ -72,6 +72,7 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		else{
 			right.primitives.push_back(primitives[i]);
 		}
+		maxVal = minVal;
 	}
 }
 
@@ -121,7 +122,7 @@ void BVHNode::build(){
 	// Find best test children
 	double bestScore = kHugeValue;
 	char bestDim = 'x';
-	int bestIndex = 0;
+	int bestIndex = medianIdx;
 	for(size_t i = 0; i < NUM_BVH_TESTS*2 + 1; i++){
 		double testScore = xLefts[i].getSAH() + xRights[i].getSAH();
 		if(testScore < bestScore){
@@ -143,7 +144,7 @@ void BVHNode::build(){
 		}
 	}
 	// What if none is better?
-	if(bestScore >= getSAH){
+	if(bestScore >= getSAH()){
 		// Terminate!
 		return;
 		leftChild = rightChild = NULL;
@@ -151,10 +152,26 @@ void BVHNode::build(){
 	// One of them is better!
 	if(bestDim == 'x'){
 		worldPtr->bvh.push_back(xLefts[bestIndex]);
-		//@RESUME
 	}
-	
+	else if(bestDim == 'y'){
+		worldPtr->bvh.push_back(yLefts[bestIndex]);	
+	}
+	else{
+		worldPtr->bvh.push_back(zLefts[bestIndex]);
+	}
 	leftChild = &(worldPtr->bvh.back());
+	leftChild->build();
+	if(bestDim == 'x'){
+		worldPtr->bvh.push_back(xRights[bestIndex]);
+	}
+	else if(bestDim == 'y'){
+		worldPtr->bvh.push_back(yRights[bestIndex]);	
+	}
+	else{
+		worldPtr->bvh.push_back(zRights[bestIndex]);
+	}
+	rightChild = &(worldPtr->bvh.back());
+	leftChild->build();
 
 	return;
 }
@@ -162,7 +179,7 @@ void BVHNode::build(){
 
 double BVHNode::getSAH(){
 	double val = 0;
-	for(auto itr = primitives.begin(); itr != primitives.end(); itr++){
+	for(auto itr : primitives){
 		Point3D maxPoint = itr->getMaxPoint();
 		Point3D minPoint = itr->getMinPoint();
 		val += 2*(maxPoint.x - minPoint.x)*(maxPoint.y - minPoint.y);
