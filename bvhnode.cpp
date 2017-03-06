@@ -12,6 +12,9 @@ bool BVHNode::hit(const Ray& ray, ShadeRec& sr){
 }
 
 bool BVHNode::hitBB(const Ray& ray){
+	// Code taken from
+	// 	https://tavianator.com/fast-branchless-raybounding-box-intersections/
+	//@TODO 									CITE!!!!!!!!!!!!!!!!!!!!!!!!
 	double tmin = -kHugeValue, tmax = kHugeValue;
 	if(std::fabs(ray.d.x) > kEpsilon){
 		double t1 = (minPoint.x - ray.o.x)/ray.d.x;
