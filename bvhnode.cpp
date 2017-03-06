@@ -1,4 +1,5 @@
 #include "bvhnode.h"
+#include <cmath>
 #include "world.h"
 
 extern World* worldPtr;
@@ -11,9 +12,26 @@ bool BVHNode::hit(const Ray& ray, ShadeRec& sr){
 }
 
 bool BVHNode::hitBB(const Ray& ray){
-	return false;
-	//@RESUME
-	// Then do hit(...)
+	double tmin = -kHugeValue, tmax = kHugeValue;
+	if(std::fabs(ray.d.x) > kEpsilon){
+		double t1 = (minPoint.x - ray.o.x)/ray.d.x;
+		double t2 = (maxPoint.x - ray.o.x)/ray.d.x;
+		tmin = max(tmin, min(t1, t2));
+		tmax = min(tmax, max(t1, t2));
+	}
+	if(std::fabs(ray.d.y) > kEpsilon){
+		double t1 = (minPoint.y - ray.o.x)/ray.d.y;
+		double t2 = (maxPoint.y - ray.o.x)/ray.d.y;
+		tmin = max(tmin, min(t1, t2));
+		tmax = min(tmax, max(t1, t2));
+	}
+	if(std::fabs(ray.d.z) > kEpsilon){
+		double t1 = (minPoint.z - ray.o.x)/ray.d.z;
+		double t2 = (maxPoint.z - ray.o.x)/ray.d.z;
+		tmin = max(tmin, min(t1, t2));
+		tmax = min(tmax, max(t1, t2));
+	}
+	return tmax > tmin && tmax > 0;
 }
 
 Point3D BVHNode::getMaxPoint(){
