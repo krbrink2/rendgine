@@ -31,7 +31,7 @@ public:
 
 protected:
 	Point3D minPoint, maxPoint;
-	void buildTestChildren(BVHNode& left, BVHNode& right, float bound, char dim);
+	void buildTestChildren(BVHNode& left, BVHNode& right, double bound, char dim);
 };
 
 #endif

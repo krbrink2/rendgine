@@ -11,21 +11,27 @@ BVHNode::BVHNode():
 {}
 
 bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
+	bool val = false;
+	// If leaf...
 	if(leftChild == NULL){
 		// Sanity check
 		assert(rightChild == NULL);
-		for(auto const & primitive : primitives){
-			primitive.hit(ray, sr);
+
+		for(auto ptr : primitives){
+			val |= ptr->hit(ray, sr);
 		}
 	}
+
+	// If non-leaf...
 	else{
 		if(leftChild->hitBB(ray)){
-			leftChild->hit(ray, sr);
+			val |= leftChild->hit(ray, sr);
 		}
 		if(rightChild->hitBB(ray)){
-			rightChild->hit(ray, sr);
+			val |= rightChild->hit(ray, sr);
 		}
 	}
+	return val;
 }
 
 bool BVHNode::hitBB(const Ray& ray) const{
@@ -90,20 +96,19 @@ void BVHNode::computePoints(){
 }
 
 // Helper function
-void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char dim){
+void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, double bound, char dim){
 	for(size_t i = 0; i < primitives.size(); i++){
+		// Sort primitives.
+
 		// If this primitive is on the left, put it into left child.
 		double maxVal; //, minVal;
 		if(dim == 'x'){
-			//minVal = primitives[i]->getMinPoint().x;
 			maxVal = primitives[i]->getMaxPoint().x;
 		}
 		else if(dim == 'y'){
-			//minVal = primitives[i]->getMinPoint().y;
 			maxVal = primitives[i]->getMaxPoint().y;
 		}
 		else{
-			// minVal = primitives[i]->getMinPoint().z;
 			maxVal = primitives[i]->getMaxPoint().z;
 		}
 
@@ -113,15 +118,15 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		else{
 			right.primitives.push_back(primitives[i]);
 		}
-		// maxVal = minVal;
 	}
 }
 
 void BVHNode::build(){
 	// You've got a bunch of primitives in your vector already.
+	computePoints();
 
 	// Terminate build at constant number.
-	if(primitives.size() < TERMINATE_NUMBER){
+	if(primitives.size() <= TERMINATE_NUMBER){
 		leftChild = rightChild = NULL;
 		return;
 	}
@@ -196,6 +201,8 @@ void BVHNode::build(){
 		return;
 	}
 	// One of them is better!
+	// Free to empty my pointers.
+	primitives.clear();
 	if(bestDim == 'x'){
 		worldPtr->bvh.push_back(xLefts[bestIndex]);
 	}
