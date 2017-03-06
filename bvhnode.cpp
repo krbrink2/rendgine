@@ -1,20 +1,37 @@
 #include "bvhnode.h"
 #include <cmath>
+#include <cassert>
 #include "world.h"
 
 extern World* worldPtr;
 
-BVHNode::BVHNode()
+BVHNode::BVHNode():
+	leftChild(NULL),
+	rightChild(NULL)
 {}
 
-bool BVHNode::hit(const Ray& ray, ShadeRec& sr){
-	return false;
+bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
+	if(leftChild == NULL){
+		// Sanity check
+		assert(rightChild == NULL);
+		for(auto const & primitive : primitives){
+			primitive.hit(ray, sr);
+		}
+	}
+	else{
+		if(leftChild->hitBB(ray)){
+			leftChild->hit(ray, sr);
+		}
+		if(rightChild->hitBB(ray)){
+			rightChild->hit(ray, sr);
+		}
+	}
 }
 
-bool BVHNode::hitBB(const Ray& ray){
+bool BVHNode::hitBB(const Ray& ray) const{
 	// Code taken from
 	// 	https://tavianator.com/fast-branchless-raybounding-box-intersections/
-	//@TODO 									CITE!!!!!!!!!!!!!!!!!!!!!!!!
+	//@TODO 									//@CITE!!!!!!!!!!!!!!!!!!!!!!!!
 	double tmin = -kHugeValue, tmax = kHugeValue;
 	if(std::fabs(ray.d.x) > kEpsilon){
 		double t1 = (minPoint.x - ray.o.x)/ray.d.x;
@@ -37,19 +54,19 @@ bool BVHNode::hitBB(const Ray& ray){
 	return tmax > tmin && tmax > 0;
 }
 
-Point3D BVHNode::getMaxPoint(){
+Point3D BVHNode::getMaxPoint() const{
 	return maxPoint;
 }
 
-Point3D BVHNode::getMinPoint(){
+Point3D BVHNode::getMinPoint() const{
 	return minPoint;
 }
 
-Point3D BVHNode::getMedPoint(){
+Point3D BVHNode::getMedPoint() const{
 	return (maxPoint + minPoint)*.5;
 }
 
-double BVHNode::getSurfaceArea(){
+double BVHNode::getSurfaceArea() const{
 	return 2*(maxPoint.x - minPoint.x)
 		+ 2*(maxPoint.y - minPoint.y)
 		+ 2*(maxPoint.z - minPoint.z);
@@ -72,20 +89,21 @@ void BVHNode::computePoints(){
 	}
 }
 
+// Helper function
 void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char dim){
 	for(size_t i = 0; i < primitives.size(); i++){
 		// If this primitive is on the left, put it into left child.
-		double minVal, maxVal;
+		double maxVal; //, minVal;
 		if(dim == 'x'){
-			minVal = primitives[i]->getMinPoint().x;
+			//minVal = primitives[i]->getMinPoint().x;
 			maxVal = primitives[i]->getMaxPoint().x;
 		}
 		else if(dim == 'y'){
-			minVal = primitives[i]->getMinPoint().y;
+			//minVal = primitives[i]->getMinPoint().y;
 			maxVal = primitives[i]->getMaxPoint().y;
 		}
 		else{
-			minVal = primitives[i]->getMinPoint().z;
+			// minVal = primitives[i]->getMinPoint().z;
 			maxVal = primitives[i]->getMaxPoint().z;
 		}
 
@@ -95,7 +113,7 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, float bound, char
 		else{
 			right.primitives.push_back(primitives[i]);
 		}
-		maxVal = minVal;
+		// maxVal = minVal;
 	}
 }
 
@@ -103,8 +121,10 @@ void BVHNode::build(){
 	// You've got a bunch of primitives in your vector already.
 
 	// Terminate build at constant number.
-	if(primitives.size() < TERMINATE_NUMBER)
+	if(primitives.size() < TERMINATE_NUMBER){
+		leftChild = rightChild = NULL;
 		return;
+	}
 
 	BVHNode xLefts[NUM_BVH_TESTS*2 + 1];
 	BVHNode xRights[NUM_BVH_TESTS*2 + 1];
@@ -117,14 +137,15 @@ void BVHNode::build(){
 	for(size_t i = 0; i < primitives.size(); i++){
 		medianPoint = medianPoint + primitives[i]->getMedPoint();
 	}
-	medianPoint.x /= (float)(primitives.size());
-	medianPoint.y /= (float)(primitives.size());
-	medianPoint.z /= (float)(primitives.size());
+	medianPoint.x /= (double)(primitives.size());
+	medianPoint.y /= (double)(primitives.size());
+	medianPoint.z /= (double)(primitives.size());
 
 	// Build median test children
 	buildTestChildren(xLefts[medianIdx], xRights[medianIdx], medianPoint.x, 'x');
 	buildTestChildren(yLefts[medianIdx], yRights[medianIdx], medianPoint.y, 'y');
 	buildTestChildren(zLefts[medianIdx], zRights[medianIdx], medianPoint.z, 'z');
+	// Build test children on left
 	double xInc = (medianPoint.x - minPoint.x)/(2*NUM_BVH_TESTS + 2);
 	double yInc = (medianPoint.y - minPoint.y)/(2*NUM_BVH_TESTS + 2);
 	double zInc = (medianPoint.z - minPoint.z)/(2*NUM_BVH_TESTS + 2);
@@ -133,6 +154,7 @@ void BVHNode::build(){
 		buildTestChildren(yLefts[i], yRights[i], minPoint.y + i*yInc, 'y');
 		buildTestChildren(zLefts[i], zRights[i], minPoint.z + i*zInc, 'z');
 	}
+	// Build test children on right
 	xInc = (maxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
 	yInc = (maxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
 	zInc = (maxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
@@ -146,6 +168,7 @@ void BVHNode::build(){
 	double bestScore = kHugeValue;
 	char bestDim = 'x';
 	int bestIndex = medianIdx;
+	// For each attempt...
 	for(size_t i = 0; i < NUM_BVH_TESTS*2 + 1; i++){
 		double testScore = xLefts[i].getSAH() + xRights[i].getSAH();
 		if(testScore < bestScore){
@@ -169,8 +192,8 @@ void BVHNode::build(){
 	// What if none is better?
 	if(bestScore >= getSAH()){
 		// Terminate!
-		return;
 		leftChild = rightChild = NULL;
+		return;
 	}
 	// One of them is better!
 	if(bestDim == 'x'){
@@ -194,14 +217,13 @@ void BVHNode::build(){
 		worldPtr->bvh.push_back(zRights[bestIndex]);
 	}
 	rightChild = &(worldPtr->bvh.back());
-	leftChild->build();
-
-	return;
+	rightChild->build();
 }
 
-
-double BVHNode::getSAH(){
+// Get surface area heuristic value
+double BVHNode::getSAH() const{
 	double val = 0;
+	// val = sum of surface area of each primitive's BB
 	for(auto itr : primitives){
 		Point3D maxPoint = itr->getMaxPoint();
 		Point3D minPoint = itr->getMinPoint();

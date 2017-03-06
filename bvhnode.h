@@ -15,15 +15,15 @@ class BVHNode{
 public:
 	BVHNode();
 
-	bool hit(const Ray& ray, ShadeRec& sr);
-	bool hitBB(const Ray& ray);
-	Point3D getMaxPoint();
-	Point3D getMinPoint();
-	Point3D getMedPoint();
-	double getSurfaceArea();
+	bool hit(const Ray& ray, ShadeRec& sr) const;
+	bool hitBB(const Ray& ray) const;
+	Point3D getMaxPoint() const;
+	Point3D getMinPoint() const;
+	Point3D getMedPoint() const;
+	double getSurfaceArea() const;
 	void computePoints();
 	void build();
-	double getSAH();
+	double getSAH() const;
 
 	BVHNode* leftChild;
 	BVHNode* rightChild;
