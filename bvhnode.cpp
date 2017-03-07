@@ -209,7 +209,7 @@ void BVHNode::build(){
 		worldPtr->bvh.push_back(xLefts[bestIndex]);
 	}
 	else if(bestDim == 'y'){
-		worldPtr->bvh.push_back(yLefts[bestIndex]);	
+		worldPtr->bvh.push_back(yLefts[bestIndex]);		//@BUG
 	}
 	else{
 		worldPtr->bvh.push_back(zLefts[bestIndex]);
