@@ -25,8 +25,7 @@ public:
 	void build();
 	double getSAH() const;
 
-	BVHNode* leftChild;
-	BVHNode* rightChild;
+	int leftChildIndex, rightChildIndex;
 	std::vector<Object*> primitives;
 
 protected:

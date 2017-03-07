@@ -6,16 +6,18 @@
 extern World* worldPtr;
 
 BVHNode::BVHNode():
-	leftChild(NULL),
-	rightChild(NULL)
+	leftChildIndex(-1),
+	rightChildIndex(-1),
+	minPoint(Point3D(0,0,0)),
+	maxPoint(Point3D(0,0,0))
 {}
 
 bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
 	bool val = false;
 	// If leaf...
-	if(leftChild == NULL){
+	if(leftChildIndex == -1){
 		// Sanity check
-		assert(rightChild == NULL);
+		assert(rightChildIndex == -1);
 
 		for(auto ptr : primitives){
 			val |= ptr->hit(ray, sr);
@@ -24,11 +26,11 @@ bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
 
 	// If non-leaf...
 	else{
-		if(leftChild->hitBB(ray)){
-			val |= leftChild->hit(ray, sr);
+		if(worldPtr->bvh[leftChildIndex].hitBB(ray)){
+			val |= worldPtr->bvh[leftChildIndex].hit(ray, sr);
 		}
-		if(rightChild->hitBB(ray)){
-			val |= rightChild->hit(ray, sr);
+		if(worldPtr->bvh[rightChildIndex].hitBB(ray)){
+			val |= worldPtr->bvh[rightChildIndex].hit(ray, sr);
 		}
 	}
 	return val;
@@ -127,7 +129,7 @@ void BVHNode::build(){
 
 	// Terminate build at constant number.
 	if(primitives.size() <= TERMINATE_NUMBER){
-		leftChild = rightChild = NULL;
+		leftChildIndex = rightChildIndex = -1;
 		return;
 	}
 
@@ -172,7 +174,7 @@ void BVHNode::build(){
 	// Find best test children
 	double bestScore = kHugeValue;
 	char bestDim = 'x';
-	int bestIndex = medianIdx;
+	int bestIndex = 0;
 	// For each attempt...
 	for(size_t i = 0; i < NUM_BVH_TESTS*2 + 1; i++){
 		double testScore = xLefts[i].getSAH() + xRights[i].getSAH();
@@ -197,7 +199,7 @@ void BVHNode::build(){
 	// What if none is better?
 	if(bestScore >= getSAH()){
 		// Terminate!
-		leftChild = rightChild = NULL;
+		leftChildIndex = rightChildIndex = -1;
 		return;
 	}
 	// One of them is better!
@@ -212,8 +214,8 @@ void BVHNode::build(){
 	else{
 		worldPtr->bvh.push_back(zLefts[bestIndex]);
 	}
-	leftChild = &(worldPtr->bvh.back());
-	leftChild->build();
+	leftChildIndex = worldPtr->bvh.size() - 1;
+	worldPtr->bvh[leftChildIndex].build();
 	if(bestDim == 'x'){
 		worldPtr->bvh.push_back(xRights[bestIndex]);
 	}
@@ -223,8 +225,8 @@ void BVHNode::build(){
 	else{
 		worldPtr->bvh.push_back(zRights[bestIndex]);
 	}
-	rightChild = &(worldPtr->bvh.back());
-	rightChild->build();
+	rightChildIndex = worldPtr->bvh.size() - 1;
+	worldPtr->bvh[rightChildIndex].build();
 }
 
 // Get surface area heuristic value
