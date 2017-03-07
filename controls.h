@@ -16,7 +16,7 @@
 #define USE_BVH 			(true)
 // Animation
 #define ANIMATE				(true)
-#define NUM_FRAMES			(1)
+#define NUM_FRAMES			(4)
 #define ANIMATION_VECTOR	Vector3D(1, 0, 0)
 
 // Bunny:
