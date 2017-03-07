@@ -10,6 +10,7 @@
 
 class World;
 
+void buildBVH(const int targetIndex);
 
 class BVHNode{
 public:
@@ -22,13 +23,10 @@ public:
 	Point3D getMedPoint() const;
 	double getSurfaceArea() const;
 	void computePoints();
-	void build(const int targetIndex);
 	double getSAH() const;
 
 	int leftChildIndex, rightChildIndex;
 	std::vector<Object*> primitives;
-
-protected:
 	Point3D minPoint, maxPoint;
 	void buildTestChildren(BVHNode& left, BVHNode& right, double bound, char dim);
 };

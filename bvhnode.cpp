@@ -123,15 +123,15 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, double bound, cha
 	}
 }
 
-void BVHNode::build(const int targetIndex){
+void buildBVH(const int targetIndex){
 	#define 	NODE 	worldPtr->bvh[targetIndex] 
 
 	// You've got a bunch of primitives in your vector already.
-	computePoints();
+	NODE.computePoints();
 
 	// Terminate build at constant number.
-	if(NODEprimitives.size() <= TERMINATE_NUMBER){
-		NODEleftChildIndex = NODErightChildIndex = -1;
+	if(NODE.primitives.size() <= TERMINATE_NUMBER){
+		NODE.leftChildIndex = NODE.rightChildIndex = -1;
 		return;
 	}
 
@@ -143,34 +143,34 @@ void BVHNode::build(const int targetIndex){
 	BVHNode zRights[NUM_BVH_TESTS*2 + 1];
 	int medianIdx = NUM_BVH_TESTS;
 	Point3D medianPoint(0,0,0);
-	for(size_t i = 0; i < NODEprimitives.size(); i++){
-		medianPoint = medianPoint + NODEprimitives[i]->getMedPoint();
+	for(size_t i = 0; i < NODE.primitives.size(); i++){
+		medianPoint = medianPoint + NODE.primitives[i]->getMedPoint();
 	}
-	medianPoint.x /= (double)(NODEprimitives.size());
-	medianPoint.y /= (double)(NODEprimitives.size());
-	medianPoint.z /= (double)(NODEprimitives.size());
+	medianPoint.x /= (double)(NODE.primitives.size());
+	medianPoint.y /= (double)(NODE.primitives.size());
+	medianPoint.z /= (double)(NODE.primitives.size());
 
 	// Build median test children
-	buildTestChildren(xLefts[medianIdx], xRights[medianIdx], medianPoint.x, 'x');
-	buildTestChildren(yLefts[medianIdx], yRights[medianIdx], medianPoint.y, 'y');
-	buildTestChildren(zLefts[medianIdx], zRights[medianIdx], medianPoint.z, 'z');
+	NODE.buildTestChildren(xLefts[medianIdx], xRights[medianIdx], medianPoint.x, 'x');
+	NODE.buildTestChildren(yLefts[medianIdx], yRights[medianIdx], medianPoint.y, 'y');
+	NODE.buildTestChildren(zLefts[medianIdx], zRights[medianIdx], medianPoint.z, 'z');
 	// Build test children on left
-	double xInc = (medianPoint.x - NODEminPoint.x)/(2*NUM_BVH_TESTS + 2);
-	double yInc = (medianPoint.y - NODEminPoint.y)/(2*NUM_BVH_TESTS + 2);
-	double zInc = (medianPoint.z - NODEminPoint.z)/(2*NUM_BVH_TESTS + 2);
+	double xInc = (medianPoint.x - NODE.minPoint.x)/(2*NUM_BVH_TESTS + 2);
+	double yInc = (medianPoint.y - NODE.minPoint.y)/(2*NUM_BVH_TESTS + 2);
+	double zInc = (medianPoint.z - NODE.minPoint.z)/(2*NUM_BVH_TESTS + 2);
 	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
-		buildTestChildren(xLefts[i], xRights[i], NODEminPoint.x + i*xInc, 'x');
-		buildTestChildren(yLefts[i], yRights[i], NODEminPoint.y + i*yInc, 'y');
-		buildTestChildren(zLefts[i], zRights[i], NODEminPoint.z + i*zInc, 'z');
+		NODE.buildTestChildren(xLefts[i], xRights[i], NODE.minPoint.x + i*xInc, 'x');
+		NODE.buildTestChildren(yLefts[i], yRights[i], NODE.minPoint.y + i*yInc, 'y');
+		NODE.buildTestChildren(zLefts[i], zRights[i], NODE.minPoint.z + i*zInc, 'z');
 	}
 	// Build test children on right
-	xInc = (NODEmaxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
-	yInc = (NODEmaxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
-	zInc = (NODEmaxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
+	xInc = (NODE.maxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
+	yInc = (NODE.maxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
+	zInc = (NODE.maxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
 	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
-		buildTestChildren(xLefts[medianIdx + 1 + i], xRights[medianIdx + 1 + i], medianPoint.x + i*xInc, 'x');
-		buildTestChildren(yLefts[medianIdx + 1 + i], yRights[medianIdx + 1 + i], medianPoint.y + i*yInc, 'y');
-		buildTestChildren(zLefts[medianIdx + 1 + i], zRights[medianIdx + 1 + i], medianPoint.z + i*zInc, 'z');
+		NODE.buildTestChildren(xLefts[medianIdx + 1 + i], xRights[medianIdx + 1 + i], medianPoint.x + i*xInc, 'x');
+		NODE.buildTestChildren(yLefts[medianIdx + 1 + i], yRights[medianIdx + 1 + i], medianPoint.y + i*yInc, 'y');
+		NODE.buildTestChildren(zLefts[medianIdx + 1 + i], zRights[medianIdx + 1 + i], medianPoint.z + i*zInc, 'z');
 	}
 
 	// Find best test children
@@ -199,14 +199,14 @@ void BVHNode::build(const int targetIndex){
 		}
 	}
 	// What if none is better?
-	if(bestScore >= getSAH()){
+	if(bestScore >= NODE.getSAH()){
 		// Terminate!
-		leftChildIndex = rightChildIndex = -1;
+		NODE.leftChildIndex = NODE.rightChildIndex = -1;
 		return;
 	}
 	// One of them is better!
 	// Free to empty my pointers.
-	primitives.clear();
+	NODE.primitives.clear();
 	if(bestDim == 'x'){
 		worldPtr->bvh.push_back(xLefts[bestIndex]);
 	}
@@ -216,8 +216,8 @@ void BVHNode::build(const int targetIndex){
 	else{
 		worldPtr->bvh.push_back(zLefts[bestIndex]);
 	}
-	leftChildIndex = worldPtr->bvh.size() - 1;
-	worldPtr->bvh[leftChildIndex].build();
+	NODE.leftChildIndex = worldPtr->bvh.size() - 1;
+	buildBVH(NODE.leftChildIndex);
 	if(bestDim == 'x'){
 		worldPtr->bvh.push_back(xRights[bestIndex]);
 	}
@@ -227,8 +227,8 @@ void BVHNode::build(const int targetIndex){
 	else{
 		worldPtr->bvh.push_back(zRights[bestIndex]);
 	}
-	rightChildIndex = worldPtr->bvh.size() - 1;
-	worldPtr->bvh[rightChildIndex].build();
+	NODE.rightChildIndex = worldPtr->bvh.size() - 1;
+	buildBVH(NODE.rightChildIndex);
 
 	#undef 		NODE
 }
