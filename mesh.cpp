@@ -46,7 +46,6 @@ Mesh& Mesh::operator=(const Mesh& rhs){
 // ---- Destructor ----
 Mesh::~Mesh(){
 	clear();
-	delete sdr;
 }
 
 Mesh* Mesh::clone(){
@@ -273,9 +272,10 @@ bool Mesh::load(const char* filename){
 }
 
 void Mesh::setShader(const Shader& _sdr){
+	// Sets all children to point to same shader.
 	sdr  = _sdr.clone();
 	for(size_t i = 0; i < faces.size(); i++){
-		faces[i]->sdr = _sdr.clone();
+		faces[i]->setShader(_sdr);
 	}
 }
 

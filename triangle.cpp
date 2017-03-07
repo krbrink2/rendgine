@@ -10,6 +10,7 @@ Triangle::Triangle():
 	n(0, 1, 0){
 }
 
+// Constructor
 Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 	Object(),
 	v0(_v0),

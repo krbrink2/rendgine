@@ -18,10 +18,12 @@ public:
 	virtual Point3D getMinPoint() = 0;
 	virtual Point3D getMedPoint() = 0;
 	virtual void addPrimitives(std::vector<Object*>& vect) = 0;
+	virtual void setShader(const Shader& _sdr);
 
 	Shader* sdr;
 
 protected:
+
 
 };
 

@@ -15,3 +15,9 @@ Object::~Object(){
 	if(sdr != NULL)
 		delete sdr;
 }
+
+void Object::setShader(const Shader& _sdr){
+	if(sdr != NULL)
+		delete sdr;
+	sdr = _sdr.clone();
+}

@@ -7,21 +7,27 @@
 Ashikhmin::Ashikhmin():
 	Shader(),
 	nu(100),
-	nv(100)
+	nv(100),
+	kdiff(.5),
+	kspec(.5)
 {}
 
 // ---- Constructor ----
 Ashikhmin::Ashikhmin(int _nu, int _nv):
 	Shader(),
 	nu(_nu),
-	nv(_nv)
+	nv(_nv),
+	kdiff(.5),
+	kspec(.5)
 {}
 
 // ---- Copy consructor ----
 Ashikhmin::Ashikhmin(const Ashikhmin& ash):
 	Shader(ash),
 	nu(ash.nu),
-	nv(ash.nv)
+	nv(ash.nv),
+	kdiff(ash.kdiff),
+	kspec(ash.kspec)
 {}
 
 // ---- Assignment operator ----
@@ -29,6 +35,8 @@ Ashikhmin& Ashikhmin::operator=(const Ashikhmin& rhs){
 	c = rhs.c;
 	nu = rhs.nu;
 	nv = rhs.nv;
+	kdiff = rhs.kdiff;
+	kspec = rhs.kdiff;
 	return *this;
 }
 

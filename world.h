@@ -46,7 +46,8 @@ public:
 	void build(void);
 	void addDefaultObjects(void);
 	void addBunny(void);
-	void clearObjects();
+	void clearObjects(void);
+	void clearLights(void);
 	void setViewCoords(void);
 	void renderScene(void) const;
 	void renderAnimation(void);

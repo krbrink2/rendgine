@@ -15,13 +15,13 @@
 // Acceleration structures
 #define USE_BVH 			(true)
 // Animation
-#define ANIMATE				(true)
-#define NUM_FRAMES			(1)
-#define ANIMATION_VECTOR	Vector3D(.02, 0, 0)
+#define ANIMATE				(false)
+#define NUM_FRAMES			(92)
+#define ANIMATION_VECTOR	Vector3D(.002, -.0005, 0)
 
 // Bunny:
 #define S 		(.002)
-#define	EYE 	Point3D(0, .5, .8)
+#define	EYE 	Point3D(0, .3, .8)
 #define	LOOKAT 	Point3D(-.025, .065, 0)
 #define	D 		(3)
 

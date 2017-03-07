@@ -39,6 +39,7 @@ int main(int argc, char* argv[]){
 		worldPtr->renderAnimation();
 	else
 		worldPtr->renderScene();
+	delete worldPtr;
 	return 0;
 
 

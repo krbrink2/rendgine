@@ -41,6 +41,7 @@ World& World::operator=(const World& w){
 // ---- Destuctor ----
 World::~World(){
 	clearObjects();
+	clearLights();
 }
 
 // Function name:		build
@@ -65,16 +66,11 @@ void World::build(void){
 
 	// Add objects
 	setViewCoords();
-	addDefaultObjects();
-	// addBunny();
-	// objects.push_back(new Sphere(1, Point3D(0, 0, 0)));
-	// Ashikhmin ash;
-	// ash.kdiff = ash.kspec = .5;
-	// ash.c = RGBColor(255, 100, 100);
-	// objects.back()->sdr = ash.clone();
+	//addDefaultObjects();
+	addBunny();
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(-15, 15, 15)));
+	lights.push_back(new PointLight(Point3D(-.2, .4, .3)));
 	lights.back()->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights.back()->color = RGBColor(40, 30, 30);
@@ -101,6 +97,9 @@ void World::clearObjects(void){
 		objects[i] = NULL;
 	}
 	objects.clear();
+}
+
+void World::clearLights(void){
 	for(size_t i = 0; i < lights.size(); i++){
 		delete lights[i];
 		lights[i] = NULL;
@@ -114,7 +113,6 @@ void World::clearObjects(void){
 // Return value:		None
 // Any other output:	None
 void World::addDefaultObjects(void){
-	clearObjects();
 	// Plane
 	Normal n(-1, 1, 5.2);
 	n.normalize();
@@ -126,24 +124,24 @@ void World::addDefaultObjects(void){
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
-	objects.back()->sdr = ash.clone();
+	objects.back()->setShader(ash);
 
 	// Sphere 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
-	objects[2]->sdr->c = RGBColor(0, 0, 255);	
+	objects.back()->sdr->c = RGBColor(0, 0, 255);	
 
 	// Triangle0
 	objects.push_back(new Triangle(
 		Point3D(0, 0, -10),
 		Point3D(-10, 12, -10),
 		Point3D(-10, -12, -10)));
-	objects[3]->sdr->c = RGBColor(0, 255, 255);
+	objects.back()->sdr->c = RGBColor(0, 255, 255);
 	// Triangle1
 	objects.push_back(new Triangle(
 		Point3D(4, 4, -10),
 		Point3D(15, 10, -10),
 		Point3D(0, 15, -10)));
-	objects[4]->sdr->c = RGBColor(255, 0, 255);
+	objects.back()->sdr->c = RGBColor(255, 0, 255);
 }
 
 void World::addBunny(void){
@@ -151,8 +149,8 @@ void World::addBunny(void){
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
 	Ashikhmin ash;
-	ash.kdiff = .8;
-	ash.kspec = .4;
+	ash.kdiff = .5;
+	ash.kspec = .5;
 	ash.c = RGBColor(226, 114, 91);
 	bunnyPtr->setShader(ash);
 	if(!bunnyPtr->loaded){
@@ -214,19 +212,19 @@ void World::renderScene(void) const{
 
 void World::renderAnimation(void){
 	std::cout << "> Beginning animation render..." << std::endl;
-	objects.clear();
+	clearObjects();
 
 	// Add sphere at default location
-	objects.push_back(new Sphere(.01, Point3D(-.1, .1, 0)));
+	objects.push_back(new Sphere(.01, Point3D(-.1, .1, .1)));
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
-	objects.back()->sdr = ash.clone();
+	objects.back()->setShader(ash);
 	addBunny();
 	// Add floor
-	double floorScale = 1;
-	double floorHeight = 0;
-	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.001, -floorScale),
+	double floorScale = .3;
+	double floorHeight = .037;
+	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.00001, -floorScale+.00001),
 									Point3D(-floorScale, floorHeight, floorScale),
 									Point3D(floorScale, floorHeight, -floorScale)));
 	objects.back()->sdr->c = RGBColor(255, 0, 0);
@@ -236,7 +234,7 @@ void World::renderAnimation(void){
 	objects.back()->sdr->c = RGBColor(0, 0, 255);
 
 	Vector3D delta = ANIMATION_VECTOR;
-	double gravity = -.02;
+	double gravity = -.001;
 
 	// For each frame...
 	for(int frame = 0; frame < NUM_FRAMES; frame++){
@@ -287,7 +285,7 @@ void World::renderAnimation(void){
 		double testHeight = ((Sphere*)(objects.front()))->c.y;
 		testHeight -= ((Sphere*)(objects.front()))->r;
 		testHeight += delta.y;
-		if( testHeight <= 0){
+		if( testHeight <= floorHeight){
 			delta.y = .8*-delta.y;
 
 		}
