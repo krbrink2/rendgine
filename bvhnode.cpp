@@ -123,13 +123,15 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, double bound, cha
 	}
 }
 
-void BVHNode::build(){
+void BVHNode::build(const int targetIndex){
+	#define 	NODE 	worldPtr->bvh[targetIndex] 
+
 	// You've got a bunch of primitives in your vector already.
 	computePoints();
 
 	// Terminate build at constant number.
-	if(primitives.size() <= TERMINATE_NUMBER){
-		leftChildIndex = rightChildIndex = -1;
+	if(NODEprimitives.size() <= TERMINATE_NUMBER){
+		NODEleftChildIndex = NODErightChildIndex = -1;
 		return;
 	}
 
@@ -141,30 +143,30 @@ void BVHNode::build(){
 	BVHNode zRights[NUM_BVH_TESTS*2 + 1];
 	int medianIdx = NUM_BVH_TESTS;
 	Point3D medianPoint(0,0,0);
-	for(size_t i = 0; i < primitives.size(); i++){
-		medianPoint = medianPoint + primitives[i]->getMedPoint();
+	for(size_t i = 0; i < NODEprimitives.size(); i++){
+		medianPoint = medianPoint + NODEprimitives[i]->getMedPoint();
 	}
-	medianPoint.x /= (double)(primitives.size());
-	medianPoint.y /= (double)(primitives.size());
-	medianPoint.z /= (double)(primitives.size());
+	medianPoint.x /= (double)(NODEprimitives.size());
+	medianPoint.y /= (double)(NODEprimitives.size());
+	medianPoint.z /= (double)(NODEprimitives.size());
 
 	// Build median test children
 	buildTestChildren(xLefts[medianIdx], xRights[medianIdx], medianPoint.x, 'x');
 	buildTestChildren(yLefts[medianIdx], yRights[medianIdx], medianPoint.y, 'y');
 	buildTestChildren(zLefts[medianIdx], zRights[medianIdx], medianPoint.z, 'z');
 	// Build test children on left
-	double xInc = (medianPoint.x - minPoint.x)/(2*NUM_BVH_TESTS + 2);
-	double yInc = (medianPoint.y - minPoint.y)/(2*NUM_BVH_TESTS + 2);
-	double zInc = (medianPoint.z - minPoint.z)/(2*NUM_BVH_TESTS + 2);
+	double xInc = (medianPoint.x - NODEminPoint.x)/(2*NUM_BVH_TESTS + 2);
+	double yInc = (medianPoint.y - NODEminPoint.y)/(2*NUM_BVH_TESTS + 2);
+	double zInc = (medianPoint.z - NODEminPoint.z)/(2*NUM_BVH_TESTS + 2);
 	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
-		buildTestChildren(xLefts[i], xRights[i], minPoint.x + i*xInc, 'x');
-		buildTestChildren(yLefts[i], yRights[i], minPoint.y + i*yInc, 'y');
-		buildTestChildren(zLefts[i], zRights[i], minPoint.z + i*zInc, 'z');
+		buildTestChildren(xLefts[i], xRights[i], NODEminPoint.x + i*xInc, 'x');
+		buildTestChildren(yLefts[i], yRights[i], NODEminPoint.y + i*yInc, 'y');
+		buildTestChildren(zLefts[i], zRights[i], NODEminPoint.z + i*zInc, 'z');
 	}
 	// Build test children on right
-	xInc = (maxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
-	yInc = (maxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
-	zInc = (maxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
+	xInc = (NODEmaxPoint.x - medianPoint.x)/(2*NUM_BVH_TESTS + 2);
+	yInc = (NODEmaxPoint.y - medianPoint.y)/(2*NUM_BVH_TESTS + 2);
+	zInc = (NODEmaxPoint.z - medianPoint.z)/(2*NUM_BVH_TESTS + 2);
 	for(size_t i = 0; i < NUM_BVH_TESTS; i++){
 		buildTestChildren(xLefts[medianIdx + 1 + i], xRights[medianIdx + 1 + i], medianPoint.x + i*xInc, 'x');
 		buildTestChildren(yLefts[medianIdx + 1 + i], yRights[medianIdx + 1 + i], medianPoint.y + i*yInc, 'y');
@@ -227,6 +229,8 @@ void BVHNode::build(){
 	}
 	rightChildIndex = worldPtr->bvh.size() - 1;
 	worldPtr->bvh[rightChildIndex].build();
+
+	#undef 		NODE
 }
 
 // Get surface area heuristic value

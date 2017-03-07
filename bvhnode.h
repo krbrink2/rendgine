@@ -22,7 +22,7 @@ public:
 	Point3D getMedPoint() const;
 	double getSurfaceArea() const;
 	void computePoints();
-	void build();
+	void build(const int targetIndex);
 	double getSAH() const;
 
 	int leftChildIndex, rightChildIndex;
