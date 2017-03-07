@@ -65,8 +65,8 @@ void World::build(void){
 
 	// Add objects
 	setViewCoords();
-	//addDefaultObjects();
-	addBunny();
+	addDefaultObjects();
+	// addBunny();
 	// objects.push_back(new Sphere(1, Point3D(0, 0, 0)));
 	// Ashikhmin ash;
 	// ash.kdiff = ash.kspec = .5;
@@ -147,7 +147,7 @@ void World::addDefaultObjects(void){
 }
 
 void World::addBunny(void){
-	clearObjects();
+	//clearObjects();
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
 	Ashikhmin ash;
@@ -217,19 +217,30 @@ void World::renderAnimation(void){
 	objects.clear();
 
 	// Add sphere at default location
-	objects.push_back(new Sphere(3, Point3D(0, 6, 0)));
+	objects.push_back(new Sphere(.01, Point3D(-.1, .1, 0)));
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
 	objects.back()->sdr = ash.clone();
+	addBunny();
 	// Add floor
-	// objects.push_back(new Plane(Point3D(0,0,0), Normal(0, 1, 0)));
-	// objects.back()->sdr->c = RGBColor(40, 40, 40);
+	double floorScale = 1;
+	double floorHeight = 0;
+	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.001, -floorScale),
+									Point3D(-floorScale, floorHeight, floorScale),
+									Point3D(floorScale, floorHeight, -floorScale)));
+	objects.back()->sdr->c = RGBColor(255, 0, 0);
+	objects.push_back(new Triangle(	Point3D(floorScale, floorHeight, -floorScale),
+									Point3D(-floorScale, floorHeight, floorScale),
+									Point3D(floorScale, floorHeight, floorScale)));
+	objects.back()->sdr->c = RGBColor(0, 0, 255);
 
 	Vector3D delta = ANIMATION_VECTOR;
+	double gravity = -.02;
 
 	// For each frame...
 	for(int frame = 0; frame < NUM_FRAMES; frame++){
+		std::cout << "> Rendering frame " << frame << endl;
 		// Rebuild
 		if(USE_BVH){
 			bvh.clear();
@@ -273,14 +284,15 @@ void World::renderAnimation(void){
 		encodeOneStep(pngName.c_str(), image, hres, vres);
 	
 		// Update location
-		double testHeight = ((Sphere*)(objects.front()))->c.z;
+		double testHeight = ((Sphere*)(objects.front()))->c.y;
 		testHeight -= ((Sphere*)(objects.front()))->r;
-		testHeight += delta.z;
+		testHeight += delta.y;
 		if( testHeight <= 0){
-			delta.z = -delta.z;
+			delta.y = .8*-delta.y;
+
 		}
 		((Sphere*)(objects.front()))->c = ((Sphere*)(objects.front()))->c + delta;
-		delta.z += -.5;						// Gravity
+		delta.y += gravity;
 	}
 
 
