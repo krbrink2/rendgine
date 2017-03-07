@@ -2,6 +2,7 @@
 #include <math.h>
 #include <assert.h>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -209,6 +210,80 @@ void World::renderScene(void) const{
 		}
 	}
 	encodeOneStep(pngName, image, hres, vres);
+}
+
+void World::renderAnimation(void){
+	std::cout << "> Beginning animation render..." << std::endl;
+	objects.clear();
+
+	// Add sphere at default location
+	objects.push_back(new Sphere(3, Point3D(0, 6, 0)));
+	Ashikhmin ash;
+	ash.kspec = ash.kdiff = .5;
+	ash.c = RGBColor(255, 80, 20);
+	objects.back()->sdr = ash.clone();
+	// Add floor
+	// objects.push_back(new Plane(Point3D(0,0,0), Normal(0, 1, 0)));
+	// objects.back()->sdr->c = RGBColor(40, 40, 40);
+
+	Vector3D delta = ANIMATION_VECTOR;
+
+	// For each frame...
+	for(int frame = 0; frame < NUM_FRAMES; frame++){
+		// Rebuild
+		if(USE_BVH){
+			bvh.clear();
+			// Build BVH
+			bvh.push_back(BVHNode());
+			for(size_t i = 0; i < objects.size(); i++){
+				// Have this object add its primitives to the bvh root
+				objects[i]->addPrimitives(bvh.back().primitives);
+			}
+			std::cout << "> Building bounding volume hierarchy..." << std::endl;
+			buildBVH(0);
+			std::cout << "> Bounding volume hierarchy successfully built." << std::endl;
+		}
+
+		// Render image
+		// Note: may need to make ints fixed length
+		std::string pngName("a");
+		pngName += std::to_string(frame);
+		pngName += ".png";
+		std::vector<unsigned char> image;
+		image.resize(hres * vres * 4);
+		// For each pixel...
+		for(int y = 0; y < vres; y++){
+			for(int x = 0; x < hres; x++){
+				RGBColor c;
+				if(orthographic)
+					c = computePixelOrtho(x, y);
+				else
+					// Change for perspective
+					c = computePixelPerspec(x, y);
+				image[4*hres*y + 4*x + 0] = c.r;
+				image[4*hres*y + 4*x + 1] = c.g;
+				image[4*hres*y + 4*x + 2] = c.b;
+				image[4*hres*y + 4*x + 3] = 255;
+			}
+			// Report status
+			if(y % 20 == 0){
+				std::cout << "  >>" << ((float)y/VRES) << "%" << endl;
+			}
+		}
+		encodeOneStep(pngName.c_str(), image, hres, vres);
+	
+		// Update location
+		double testHeight = ((Sphere*)(objects.front()))->c.z;
+		testHeight -= ((Sphere*)(objects.front()))->r;
+		testHeight += delta.z;
+		if( testHeight <= 0){
+			delta.z = -delta.z;
+		}
+		((Sphere*)(objects.front()))->c = ((Sphere*)(objects.front()))->c + delta;
+		delta.z += -.5;						// Gravity
+	}
+
+
 }
 
 // Function name:		computePixelOrtho

@@ -49,6 +49,7 @@ public:
 	void clearObjects();
 	void setViewCoords(void);
 	void renderScene(void) const;
+	void renderAnimation(void);
 	RGBColor computePixelOrtho(const int x, const int y) const;
 	RGBColor computePixelPerspec(const int x, const int y) const;
 	void traceRay(const Ray& ray, ShadeRec& sr) const;

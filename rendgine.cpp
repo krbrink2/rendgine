@@ -35,7 +35,10 @@ int main(int argc, char* argv[]){
 
 	worldPtr = new World();
 	worldPtr->build();
-	worldPtr->renderScene();
+	if(ANIMATE)
+		worldPtr->renderAnimation();
+	else
+		worldPtr->renderScene();
 	return 0;
 
 
