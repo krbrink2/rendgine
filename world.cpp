@@ -74,17 +74,23 @@ void World::build(void){
 
 	//@luces
 	lights.push_back(new PointLight(Point3D(-15, 15, 15)));
-	lights[0]->color = RGBColor(255, 255, 255);
+	lights.back()->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
-	//lights[1]->color = RGBColor(40, 30, 30);
+	//lights.back()->color = RGBColor(40, 30, 30);
+	// lights.push_back(new PointLight(Point3D(15, -10, 10)));
+	// lights.back()->color = RGBColor(4, 4, 6);
 
-	// Build BVH
-	bvh.push_back(BVHNode());
-	for(size_t i = 0; i < objects.size(); i++){
-		// Have this object add its primitives to the bvh root
-		objects[i]->addPrimitives(bvh.back().primitives);
+	if(USE_BVH){
+		// Build BVH
+		bvh.push_back(BVHNode());
+		for(size_t i = 0; i < objects.size(); i++){
+			// Have this object add its primitives to the bvh root
+			objects[i]->addPrimitives(bvh.back().primitives);
+		}
+		std::cout << "> Building bounding volume hierarchy..." << std::endl;
+		buildBVH(0);
+		std::cout << "> Bounding volume hierarchy successfully built." << std::endl;
 	}
-	buildBVH(0);
 	
 }
 
@@ -177,6 +183,7 @@ void World::setViewCoords(void){
 // Return value:		None
 // Any other output:	Writes image file to disk
 void World::renderScene(void) const{
+	std::cout << "> Beginning render..." << std::endl;
 	//generate some image
 	const char* pngName = "image.png";
 	std::vector<unsigned char> image;
@@ -347,6 +354,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 			vpp += wy * vy;
 			// Generate direction
 			Vector3D d = vpp - E;
+			d.normalize();
 			// Create ray
 			Ray ray(o, d);
 			// Trace ray
@@ -373,10 +381,14 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 // Return value:		None (returns information thru sr)
 // Any other output:	None
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{
-	// Let every object check against this ray,
+	// Let objects check against this ray,
 	//	using sr to record information.
-	for(size_t i = 0; i < objects.size(); i++){
-		objects[i]->hit(ray, sr);
+	if(USE_BVH)
+		bvh[0].hit(ray, sr);
+	else{
+		for(size_t i = 0; i < objects.size(); i++){
+			objects[i]->hit(ray, sr);
+		}
 	}
 }
 

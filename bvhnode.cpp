@@ -48,14 +48,14 @@ bool BVHNode::hitBB(const Ray& ray) const{
 		tmax = min(tmax, max(t1, t2));
 	}
 	if(std::fabs(ray.d.y) > kEpsilon){
-		double t1 = (minPoint.y - ray.o.x)/ray.d.y;
-		double t2 = (maxPoint.y - ray.o.x)/ray.d.y;
+		double t1 = (minPoint.y - ray.o.y)/ray.d.y;
+		double t2 = (maxPoint.y - ray.o.y)/ray.d.y;
 		tmin = max(tmin, min(t1, t2));
 		tmax = min(tmax, max(t1, t2));
 	}
 	if(std::fabs(ray.d.z) > kEpsilon){
-		double t1 = (minPoint.z - ray.o.x)/ray.d.z;
-		double t2 = (maxPoint.z - ray.o.x)/ray.d.z;
+		double t1 = (minPoint.z - ray.o.z)/ray.d.z;
+		double t2 = (maxPoint.z - ray.o.z)/ray.d.z;
 		tmin = max(tmin, min(t1, t2));
 		tmax = min(tmax, max(t1, t2));
 	}
