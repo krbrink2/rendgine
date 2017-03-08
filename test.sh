@@ -1,3 +1,3 @@
 #!/bin/bash
-make && ./rendgine && xdg-open image.png
+make && ./MP_2_TEST && xdg-open image.png
 

@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
-TARGET = rendgine
+TARGET = MP_2_TEST
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = ashikhmin.o bvhnode.o dirlight.o light.o lodepng.o mesh.o object.o plane.o pointlight.o shader.o \

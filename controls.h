@@ -4,8 +4,8 @@
 // Compilation controls. This will handle render parameters for now.
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(1)
-#define SQRT_NUM_SAMPLES	(1)
+#define NUM_SAMPLES 		(4)
+#define SQRT_NUM_SAMPLES	(2)
 // Resolution
 #define	HRES 				(500)	// 1366,	1920
 #define VRES 				(500)	// 768,		1080
@@ -17,15 +17,14 @@
 #define BENCHMARK_NUM_SPHERES	(1000)
 // Animation
 #define ANIMATE				(false)
-#define NUM_FRAMES			(40)
+#define NUM_FRAMES			(20)
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 
 // Bunny:
-// #define S 		(.002)
-// #define	EYE 	Point3D(0, .3, .8)
-// #define	LOOKAT 	Point3D(-.025, .065, 0)
-// #define	D 		(3)
-
+#define S 		(.002)
+#define	EYE 	Point3D(0, .3, .8)
+#define	LOOKAT 	Point3D(-.025, .065, 0)
+#define	D 		(3)
 
 // Defaults:
 // #define S 		(.02)
@@ -34,10 +33,10 @@
 // #define D 		(7)
 
 // Many spheres:
-#define S 		(.02)
-#define	EYE		Point3D(-1, 1, 1)
-#define LOOKAT	Point3D(.5, .5, .5)
-#define D 		(14)
+// #define S 		(.02)
+// #define	EYE		Point3D(-1, 1, 1)
+// #define LOOKAT	Point3D(.5, .5, .5)
+// #define D 		(14)
 
 
 

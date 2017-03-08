@@ -70,11 +70,11 @@ void World::build(void){
 	// Add objects
 	setViewCoords();
 	//addDefaultObjects();
-	//addBunny();
-	addManySpheres(BENCHMARK_NUM_SPHERES);
+	addBunny();
+	//addManySpheres(BENCHMARK_NUM_SPHERES);
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(-.2, .4, .3)));
+	lights.push_back(new PointLight(Point3D(-.1, .2, .15)));
 	lights.back()->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights.back()->color = RGBColor(40, 30, 30);
