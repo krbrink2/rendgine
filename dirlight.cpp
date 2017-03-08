@@ -18,6 +18,11 @@ DirLight::DirLight(const Vector3D& dir):
 
 }
 
+// Function name:		getIrradiacne
+// Function purpose:	Get irradiance from this light to point p.
+// Parameters:			Point p
+// Return value:		Irradiance
+// Any other output:	none
 RGBColor DirLight::getIrradiance(const Point3D& p){
 	// Check to see if p is in a shadow.
 	Ray ray;
@@ -34,6 +39,8 @@ RGBColor DirLight::getIrradiance(const Point3D& p){
 		return color;
 }
 
+// Function name:		getDirection
+// Function purpose:	Get direction from p to this light.
 Vector3D DirLight::getDirection(const Point3D& p){
 	return direction;
 }

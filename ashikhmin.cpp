@@ -44,6 +44,11 @@ Ashikhmin& Ashikhmin::operator=(const Ashikhmin& rhs){
 Ashikhmin::~Ashikhmin(){
 }
 
+// Function name:		shade
+// Function purpose:	BRDf
+// Parameters:			World for reference, sr for data
+// Return value:		Color
+// Any other output:	none
 RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 	RGBColor accum(0,0,0);
 
@@ -87,6 +92,11 @@ RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 	return accum;
 }
 
+// Function name:		clone
+// Function purpose:	Returns pointer to clone of this Ashikhmin.
+// Parameters:			none
+// Return value:		Pointer to new shader.
+// Any other output:	none
 Ashikhmin* Ashikhmin::clone(){
 	return new Ashikhmin(*this);
 }	

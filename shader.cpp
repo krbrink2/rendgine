@@ -64,6 +64,8 @@ RGBColor Shader::operator()(const World& w, const ShadeRec& sr){
 	return shade(w, sr);
 }
 
+// Function name:		clone
+// Function purpose:	Returns pointer to clone of this shader.
 Shader* Shader::clone() const{
 	return new Shader(*this);
 }

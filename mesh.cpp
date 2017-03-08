@@ -52,6 +52,8 @@ Mesh* Mesh::clone(){
 	return new Mesh(*this);
 }
 
+// Function name:		getMinPoint
+// Return value:		minPoint of this mesh volume
 Point3D Mesh::getMinPoint(){
 	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
 	for(size_t i = 0; i < faces.size(); i++){
@@ -63,6 +65,8 @@ Point3D Mesh::getMinPoint(){
 	return minPoint;
 }
 
+// Function name:		getMaxPoint
+// Parameters:			maxPoint of this mesh volue
 Point3D Mesh::getMaxPoint(){
 	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
 	for(size_t i = 0; i < faces.size(); i++){
@@ -74,16 +78,25 @@ Point3D Mesh::getMaxPoint(){
 	return maxPoint;
 }
 
+// Function name:		getMedPoint
+// Parameters:			Median point of this mesh volume.
 Point3D Mesh::getMedPoint(){
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
+// Function name:		addPrimitives
+// Function purpose:	Adds this mesh's primitives to vect.
 void Mesh::addPrimitives(std::vector<Object*>& vect){
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->addPrimitives(vect);
 	}
 }
 
+// Function name:		hit
+// Function purpose:	hit function for this mesh object
+// Parameters:			ray to trace, sr to record.
+// Return value:		True if hit
+// Any other output:	Writes to sr
 bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->hit(ray, sr);
@@ -91,7 +104,9 @@ bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 	return sr.hitObject;
 }
 
-// Helper function
+// Function name:		clear
+// Function purpose:	Frees and resets this mesh
+// Any other output:	none
 void Mesh::clear(void){
 	for(size_t i = 0; i < faces.size(); i++){
 		delete faces[i];
@@ -103,6 +118,11 @@ void Mesh::clear(void){
 	numTriangles = 0;
 }
 
+// Function name:		dataPass
+// Function purpose:	Helper: pulls vertices and normals from file.
+// Parameters:			file to read, vertex and normal arrays to push to.
+// Return value:		True if successful.
+// Any other output:	none
 bool Mesh::dataPass(FILE* file, std::vector<Point3D>& vertices, 
 	std::vector<Normal>& normals){
 	maxs = Vector3D(-FLT_MAX);
@@ -147,7 +167,11 @@ bool Mesh::dataPass(FILE* file, std::vector<Point3D>& vertices,
 	return true;
 }
 
-
+// Function name:		facePass
+// Function purpose:	Helper; reads faces from file, adds them to faces vector.
+// Parameters:			file to read, vertices and normals for generating faces.
+// Return value:		True if successful.
+// Any other output:	Writes to faces vector.
 bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices, 
 	std::vector<Normal>& normals){
 
@@ -242,7 +266,12 @@ bool Mesh::facePass(FILE* file, std::vector<Point3D>& 	vertices,
 	return true;
 }
 
-
+// Function name:		load
+// Function purpose:	Loads .obj into this mesh.
+// Parameters:			filename to read from.
+// Return value:		True if successful
+// Any other output:	Loads this mesh.
+// Inspired by https://github.com/wdas/brdf/blob/master/src/brdf/SimpleModel.cpp
 bool Mesh::load(const char* filename){
 	clear(); 		// Clear faces
 
@@ -271,6 +300,9 @@ bool Mesh::load(const char* filename){
 	return true;
 }
 
+// Function name:		setShader
+// Function purpose:	Sets all shaders in this mesh to copy of _sdr.
+// Parameters:			_sdr to be copied.
 void Mesh::setShader(const Shader& _sdr){
 	// Sets all children to point to same shader.
 	if(sdr != NULL)
@@ -280,23 +312,4 @@ void Mesh::setShader(const Shader& _sdr){
 		faces[i]->setShader(_sdr);
 	}
 }
-
-
-
-
-
-
-
-// Function name:		
-// Function purpose:	
-// Parameters:			
-// Return value:		
-// Any other output:	
-
-
-
-
-
-
-
 

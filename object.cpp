@@ -16,6 +16,11 @@ Object::~Object(){
 		delete sdr;
 }
 
+// Function name:		setShader
+// Function purpose:	sets sdr to be copy of _sdr.
+// Parameters:			_sdr to be copied.
+// Return value:		none
+// Any other output:	Writes sdr.
 void Object::setShader(const Shader& _sdr){
 	if(sdr != NULL)
 		delete sdr;

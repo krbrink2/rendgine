@@ -94,6 +94,11 @@ void World::build(void){
 	
 }
 
+// Function name:		clearObjects
+// Function purpose:	Deletes all Objects
+// Parameters:			none
+// Return value:		none
+// Any other output:	none
 void World::clearObjects(void){
 	for(size_t i = 0; i < objects.size(); i++){
 		delete objects[i];
@@ -102,6 +107,11 @@ void World::clearObjects(void){
 	objects.clear();
 }
 
+// Function name:		clearLights
+// Function purpose:	Deletes all Lights.
+// Parameters:			none
+// Return value:		none
+// Any other output:	none
 void World::clearLights(void){
 	for(size_t i = 0; i < lights.size(); i++){
 		delete lights[i];
@@ -147,6 +157,11 @@ void World::addDefaultObjects(void){
 	objects.back()->sdr->c = RGBColor(255, 0, 255);
 }
 
+// Function name:		addBunny
+// Function purpose:	Adds bunny.obj to objects vector.
+// Parameters:			none
+// Return value:		none
+// Any other output:	Reports if load failed.
 void World::addBunny(void){
 	//clearObjects();
 	const char bunny[128] = "bunny.obj";
@@ -213,6 +228,11 @@ void World::renderScene(void) const{
 	encodeOneStep(pngName, image, hres, vres);
 }
 
+// Function name:		renderAnimation
+// Function purpose:	Render animation to a000.png, a001.png, etc.
+// Parameters:			none
+// Return value:		none
+// Any other output:	Writes image files to disk.
 void World::renderAnimation(void){
 	std::cout << "> Beginning animation render..." << std::endl;
 	clearObjects();
@@ -222,7 +242,7 @@ void World::renderAnimation(void){
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
-	objects.back()->setShader(ash);
+	objects.back()->sdr = ash.clone();//setShader(ash);
 	addBunny();
 	// Add floor
 	double floorScale = .3;

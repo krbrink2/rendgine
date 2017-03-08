@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir frames 2> /dev/null
 rm frames/*
 make && ./rendgine && mv a*.png frames
 cd frames

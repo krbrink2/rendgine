@@ -8,8 +8,14 @@ lodepng.cpp
 Most of Triangle::hit
 1 41 www.raytracegroundup.com/downloads.html
 
+BVHNode::hitBB(...)
+2 https://tavianator.com/fast-branchless-raybounding-box-intersections/
+
 A subset of Kevin Suffern's Utilities library. All c++ code starting with a capital letter is his. This does not include the ShadeRec class.
 1 1710 www.raytracegroundup.com/downloads.html
 
 The main function was inspired by Suffern.
 1 9 www.raytracegroundup.com/downloads.html
+
+Mesh::load
+1 https://github.com/wdas/brdf/blob/master/src/brdf/SimpleModel.cpp

@@ -13,6 +13,11 @@ PointLight::PointLight(const Point3D& p):
 	point(p)
 {}
 
+// Function name:		getIrradiance
+// Function purpose:	Find irradiance point p receives from this light source.
+// Parameters:			Point p
+// Return value:		Irradiance
+// Any other output:	none
 RGBColor PointLight::getIrradiance(const Point3D& p){
 	// Check to see if this point is in shadow.
 	Ray ray;
@@ -30,6 +35,8 @@ RGBColor PointLight::getIrradiance(const Point3D& p){
 		return color;
 }
 
+// Function name:		getDirection
+// Function purpose:	Get direction to this light from p.
 Vector3D PointLight::getDirection(const Point3D& p){
 	Vector3D direction = point - p;
 	direction.normalize();

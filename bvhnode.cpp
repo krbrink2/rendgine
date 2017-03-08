@@ -5,6 +5,7 @@
 
 extern World* worldPtr;
 
+// ---- Default constructor ----
 BVHNode::BVHNode():
 	leftChildIndex(-1),
 	rightChildIndex(-1),
@@ -12,6 +13,11 @@ BVHNode::BVHNode():
 	maxPoint(Point3D(0,0,0))
 {}
 
+// Function name:		hit
+// Function purpose:	Used for ray intersection
+// Parameters:			Ray to intersect, ShadeRec for recording.
+// Return value:		True if hit.
+// Any other output:	Writes to sr.
 bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
 	bool val = false;
 	// If leaf...
@@ -36,10 +42,14 @@ bool BVHNode::hit(const Ray& ray, ShadeRec& sr) const{
 	return val;
 }
 
+// Function name:		hitBB
+// Function purpose:	Find if Ray hits this bounding volume.
+// Parameters:			Ray to follow.
+// Return value:		True if hit.
+// Any other output:	none
 bool BVHNode::hitBB(const Ray& ray) const{
 	// Code taken from
 	// 	https://tavianator.com/fast-branchless-raybounding-box-intersections/
-	//@TODO 									//@CITE!!!!!!!!!!!!!!!!!!!!!!!!
 	double tmin = -kHugeValue, tmax = kHugeValue;
 	if(std::fabs(ray.d.x) > kEpsilon){
 		double t1 = (minPoint.x - ray.o.x)/ray.d.x;
@@ -62,24 +72,38 @@ bool BVHNode::hitBB(const Ray& ray) const{
 	return tmax > tmin && tmax > 0;
 }
 
+// Getter for maxPoint
 Point3D BVHNode::getMaxPoint() const{
 	return maxPoint;
 }
 
+// Getter for minPoint
 Point3D BVHNode::getMinPoint() const{
 	return minPoint;
 }
 
+// Getter for median point
 Point3D BVHNode::getMedPoint() const{
 	return (maxPoint + minPoint)*.5;
 }
 
+// Function name:		getSurfaceArea
+// Function purpose:	Returns surface area for
+//	surface area heuristic.
+// Parameters:			none
+// Return value:		Surface area
+// Any other output:	none
 double BVHNode::getSurfaceArea() const{
 	return 2*(maxPoint.x - minPoint.x)
 		+ 2*(maxPoint.y - minPoint.y)
 		+ 2*(maxPoint.z - minPoint.z);
 }
 
+// Function name:		computePoints
+// Function purpose:	Sets minPoint and maxPoint
+// Parameters:			none
+// Return value:		none
+// Any other output:	none
 void BVHNode::computePoints(){
 	minPoint = Point3D(kHugeValue, kHugeValue, kHugeValue);
 	maxPoint = Point3D(-kHugeValue, -kHugeValue, -kHugeValue);
@@ -97,7 +121,13 @@ void BVHNode::computePoints(){
 	}
 }
 
-// Helper function
+// Function name:		buildTestChildren
+// Function purpose:	Helpter for buildBVH;
+//	builds left and right BVHNodes as possible split candidates.
+// Parameters:			Blank left and right BVHNode references,
+//	bound for split, and dim as x, y, or z dimension.
+// Return value:		none
+// Any other output:	Writes to left and right
 void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, double bound, char dim){
 	for(size_t i = 0; i < primitives.size(); i++){
 		// Sort primitives.
@@ -123,6 +153,11 @@ void BVHNode::buildTestChildren(BVHNode& left, BVHNode& right, double bound, cha
 	}
 }
 
+// Function name:		buildBVH
+// Function purpose:	Given an index into worldPtr->bvh, builds that subtree.
+// Parameters:			targetIndex to be built
+// Return value:		none
+// Any other output:	Pushes to worldPtr->bvh
 void buildBVH(const int targetIndex){
 	#define 	NODE 	worldPtr->bvh[targetIndex] 
 
@@ -233,7 +268,11 @@ void buildBVH(const int targetIndex){
 	#undef 		NODE
 }
 
-// Get surface area heuristic value
+// Function name:		getSAH
+// Function purpose:	Finds surface area heuristic value.
+// Parameters:			none
+// Return value:		SAH value
+// Any other output:	none
 double BVHNode::getSAH() const{
 	double val = 0;
 	// val = sum of surface area of each primitive's BB
