@@ -46,6 +46,7 @@ public:
 	void build(void);
 	void addDefaultObjects(void);
 	void addBunny(void);
+	void addManySpheres(int num);
 	void clearObjects(void);
 	void clearLights(void);
 	void setViewCoords(void);

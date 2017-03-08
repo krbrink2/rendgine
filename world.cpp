@@ -70,7 +70,8 @@ void World::build(void){
 	// Add objects
 	setViewCoords();
 	//addDefaultObjects();
-	addBunny();
+	//addBunny();
+	addManySpheres(BENCHMARK_NUM_SPHERES);
 
 	//@luces
 	lights.push_back(new PointLight(Point3D(-.2, .4, .3)));
@@ -167,15 +168,24 @@ void World::addBunny(void){
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
 	Ashikhmin ash;
-	ash.kdiff = .5;
-	ash.kspec = .5;
 	ash.c = RGBColor(226, 114, 91);
 	bunnyPtr->setShader(ash);
+	//bunnyPtr->sdr = ash.clone();	//@TODO get mesh.setShader to stop chopping
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 	}
 	else
 		objects.push_back(bunnyPtr);
+}
+
+void World::addManySpheres(int num){
+	for(int i = 0; i < num; i++){
+		objects.push_back(new Sphere(.02, Point3D(rand_float(), rand_float(), rand_float())));
+		Ashikhmin ash;
+		ash.c = RGBColor(rand_int(0, 256), rand_int(0, 256),rand_int(0, 256));
+		objects.back()->sdr = ash.clone();
+
+	}
 }
 
 
@@ -242,7 +252,8 @@ void World::renderAnimation(void){
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
-	objects.back()->sdr = ash.clone();//setShader(ash);
+	objects.back()->sdr = ash.clone();	//@TODO @BUG why does this chop/go to Shader?
+	//objects.back()->setShader(ash);
 	addBunny();
 	// Add floor
 	double floorScale = .3;

@@ -14,16 +14,17 @@
 #define UP 					Vector3D(0, 1, 0)
 // Acceleration structures
 #define USE_BVH 			(true)
+#define BENCHMARK_NUM_SPHERES	(1000)
 // Animation
-#define ANIMATE				(true)
-#define NUM_FRAMES			(1)
+#define ANIMATE				(false)
+#define NUM_FRAMES			(40)
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 
 // Bunny:
-#define S 		(.002)
-#define	EYE 	Point3D(0, .3, .8)
-#define	LOOKAT 	Point3D(-.025, .065, 0)
-#define	D 		(3)
+// #define S 		(.002)
+// #define	EYE 	Point3D(0, .3, .8)
+// #define	LOOKAT 	Point3D(-.025, .065, 0)
+// #define	D 		(3)
 
 
 // Defaults:
@@ -31,6 +32,12 @@
 // #define	EYE		Point3D(0, 1, 15)
 // #define LOOKAT	Point3D(0, 0, 0)
 // #define D 		(7)
+
+// Many spheres:
+#define S 		(.02)
+#define	EYE		Point3D(-1, 1, 1)
+#define LOOKAT	Point3D(.5, .5, .5)
+#define D 		(14)
 
 
 
