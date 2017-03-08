@@ -1,7 +1,7 @@
 Kyle Brinker
 Rendgine ray tracer
 
-To build, run the Makefile. The project uses no external libraries other than std.
+To build, run the Makefile. The executable uses no external libraries other than std, but the animation.sh script uses ffmpeg.
 
 Scene parameters are found as macros in controls.h. The binary rendres the scene into image.png. 
 
