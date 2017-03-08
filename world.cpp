@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <iostream>
 #include <string>
+#include <iomanip>
+#include <sstream>
 
 using namespace std;
 
@@ -42,6 +44,7 @@ World& World::operator=(const World& w){
 World::~World(){
 	clearObjects();
 	clearLights();
+	bvh.clear();
 }
 
 // Function name:		build
@@ -215,7 +218,7 @@ void World::renderAnimation(void){
 	clearObjects();
 
 	// Add sphere at default location
-	objects.push_back(new Sphere(.01, Point3D(-.1, .1, .1)));
+	objects.push_back(new Sphere(.01, Point3D(-.1, .2, .1)));
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
@@ -254,9 +257,10 @@ void World::renderAnimation(void){
 		}
 
 		// Render image
-		// Note: may need to make ints fixed length
 		std::string pngName("a");
-		pngName += std::to_string(frame);
+		std::stringstream ss;
+		ss << std::setw(3) << std::setfill('0') << frame;
+		pngName += ss.str();
 		pngName += ".png";
 		std::vector<unsigned char> image;
 		image.resize(hres * vres * 4);
