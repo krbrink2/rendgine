@@ -9,3 +9,7 @@ To render an animation, change ANIMATE to "true" in controls.h. The binary will 
 
 FOR CS 419:
 I am making an attempt at the extra credit points with animation capabilities. See the google doc for details.
+
+Google doc:
+https://docs.google.com/document/d/12dRJkoQqxV3WtE4y4Y5s7xE9KnMD9Rbi1VUjqLrk9KU/edit
+
