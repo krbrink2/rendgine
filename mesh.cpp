@@ -52,8 +52,24 @@ Mesh* Mesh::clone(){
 
 // Function name:		getMinPoint
 // Return value:		minPoint of this mesh volume
-Point3D Mesh::getMinPoint(){
+Point3D Mesh::getMinPoint() const{
 	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
+	// For each instance...
+	for(const instance& inst : instances){
+		Matrix matrix = inst.matrix;
+		// For each face...
+		for(size_t i = 0; i < faces.size(); i++){
+			Point3D testPoint = matrix * faces[i]->getMinPoint();
+			minPoint.x = min(minPoint.x, testPoint.x);
+			minPoint.y = min(minPoint.y, testPoint.y);
+			minPoint.z = min(minPoint.z, testPoint.z);
+		}
+	}
+	return minPoint;
+
+/*	// How it was done before:
+	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
+	// For each face...
 	for(size_t i = 0; i < faces.size(); i++){
 		Point3D testPoint = faces[i]->getMinPoint();
 		minPoint.x = min(minPoint.x, testPoint.x);
@@ -61,24 +77,30 @@ Point3D Mesh::getMinPoint(){
 		minPoint.z = min(minPoint.z, testPoint.z);
 	}
 	return minPoint;
+*/
 }
 
 // Function name:		getMaxPoint
 // Parameters:			maxPoint of this mesh volue
-Point3D Mesh::getMaxPoint(){
+Point3D Mesh::getMaxPoint() const{
 	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
-	for(size_t i = 0; i < faces.size(); i++){
-		Point3D testPoint = faces[i]->getMaxPoint();
-		maxPoint.x = max(maxPoint.x, testPoint.x);
-		maxPoint.y = max(maxPoint.y, testPoint.y);
-		maxPoint.z = max(maxPoint.z, testPoint.z);
+	// For each instace...
+	for(const instance& inst : instances){
+		Matrix matrix = inst.matrix;
+		// For each face...
+		for(size_t i = 0; i < faces.size(); i++){
+			Point3D testPoint = matrix * faces[i]->getMaxPoint();
+			maxPoint.x = max(maxPoint.x, testPoint.x);
+			maxPoint.y = max(maxPoint.y, testPoint.y);
+			maxPoint.z = max(maxPoint.z, testPoint.z);
+		}
 	}
 	return maxPoint;
 }
 
 // Function name:		getMedPoint
 // Parameters:			Median point of this mesh volume.
-Point3D Mesh::getMedPoint(){
+Point3D Mesh::getMedPoint() const{
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
