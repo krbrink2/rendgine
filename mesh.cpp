@@ -52,10 +52,10 @@ Mesh* Mesh::clone(){
 
 // Function name:		getMinPoint
 // Return value:		minPoint of this mesh volume
-Point3D Mesh::getMinPoint() const{
+Point3D Mesh::getMinPoint(){
 	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
 	// For each instance...
-	for(const instance& inst : instances){
+	for(const instance_t& inst : instances){
 		Matrix matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
@@ -82,10 +82,10 @@ Point3D Mesh::getMinPoint() const{
 
 // Function name:		getMaxPoint
 // Parameters:			maxPoint of this mesh volue
-Point3D Mesh::getMaxPoint() const{
+Point3D Mesh::getMaxPoint(){
 	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
 	// For each instace...
-	for(const instance& inst : instances){
+	for(const instance_t& inst : instances){
 		Matrix matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
@@ -100,7 +100,7 @@ Point3D Mesh::getMaxPoint() const{
 
 // Function name:		getMedPoint
 // Parameters:			Median point of this mesh volume.
-Point3D Mesh::getMedPoint() const{
+Point3D Mesh::getMedPoint(){
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
