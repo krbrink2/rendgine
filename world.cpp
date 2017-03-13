@@ -166,10 +166,15 @@ void World::addDefaultObjects(void){
 void World::addBunny(void){
 	//clearObjects();
 	const char bunny[128] = "bunny.obj";
-	Mesh* bunnyPtr = new Mesh(bunny, Point3D(0, 0, 0));
+	Mesh* bunnyPtr = new Mesh(bunny);
 	Ashikhmin ash;
 	ash.c = RGBColor(226, 114, 91);
 	bunnyPtr->setShader(ash);
+	instance_t instance;
+	instance.matrix.set_identity();
+	instance.matrix[1][1] = 2; 		// Make the bunny tall.
+	instance.sdr = ash.clone();
+	bunnyPtr->instances.push_back(instance);
 	//bunnyPtr->sdr = ash.clone();	//@TODO get mesh.setShader to stop chopping
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;

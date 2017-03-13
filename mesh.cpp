@@ -6,15 +6,13 @@ const int MAX_VERTICES_PER_FACE = 255;
 // ---- Constructor ----
 Mesh::Mesh():
 	Object(),
-	p(Point3D()),
 	loaded(false),
 	numTriangles(0)
 {}
 
 // ---- Constructor ----
-Mesh::Mesh(const char* filename, const Point3D _p):
-	Object(),
-	p(_p)
+Mesh::Mesh(const char* filename):
+	Object()
 {
 	load(filename);
 
@@ -23,10 +21,10 @@ Mesh::Mesh(const char* filename, const Point3D _p):
 // ---- Copy Constructor ----
 Mesh::Mesh(const Mesh& mesh):
 	Object(mesh),
-	p(mesh.p),
 	loaded(mesh.loaded),
 	numTriangles(mesh.numTriangles) 
 {
+	instances = mesh.instances;
 	for(size_t i = 0; i < mesh.faces.size(); i++)
 		faces.push_back(mesh.faces[i]->clone());
 }
@@ -34,9 +32,9 @@ Mesh::Mesh(const Mesh& mesh):
 // ---- Assignment operator ----
 Mesh& Mesh::operator=(const Mesh& rhs){
 	sdr = rhs.sdr->clone();
-	p = rhs.p;
 	loaded = rhs.loaded;
 	numTriangles = rhs.numTriangles;
+	instances = rhs.instances;
 	for(size_t i = 0; i < rhs.faces.size(); i++){
 		faces.push_back(rhs.faces[i]->clone());
 	}
@@ -113,6 +111,12 @@ void Mesh::clear(void){
 		faces[i] = NULL;
 	}
 	faces.clear();
+	for(auto&& instance : instances){
+		if(instance.sdr != NULL)
+			delete sdr;
+		sdr = NULL;
+	}
+	instances.clear();
 	loaded = false;
 	maxs = mins = Vector3D(0,0,0);
 	numTriangles = 0;

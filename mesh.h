@@ -10,10 +10,16 @@
 #include <float.h>
 #include <string.h>
 
+typedef struct {
+	Matrix matrix;
+	Shader* sdr;
+
+} instance_t;
+
 class Mesh : public Object{
 public:
 	Mesh();
-	Mesh(const char* filename, Point3D _p);
+	Mesh(const char* filename);
 	Mesh(const Mesh& mesh);
 	Mesh& operator=(const Mesh& rhs);
 	virtual ~Mesh();
@@ -27,7 +33,7 @@ public:
 	bool load(const char* filename);
 	void setShader(const Shader& _sdr);
 
-	Point3D p;
+	std::vector<instance_t> instances;
 	bool loaded;
 	std::vector<Triangle*> faces;
 
