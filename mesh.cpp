@@ -56,7 +56,7 @@ Point3D Mesh::getMinPoint(){
 	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
 	// For each instance...
 	for(const instance_t& inst : instances){
-		Matrix matrix = inst.matrix;
+		Matrix& matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
 			Point3D testPoint = matrix * faces[i]->getMinPoint();
@@ -86,7 +86,7 @@ Point3D Mesh::getMaxPoint(){
 	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
 	// For each instace...
 	for(const instance_t& inst : instances){
-		Matrix matrix = inst.matrix;
+		Matrix& matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
 			Point3D testPoint = matrix * faces[i]->getMaxPoint();
@@ -107,8 +107,18 @@ Point3D Mesh::getMedPoint(){
 // Function name:		addPrimitives
 // Function purpose:	Adds this mesh's primitives to vect.
 void Mesh::addPrimitives(std::vector<Object*>& vect){
-	for(size_t i = 0; i < faces.size(); i++){
-		faces[i]->addPrimitives(vect);
+	// This will be pretty ad-hoc...
+	// For each instance...
+	for(const auto& inst : instances){
+		Matrix& matrix = inst.matrix;
+		// For each face...
+		for(size_t i = 0; i < faces.size(); i++){ //@RESUME
+			vect.push_back(new Triangle(
+				matrix * faces[i].v0,
+				matrix * faces[i].v1,
+				matrix * faces[i].v2));
+			//faces[i]->addPrimitives(vect);
+		}
 	}
 }
 

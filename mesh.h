@@ -35,6 +35,7 @@ public:
 
 	std::vector<instance_t> instances;
 	bool loaded;
+	// faces only serves as a basis for instances
 	std::vector<Triangle*> faces;
 
 
