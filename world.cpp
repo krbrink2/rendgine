@@ -70,11 +70,20 @@ void World::build(void){
 	// Add objects
 	setViewCoords();
 	//addDefaultObjects();
-	addBunny();
+	Matrix bunnyMatrix;
+	double scale 			= 75;
+	double translate[3] 	= {0, -3, 0};
+	for(int i = 0; i < 3; i++){
+		bunnyMatrix.m[i][i] = scale;
+		bunnyMatrix.m[i][3] = translate[i];
+	}
+
+	bunnyMatrix.m[0][0] = bunnyMatrix.m[1][1] = bunnyMatrix.m[2][2]= 50;
+	addBunny(bunnyMatrix);
 	//addManySpheres(BENCHMARK_NUM_SPHERES);
 
 	//@luces
-	lights.push_back(new PointLight(Point3D(-.1, .2, .15)));
+	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
 	lights.back()->color = RGBColor(255, 255, 255);
 	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	//lights.back()->color = RGBColor(40, 30, 30);
@@ -163,7 +172,7 @@ void World::addDefaultObjects(void){
 // Parameters:			none
 // Return value:		none
 // Any other output:	Reports if load failed.
-void World::addBunny(void){
+void World::addBunny(const Matrix& matrix){
 	// Allocate Mesh
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny);
@@ -173,9 +182,6 @@ void World::addBunny(void){
 	bunnyPtr->setShader(ash);
 	//bunnyPtr->sdr = ash.clone();	//@TODO get mesh.setShader to stop chopping
 	// Create instance_t
-	Matrix matrix;
-	matrix.set_identity();
-	matrix.m[1][1] = 2; 		// Make the bunny tall.
 	// Add instance
 	bunnyPtr->addInstance(matrix, ash.clone());
 	if(!bunnyPtr->loaded){
@@ -262,7 +268,7 @@ void World::renderAnimation(void){
 	ash.c = RGBColor(255, 80, 20);
 	objects.back()->sdr = ash.clone();	//@TODO @BUG why does this chop/go to Shader?
 	//objects.back()->setShader(ash);
-	addBunny();
+	addBunny(Matrix());
 	// Add floor
 	double floorScale = .3;
 	double floorHeight = .037;
