@@ -246,7 +246,7 @@ void buildBVH(const int targetIndex){
 		worldPtr->bvh.push_back(xLefts[bestIndex]);
 	}
 	else if(bestDim == 'y'){
-		worldPtr->bvh.push_back(yLefts[bestIndex]);		//@BUG
+		worldPtr->bvh.push_back(yLefts[bestIndex]);
 	}
 	else{
 		worldPtr->bvh.push_back(zLefts[bestIndex]);

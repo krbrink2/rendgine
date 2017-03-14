@@ -110,13 +110,14 @@ void Mesh::addPrimitives(std::vector<Object*>& vect){
 	// This will be pretty ad-hoc...
 	// For each instance...
 	for(const auto& inst : instances){
-		Matrix matrix = inst.matrix;
+		const Matrix& matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
 			vect.push_back(new Triangle(
 				matrix * faces[i]->v0,
 				matrix * faces[i]->v1,
 				matrix * faces[i]->v2));
+			vect.back()->sdr = inst.sdr;
 			//faces[i]->addPrimitives(vect);
 		}
 	}
@@ -369,5 +370,6 @@ void Mesh::addInstance(const Matrix& matrix, Shader* sdr){
 			matrix * face->v1, 
 			matrix * face->v2));
 	}
+	instances.push_back(inst);
 }
 

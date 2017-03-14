@@ -164,23 +164,26 @@ void World::addDefaultObjects(void){
 // Return value:		none
 // Any other output:	Reports if load failed.
 void World::addBunny(void){
-	//clearObjects();
+	// Allocate Mesh
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny);
+	// Create ashikhmin shader
 	Ashikhmin ash;
 	ash.c = RGBColor(226, 114, 91);
 	bunnyPtr->setShader(ash);
-	instance_t instance;
-	instance.matrix.set_identity();
-	instance.matrix.m[1][1] = 2; 		// Make the bunny tall.
-	instance.sdr = ash.clone();
-	bunnyPtr->instances.push_back(instance);
 	//bunnyPtr->sdr = ash.clone();	//@TODO get mesh.setShader to stop chopping
+	// Create instance_t
+	Matrix matrix;
+	matrix.set_identity();
+	matrix.m[1][1] = 2; 		// Make the bunny tall.
+	// Add instance
+	bunnyPtr->addInstance(matrix, ash.clone());
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
+		delete bunnyPtr;
+		return;
 	}
-	else
-		objects.push_back(bunnyPtr);
+	objects.push_back(bunnyPtr);
 }
 
 void World::addManySpheres(int num){
