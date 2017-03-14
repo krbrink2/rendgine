@@ -46,6 +46,7 @@ public:
 	void build(void);
 	void addDefaultObjects(void);
 	void addBunny(const Matrix& matrix);
+	void addManyBunnies(int numBunnies);
 	void addManySpheres(int num);
 	void clearObjects(void);
 	void clearLights(void);

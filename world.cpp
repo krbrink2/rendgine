@@ -79,7 +79,8 @@ void World::build(void){
 	}
 
 	bunnyMatrix.m[0][0] = bunnyMatrix.m[1][1] = bunnyMatrix.m[2][2]= 50;
-	addBunny(bunnyMatrix);
+	//addBunny(bunnyMatrix);
+	addManyBunnies(4);
 	//addManySpheres(BENCHMARK_NUM_SPHERES);
 
 	//@luces
@@ -190,6 +191,24 @@ void World::addBunny(const Matrix& matrix){
 		return;
 	}
 	objects.push_back(bunnyPtr);
+}
+
+void World::addManyBunnies(int numBunnies){
+	double interval = 5;
+
+	for(int i = 0; i < numBunnies; i++){
+		for(int j = 0; j < numBunnies; j++){
+			Matrix matrix;
+			// Scale
+			matrix.m[0][0] = matrix.m[1][1] = matrix.m[2][2] = 30;
+			// Translate
+			matrix.m[0][3] = interval * ((numBunnies - 1)/-2.0 + i);
+			matrix.m[1][3] = -6;
+			matrix.m[2][3] = -interval * j;
+			//ash.c = RGBColor(i*255/NUM_BUNNIES + 10, j*255/NUM_BUNNIES + 10, 10);
+			addBunny(matrix);
+		}
+	}
 }
 
 void World::addManySpheres(int num){
