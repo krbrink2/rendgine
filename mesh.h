@@ -13,7 +13,7 @@
 typedef struct {
 	Matrix matrix;
 	Shader* sdr;
-
+	std::vector<Triangle*> faces;
 } instance_t;
 
 class Mesh : public Object{
@@ -32,6 +32,7 @@ public:
 	void clear(void);
 	bool load(const char* filename);
 	void setShader(const Shader& _sdr);
+	void addInstance(const Matrix& matrix, Shader* sdr);
 
 	std::vector<instance_t> instances;
 	bool loaded;

@@ -56,7 +56,7 @@ Point3D Mesh::getMinPoint(){
 	Point3D minPoint(kHugeValue, kHugeValue, kHugeValue);
 	// For each instance...
 	for(const instance_t& inst : instances){
-		Matrix& matrix = inst.matrix;
+		const Matrix& matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
 			Point3D testPoint = matrix * faces[i]->getMinPoint();
@@ -86,7 +86,7 @@ Point3D Mesh::getMaxPoint(){
 	Point3D maxPoint(-kHugeValue, -kHugeValue, -kHugeValue);
 	// For each instace...
 	for(const instance_t& inst : instances){
-		Matrix& matrix = inst.matrix;
+		const Matrix& matrix = inst.matrix;
 		// For each face...
 		for(size_t i = 0; i < faces.size(); i++){
 			Point3D testPoint = matrix * faces[i]->getMaxPoint();
@@ -110,13 +110,13 @@ void Mesh::addPrimitives(std::vector<Object*>& vect){
 	// This will be pretty ad-hoc...
 	// For each instance...
 	for(const auto& inst : instances){
-		Matrix& matrix = inst.matrix;
+		Matrix matrix = inst.matrix;
 		// For each face...
-		for(size_t i = 0; i < faces.size(); i++){ //@RESUME
+		for(size_t i = 0; i < faces.size(); i++){
 			vect.push_back(new Triangle(
-				matrix * faces[i].v0,
-				matrix * faces[i].v1,
-				matrix * faces[i].v2));
+				matrix * faces[i]->v0,
+				matrix * faces[i]->v1,
+				matrix * faces[i]->v2));
 			//faces[i]->addPrimitives(vect);
 		}
 	}
@@ -138,15 +138,25 @@ bool Mesh::hit(const Ray& ray, ShadeRec& sr){
 // Function purpose:	Frees and resets this mesh
 // Any other output:	none
 void Mesh::clear(void){
+	// Clear faces
 	for(size_t i = 0; i < faces.size(); i++){
 		delete faces[i];
 		faces[i] = NULL;
 	}
 	faces.clear();
+	// Clear instances
 	for(auto&& instance : instances){
+		// Delete sdr
 		if(instance.sdr != NULL)
 			delete sdr;
 		sdr = NULL;
+		// Clear instaces.faces
+		for(Triangle* tri : instance.faces){
+			if(tri != NULL)
+				delete tri;
+			tri = NULL;
+		}
+		instance.faces.clear();
 	}
 	instances.clear();
 	loaded = false;
@@ -346,6 +356,18 @@ void Mesh::setShader(const Shader& _sdr){
 	sdr  = _sdr.clone();
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->setShader(_sdr);
+	}
+}
+
+void Mesh::addInstance(const Matrix& matrix, Shader* sdr){
+	instance_t inst;
+	inst.matrix = matrix;
+	inst.sdr = sdr;
+	for(const Triangle* face : faces){
+		inst.faces.push_back(new Triangle(
+			matrix * face->v0,
+			matrix * face->v1, 
+			matrix * face->v2));
 	}
 }
 
