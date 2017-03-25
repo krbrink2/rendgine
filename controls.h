@@ -19,6 +19,8 @@
 #define ANIMATE				(false)
 #define NUM_FRAMES			(10)
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
+// Rendering
+#define MAX_BOUNCES 		(2)
 
 // Bunny:
 // #define S 		(.002)

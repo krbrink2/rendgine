@@ -2,7 +2,7 @@
 #define SHADER_H
 #include "utils.h"
 
-// ---- Forward decalrations ----
+// ---- Forward declarations ----
 
 class World;
 class ShadeRec;

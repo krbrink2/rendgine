@@ -428,6 +428,7 @@ RGBColor World::computePixelOrtho(const int x, const int y) const{
 			Ray ray(o, d);
 			// Trace ray
 			ShadeRec sr;
+			sr.ray = ray;
 			traceRay(ray, sr);
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr);
@@ -512,6 +513,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 			Ray ray(o, d);
 			// Trace ray
 			ShadeRec sr;
+			sr.ray = ray;
 			traceRay(ray, sr);
 			if(sr.hitObject){
 				accum += sr.hitShader->shade(*this, sr);
@@ -534,6 +536,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 // Return value:		None (returns information thru sr)
 // Any other output:	None
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{
+	sr.ray = ray;
 	// Let objects check against this ray,
 	//	using sr to record information.
 	if(USE_BVH)

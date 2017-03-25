@@ -7,15 +7,15 @@
 
 class ShadeRec{
 	public:
+		ShadeRec();
+
 		bool hitObject;
 		double t;
 		Point3D hitPoint;
 		Normal hitNormal;
-		//RGBColor hitColor;
+		Ray ray;
+		int numBounces;
 		Shader* hitShader;
-
-		ShadeRec();									// Constructor
-		//ShadeRec(const RGBColor& c);
 };
 
 
