@@ -1,5 +1,6 @@
 #ifndef MIRROR_H
 #define MIRROR_H
+#include "controls.h"
 #include "shaderec.h"
 #include "shader.h"
 #include "utils.h"
@@ -11,7 +12,7 @@ public:
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	Mirror* clone();
 
-}
+};
 
 
 #endif
