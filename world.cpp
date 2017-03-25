@@ -82,6 +82,16 @@ void World::build(void){
 	//addBunny(bunnyMatrix);
 	addManyBunnies(2);
 	//addManySpheres(BENCHMARK_NUM_SPHERES);
+	// Add mirror sphere
+	//objects.push_back(new Sphere(3, Point3D(0, 3, -1)));
+	Mirror mirror;
+	//objects.back()->setShader(mirror);	
+	//objects.back()->sdr = mirror.clone();
+	// Add mirror triangle
+	objects.push_back(new Triangle(	Point3D(-10, 0, -10),
+									Point3D(10, 0, -10),
+									Point3D(0, 10, 0)));
+	objects.back()->sdr = mirror.clone();
 
 	//@luces
 	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
@@ -208,9 +218,9 @@ void World::addManyBunnies(int numBunnies){
 			addBunny(matrix);
 		}
 	}
-	Mirror mirror; // on the wall...
-	//objects.front()->setShader(mirror);
-	((Mesh*)objects.front())->instances.front().sdr = mirror.clone();
+	// Mirror mirror; // on the wall...
+	// //objects.front()->setShader(mirror);
+	// ((Mesh*)objects.front())->instances.front().sdr = mirror.clone();
 }
 
 void World::addManySpheres(int num){
