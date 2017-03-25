@@ -8,6 +8,7 @@
 #include "dirlight.h"
 #include "light.h"
 #include "mesh.h"
+#include "mirror.h"
 #include "object.h"
 #include "plane.h"
 #include "pointlight.h"

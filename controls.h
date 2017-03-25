@@ -30,7 +30,7 @@
 
 // Defaults:
 #define S 		(.02)
-#define	EYE		Point3D(2, 7, 7)
+#define	EYE		Point3D(0, .5, 9)
 #define LOOKAT	Point3D(0, 0, 0)
 #define D 		(7)
 

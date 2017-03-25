@@ -181,7 +181,6 @@ void World::addBunny(const Matrix& matrix){
 	Ashikhmin ash;
 	ash.c = RGBColor(226, 114, 91);
 	bunnyPtr->setShader(ash);
-	//bunnyPtr->sdr = ash.clone();	//@TODO get mesh.setShader to stop chopping
 	// Create instance_t
 	// Add instance
 	bunnyPtr->addInstance(matrix, ash.clone());
@@ -209,6 +208,9 @@ void World::addManyBunnies(int numBunnies){
 			addBunny(matrix);
 		}
 	}
+	Mirror mirror; // on the wall...
+	//objects.front()->setShader(mirror);
+	((Mesh*)objects.front())->instances.front().sdr = mirror.clone();
 }
 
 void World::addManySpheres(int num){
