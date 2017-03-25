@@ -80,7 +80,7 @@ void World::build(void){
 
 	bunnyMatrix.m[0][0] = bunnyMatrix.m[1][1] = bunnyMatrix.m[2][2]= 50;
 	//addBunny(bunnyMatrix);
-	addManyBunnies(4);
+	addManyBunnies(2);
 	//addManySpheres(BENCHMARK_NUM_SPHERES);
 
 	//@luces
