@@ -18,6 +18,8 @@ public:
 	virtual ~Light();
 	virtual RGBColor getIrradiance(const Point3D& p) = 0;
 	virtual Vector3D getDirection(const Point3D& p) = 0;
+	//virtual void addSamples(const Point3D point, std::vector< std::pair<Ray, RGBColor> >& vect) = 0;
+		//@TODO implement the above
 
 	RGBColor color;
 

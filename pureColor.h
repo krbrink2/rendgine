@@ -5,6 +5,8 @@
 class PureColor: public Shader{
 public:
 	PureColor();
+	PureColor(double r, double g, double b);
+	PureColor(RGBColor _color);
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	PureColor* clone();
 };

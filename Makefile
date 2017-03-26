@@ -3,7 +3,7 @@ CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-v
 TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = areLight.o ashikhmin.o bvhnode.o dirlight.o light.o lodepng.o mesh.o \
+OBJS = areaLight.o ashikhmin.o bvhnode.o dirlight.o light.o lodepng.o mesh.o \
 mirror.o object.o plane.o pointlight.o pureColor.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
@@ -25,7 +25,7 @@ $(TARGET): rendgine.o $(OBJS)
 rendgine.o: rendgine.cpp $(HEADERS)
 	$(CC) -c rendgine.cpp $(CFLAGS)
 
-areaLight.o: areaLight.cpp areaLight.h shader.h world.h shaderec.h $(UTILS)
+areaLight.o: areaLight.cpp areaLight.h pureColor.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c areaLight.cpp $(CFLAGS)
 
 ashikhmin.o: ashikhmin.cpp ashikhmin.h shader.h world.h shaderec.h $(UTILS)
