@@ -190,12 +190,10 @@ void World::addBunny(const Matrix& matrix){
 	// Create ashikhmin shader
 	Ashikhmin ash;
 	ash.c = RGBColor(226, 114, 91);
-	PureColor pureColor;
-	pureColor.c = RGBColor(255, 200, 100);
-	bunnyPtr->setShader(pureColor);
+	bunnyPtr->setShader(ash);
 	// Create instance_t
 	// Add instance
-	bunnyPtr->addInstance(matrix, pureColor.clone());
+	bunnyPtr->addInstance(matrix, ash.clone());
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 		delete bunnyPtr;
