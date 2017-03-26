@@ -12,6 +12,7 @@
 #include "object.h"
 #include "plane.h"
 #include "pointlight.h"
+#include "pureColor.h"
 #include "shaderec.h"
 #include "sphere.h"
 #include "triangle.h"
