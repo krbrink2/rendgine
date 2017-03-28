@@ -40,11 +40,17 @@ RGBColor Shader::shade(const World& w, const ShadeRec& sr){
 	RGBColor accum(0, 0, 0);
 	//Vector3D& E = worldPtr->E;
 
+	// For each light...
 	for(size_t i = 0; i < worldPtr->lights.size(); i++){
-		// May want to put this in another function.
-		Vector3D L = worldPtr->lights[i]->getDirection(sr.hitPoint);
-		double NDotL = clamp((sr.hitNormal * L), 0, 1);
-		accum += (c * NDotL * worldPtr->lights[i]->getIrradiance(sr.hitPoint))/256;
+		vector<std::pair<Vector3D, RGBColor> > samples;
+		worldPtr->lights[i]->getSamples(samples, sr.hitPoint);
+		// For each sample...
+		for(auto sample : samples){
+			// May want to put this in another function.
+			Vector3D& L = sample.first;
+			double NDotL = clamp((sr.hitNormal * L), 0, 1);
+			accum += (c * NDotL * sample.second)/256;
+		}
 	}
 
 	// Clamp color

@@ -42,3 +42,7 @@ Vector3D PointLight::getDirection(const Point3D& p){
 	direction.normalize();
 	return direction;
 }
+
+void PointLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p){
+	vect.push_back(pair<Vector3D, RGBColor>(getDirection(p), getIrradiance(p)));
+}

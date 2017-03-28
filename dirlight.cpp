@@ -44,3 +44,7 @@ RGBColor DirLight::getIrradiance(const Point3D& p){
 Vector3D DirLight::getDirection(const Point3D& p){
 	return direction;
 }
+
+void DirLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p){
+	vect.push_back(pair<Vector3D, RGBColor>(direction, getIrradiance(p)));
+}
