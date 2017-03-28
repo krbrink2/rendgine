@@ -16,3 +16,7 @@ RGBColor AreaLight::getIrradiance(const Point3D& p){
 Vector3D AreaLight::getDirection(const Point3D& p){
 	return Vector3D(0,0,0); //@TODO modify
 }
+
+void AreaLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p){
+	//@RESUME
+}
