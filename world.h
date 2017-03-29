@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "bvhnode.h"
+#include "areaLight.h"
 #include "ashikhmin.h"
 #include "controls.h"
 #include "dirlight.h"

@@ -5,10 +5,7 @@
 #include "object.h"
 #include "pureColor.h"
 #include "triangle.h"
-#include "Constants.h"
-#include "Normal.h"
-#include "Point3D.h"
-#include "Ray.h"
+#include "utils.h"
 using namespace std;
 
 #define AREALIGHT_NUM_SAMPLES 		(8)
@@ -17,9 +14,10 @@ using namespace std;
 class AreaLight : public Light, public Triangle{
 public:
 	AreaLight();
+	AreaLight(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2);
 	RGBColor getIrradiance(const Point3D& p);
 	Vector3D getDirection(const Point3D& p);
-	void getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p) = 0;
+	void getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p);
 
 };
 

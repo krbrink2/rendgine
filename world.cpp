@@ -67,32 +67,44 @@ void World::build(void){
 	d = D;
 	orthographic = ORTHO;
 
-	// Add objects
 	setViewCoords();
+	// ======== ========  ======== ========
+	// Add objects
 	//addDefaultObjects();
-	Matrix bunnyMatrix;
-	double scale 			= 75;
-	double translate[3] 	= {0, -3, 0};
-	for(int i = 0; i < 3; i++){
-		bunnyMatrix.m[i][i] = scale;
-		bunnyMatrix.m[i][3] = translate[i];
-	}
-
-	bunnyMatrix.m[0][0] = bunnyMatrix.m[1][1] = bunnyMatrix.m[2][2]= 50;
-	//addBunny(bunnyMatrix);
+	
 	addManyBunnies(2);
-	//addManySpheres(BENCHMARK_NUM_SPHERES);
+
+	// Add floor
+	double floorScale = 7;
+	double floorHeight = -5;
+	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.00001, -floorScale+.00001),
+									Point3D(-floorScale, floorHeight, floorScale),
+									Point3D(floorScale, floorHeight, -floorScale)));
+	objects.back()->sdr->c = RGBColor(255, 0, 0);
+	objects.push_back(new Triangle(	Point3D(floorScale, floorHeight, -floorScale),
+									Point3D(-floorScale, floorHeight, floorScale),
+									Point3D(floorScale, floorHeight, floorScale)));
+	objects.back()->sdr->c = RGBColor(0, 0, 255);
+
+
 	// Add mirror sphere
 	//objects.push_back(new Sphere(3, Point3D(0, 3, -1)));
 	Mirror mirror;
 	//objects.back()->setShader(mirror);	
 	//objects.back()->sdr = mirror.clone();
+
 	// Add mirror triangle
 	objects.push_back(new Triangle(	Point3D(-10, 0, -10),
 									Point3D(10, 0, -10),
 									Point3D(0, 10, 0)));
 	objects.back()->sdr = mirror.clone();
 
+	// Add areaLight triangle
+	objects.push_back(new AreaLight(Point3D(-5, 0, 5),
+									Point3D(-5, 0, -5),
+									Point3D(-5, 5, -5)));
+	objects.back()->sdr = mirror.clone();
+	// ======== ========  ======== ========
 	//@luces
 	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
 	lights.back()->color = RGBColor(255, 255, 255);
@@ -100,6 +112,8 @@ void World::build(void){
 	//lights.back()->color = RGBColor(40, 30, 30);
 	// lights.push_back(new PointLight(Point3D(15, -10, 10)));
 	// lights.back()->color = RGBColor(4, 4, 6);
+
+	// ======== ========  ======== ========
 
 	if(USE_BVH){
 		// Build BVH
