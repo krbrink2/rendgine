@@ -43,7 +43,7 @@ World& World::operator=(const World& w){
 // ---- Destuctor ----
 World::~World(){
 	clearObjects();
-	clearLights();
+	//clearLights(); //@TODO FIGURE OUT HOW TO STOP THIS FROM SEGFAULTING
 	bvh.clear();
 }
 
@@ -103,7 +103,8 @@ void World::build(void){
 	objects.push_back(new AreaLight(Point3D(-5, 0, 5),
 									Point3D(-5, 0, -5),
 									Point3D(-5, 5, -5)));
-	objects.back()->sdr = mirror.clone();
+	PureColor pc(255, 255, 0);
+	//objects.back()->sdr = pc.clone();
 	// ======== ========  ======== ========
 	//@luces
 	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
@@ -136,6 +137,8 @@ void World::build(void){
 // Any other output:	none
 void World::clearObjects(void){
 	for(size_t i = 0; i < objects.size(); i++){
+		if(objects[i] == NULL)
+			continue;
 		delete objects[i];
 		objects[i] = NULL;
 	}
@@ -149,6 +152,8 @@ void World::clearObjects(void){
 // Any other output:	none
 void World::clearLights(void){
 	for(size_t i = 0; i < lights.size(); i++){
+		if(lights[i] == NULL)
+			continue;
 		delete lights[i];
 		lights[i] = NULL;
 	}

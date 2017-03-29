@@ -19,6 +19,10 @@ PureColor::PureColor(RGBColor _color):
 	c = _color;
 }
 
+PureColor::~PureColor(){
+	return;
+}
+
 RGBColor PureColor::shade(const World& w, const ShadeRec& sr){
 	return c;
 }

@@ -7,7 +7,7 @@ extern World* worldPtr;
 
 // ---- Default constructor ----
 Shader::Shader():
-	c(RGBColor(0, 1, 0))	// Default to green because why not.
+	c(RGBColor(0, 255, 0))	// Default to green because why not.
 {}
 
 // ---- Copy constructor ----
