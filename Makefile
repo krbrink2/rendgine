@@ -3,12 +3,12 @@ CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-v
 TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = areaLight.o ashikhmin.o bvhnode.o dirlight.o light.o lodepng.o mesh.o \
+OBJS = areaLight.o ashikhmin.o bvhnode.o dirlight.o halton.o light.o lodepng.o mesh.o \
 mirror.o object.o plane.o pointlight.o pureColor.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  areaLight.h ashikhmin.h bvhnode.h dirlight.h controls.h \
+HEADERS =  areaLight.h ashikhmin.h bvhnode.h dirlight.h halton.hpp controls.h \
 light.h lodepng.h mesh.h mirror.h object.h plane.h pointlight.h \
 pureColor.h\
 shader.h shaderec.h sphere.h triangle.h world.h \
@@ -36,6 +36,9 @@ bvhnode.o: bvhnode.cpp bvhnode.h object.h shaderec.h utils.h
 
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)
+
+halton.o: halton.cpp halton.hpp
+	$(CC) -c halton.cpp $(CFLAGS)
 
 light.o: light.cpp light.h shaderec.h utils.h
 	$(CC) -c light.cpp $(CFLAGS)

@@ -24,9 +24,6 @@ World* worldPtr;		// Pointer to active World object.
 // Any other output:	Writes png file
 void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsigned hres, unsigned vres);
 
-// Pulled from 
-//	https://people.sc.fsu.edu/~jburkardt/cpp_src/halton/halton.cpp
-double *halton ( int i, int m );
 
 // ---- Main funciton ----
 
@@ -56,54 +53,6 @@ void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsi
 	if(error) std::cout << "encoder error " << error << ": "<< lodepng_error_text(error) << std::endl;
 }
 
-// Pulled from 
-//	https://people.sc.fsu.edu/~jburkardt/cpp_src/halton/halton.cpp
-double *halton ( int i, int m )
-{
-  int d;
-  int i1;
-  int j;
-  double *prime_inv;
-  double *r;
-  int *t;
-
-  prime_inv = new double[m];
-  r = new double[m];
-  t = new int[m];
-
-  for ( j = 0; j < m; j++ )
-  {
-    t[j] = i;
-  }
-//
-//  Carry out the computation.
-//
-  for ( j = 0; j < m; j++ )
-  {
-    prime_inv[j] = 1.0 / ( double ) ( prime ( j + 1 ) );
-  }
-
-  for ( j = 0; j < m; j++ )
-  {
-    r[j] = 0.0;
-  }
-
-  while ( 0 < i4vec_sum ( m, t ) )
-  {
-    for ( j = 0; j < m; j++ )
-    {
-      d = ( t[j] % prime ( j + 1 ) );
-      r[j] = r[j] + ( double ) ( d ) * prime_inv[j];
-      prime_inv[j] = prime_inv[j] / ( double ) ( prime ( j + 1 ) );
-      t[j] = ( t[j] / prime ( j + 1 ) );
-    }
-  }
-
-  delete [] prime_inv;
-  delete [] t;
-
-  return r;
-}
 
 
 // Function name:		
