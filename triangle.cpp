@@ -57,7 +57,7 @@ void Triangle::addPrimitives(std::vector<Object*>& vect){
 // Parameters:			
 //		ray:		Ray being traced
 //		sr:			ShadeRec to store values
-// Return value:		True if ray hits
+// Return value:		True if ray 
 // Any other output:	Writes to sr
 bool Triangle::hit(const Ray& ray, ShadeRec& sr){
 	// The below math is courtesy of Suffern's Ray Tracing from the Ground Up
