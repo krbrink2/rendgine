@@ -1,6 +1,7 @@
 #ifndef AREALIGHT_H
 #define AREALIGHT_H
 #include <vector>
+#include "halton.hpp"
 #include "light.h"
 #include "object.h"
 #include "pureColor.h"

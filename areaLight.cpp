@@ -41,8 +41,14 @@ void AreaLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point
 	std::pair<double, double> randPairs[AREALIGHT_NUM_SAMPLES];
 	for(int i = 0; i < AREALIGHT_NUM_SAMPLES; i++){
 		//@TODO make this quasirandom
-		randPairs[i].first 	= rand_float(0, 1.0);
-		randPairs[i].second	= rand_float(0, 1.0);
+		double* rands = halton(i, 2);
+		// Quasirandom
+		randPairs[i].first 	= rands[0];
+		randPairs[i].second	= rands[1];
+		delete rands;
+		// Pseudorandom
+		// randPairs[i].first 	= rand_float(0, 1);
+		// randPairs[i].second	= rand_float(0, 1);
 	}
 	// Transform randPairs into 3D points on triangle
 	Point3D samplePoints[AREALIGHT_NUM_SAMPLES];
