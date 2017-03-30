@@ -9,9 +9,6 @@
 #include "utils.h"
 using namespace std;
 
-#define AREALIGHT_NUM_SAMPLES 		(8)
-
-
 class AreaLight : public Light, public Triangle{
 public:
 	AreaLight();

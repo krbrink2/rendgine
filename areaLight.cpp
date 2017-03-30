@@ -66,7 +66,7 @@ void AreaLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point
 		Ray ray(p, direction);
 		ShadeRec sr;
 		worldPtr->traceRay(ray, sr);
-		if(sr.hitObject && sr.t < p.distance(samplePoints[i])){
+		if(sr.t >= p.distance(samplePoints[i])){
 			// Will need to modify if using fog.
 			irradiance = color / AREALIGHT_NUM_SAMPLES;
 		}

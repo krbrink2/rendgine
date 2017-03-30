@@ -25,7 +25,7 @@ $(TARGET): rendgine.o $(OBJS)
 rendgine.o: rendgine.cpp $(HEADERS)
 	$(CC) -c rendgine.cpp $(CFLAGS)
 
-areaLight.o: areaLight.cpp areaLight.h halton.hpp pureColor.h shader.h world.h shaderec.h $(UTILS)
+areaLight.o: areaLight.cpp areaLight.h controls.h halton.hpp pureColor.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c areaLight.cpp $(CFLAGS)
 
 ashikhmin.o: ashikhmin.cpp ashikhmin.h shader.h world.h shaderec.h $(UTILS)

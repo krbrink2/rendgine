@@ -4,8 +4,8 @@
 // Compilation controls. This will handle render parameters for now.
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(1)
-#define SQRT_NUM_SAMPLES	(1)
+#define NUM_SAMPLES 		(16)
+#define SQRT_NUM_SAMPLES	(4)
 // Resolution
 #define	HRES 				(500)	// 1366,	1920
 #define VRES 				(500)	// 768,		1080
@@ -20,7 +20,8 @@
 #define NUM_FRAMES			(10)
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 // Rendering
-#define MAX_BOUNCES 		(2)
+#define MAX_BOUNCES 				(2)
+#define AREALIGHT_NUM_SAMPLES 		(64)
 
 // Bunny:
 // #define S 		(.002)
