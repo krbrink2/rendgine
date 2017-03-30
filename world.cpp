@@ -89,14 +89,18 @@ void World::build(void){
 
 	// Add mirror sphere
 	//objects.push_back(new Sphere(3, Point3D(0, 3, -1)));
-	Mirror mirror;
+	Mirror mirror;	// On the wall...
 	//objects.back()->setShader(mirror);	
 	//objects.back()->sdr = mirror.clone();
 
 	// Add mirror triangle
 	objects.push_back(new Triangle(	Point3D(-10, 0, -10),
 									Point3D(10, 0, -10),
-									Point3D(0, 10, 0)));
+									Point3D(-10, 10, 0)));
+	objects.back()->sdr = mirror.clone();
+	objects.push_back(new Triangle(	Point3D(10, 10, 0),
+									Point3D(-10, 10, 0),
+									Point3D(10, 0, -10)));
 	objects.back()->sdr = mirror.clone();
 
 	// Add areaLight triangle

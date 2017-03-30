@@ -21,7 +21,7 @@
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 // Rendering
 #define MAX_BOUNCES 				(2)
-#define AREALIGHT_NUM_SAMPLES 		(100)
+#define AREALIGHT_NUM_SAMPLES 		(16)
 
 // Bunny:
 // #define S 		(.002)
