@@ -8,6 +8,7 @@ Checkerboard::Checkerboard():
 	Shader()
 {}
 
+// ---- Constructor ----
 Checkerboard::Checkerboard(const RGBColor _c):
 	Shader()
 {

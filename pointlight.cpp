@@ -43,6 +43,12 @@ Vector3D PointLight::getDirection(const Point3D& p){
 	return direction;
 }
 
+// Function name:		getSamples
+// Function purpose:	Gets sample directions & irradiances, relative to p.
+// Parameters:			vect for samples.
+// 						Point p that samples are relative to.
+// Return value:		none
+// Any other output:	Pushed to vect.
 void PointLight::getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p){
 	vect.push_back(pair<Vector3D, RGBColor>(getDirection(p), getIrradiance(p)));
 }

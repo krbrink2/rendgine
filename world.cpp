@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// Defined in rendgine.cpp
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
 extern int raysShot;
@@ -265,6 +266,12 @@ void World::addBunny(const Matrix& matrix, Shader& _sdr){
 	objects.push_back(bunnyPtr);
 }
 
+// Function name:		addManyBunnies
+// Function purpose:	Adds numBunnies*numBunnies instances of 
+// 						the bunny mesh with random shaders.
+// Parameters:			numBunnies: sqrt of number to render.
+// Return value:		none
+// Any other output:	Pushes to objects.
 void World::addManyBunnies(int numBunnies){
 	double interval = 7;
 
@@ -307,6 +314,11 @@ void World::addManyBunnies(int numBunnies){
 	// ((Mesh*)objects.front())->instances.front().sdr = mirror.clone();
 }
 
+// Function name:		addManySpheres
+// Function purpose:	Adds a bunch of random spheres.
+// Parameters:			num to add.
+// Return value:		none
+// Any other output:	Pushes to objects.
 void World::addManySpheres(int num){
 	for(int i = 0; i < num; i++){
 		objects.push_back(new Sphere(.02, Point3D(rand_float(), rand_float(), rand_float())));

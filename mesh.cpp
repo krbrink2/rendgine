@@ -46,6 +46,11 @@ Mesh::~Mesh(){
 	clear();
 }
 
+// Function name:		clone
+// Function purpose:	Returns pointer to new clone of this Mesh.
+// Parameters:			none
+// Return value:		Pointer to new clone.
+// Any other output:	none
 Mesh* Mesh::clone(){
 	return new Mesh(*this);
 }
@@ -360,6 +365,13 @@ void Mesh::setShader(const Shader& _sdr){
 	}
 }
 
+// Function name:		addInstance
+// Function purpose:	Creates an instance of this mesh, modified
+// 						by matrix, shaded with sdr.
+// Parameters:			matrix for affine transformations.
+//						sdr for shading.
+// Return value:		none
+// Any other output:	pushed to instances vector.
 void Mesh::addInstance(const Matrix& matrix, Shader* sdr){
 	instance_t inst;
 	inst.matrix = matrix;

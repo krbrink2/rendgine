@@ -3,11 +3,18 @@
 
 extern World* worldPtr;
 
+// ---- Constructor ----
 Mirror::Mirror():
 	Shader(){
 	// Pass	
 }
 
+// Function name:		shade
+// Function purpose:	BSDF
+// Parameters:			World w for world reference.
+// 						ShadeRec sr for bookkeeping.
+// Return value:		Computed color.
+// Any other output:	May write to sr.
 RGBColor Mirror::shade(const World& w, const ShadeRec& sr){
 	if(sr.numBounces >= MAX_BOUNCES - 1){
 		// Can't bounce again.

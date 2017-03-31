@@ -30,6 +30,7 @@ Triangle* Triangle::clone(void){
 	return new Triangle(*this);
 }
 
+// Gets minimum point in this triangle
 Point3D Triangle::getMinPoint(){
 	double x = min(v0.x, min(v1.x, v2.x));
 	double y = min(v0.y, min(v1.y, v2.y));
@@ -37,6 +38,7 @@ Point3D Triangle::getMinPoint(){
 	return Point3D(x, y, z);
 }
 
+// Gets maximum point in this triangle
 Point3D Triangle::getMaxPoint(){
 	double x = max(v0.x, max(v1.x, v2.x));
 	double y = max(v0.y, max(v1.y, v2.y));
@@ -44,10 +46,12 @@ Point3D Triangle::getMaxPoint(){
 	return Point3D(x, y, z);
 }
 
+// Gets mid point of this triangle
 Point3D Triangle::getMedPoint(){
 	return (getMinPoint() + getMaxPoint())*.5;
 }
 
+// Adds this triangle to vect.
 void Triangle::addPrimitives(std::vector<Object*>& vect){
 	vect.push_back(this);
 }
@@ -121,6 +125,7 @@ bool Triangle::hit(const Ray& ray, ShadeRec& sr){
 		return false;
 }
 
+// Sets Normal n.
 void Triangle::generateNormal(void){
 	n = (v1 - v0) ^ (v2 - v0);
 	n.normalize();
