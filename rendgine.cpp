@@ -11,7 +11,7 @@ using namespace std;
 
 // ---- Global variable declarations ----
 World* worldPtr;		// Pointer to active World object.
-int raysShot;
+int raysShot;			// Total number of rays shot.
 
 // ---- Function declarations ----
 
