@@ -3,12 +3,12 @@ CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-v
 TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = areaLight.o ashikhmin.o bvhnode.o dirlight.o halton.o light.o lodepng.o mesh.o \
+OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o halton.o light.o lodepng.o mesh.o \
 mirror.o object.o plane.o pointlight.o pureColor.o shader.o \
 shaderec.o sphere.o world.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  areaLight.h ashikhmin.h bvhnode.h dirlight.h halton.hpp controls.h \
+HEADERS =  areaLight.h ashikhmin.h bvhnode.h checkerboard.h dirlight.h halton.hpp controls.h \
 light.h lodepng.h mesh.h mirror.h object.h plane.h pointlight.h \
 pureColor.h\
 shader.h shaderec.h sphere.h triangle.h world.h \
@@ -33,6 +33,9 @@ ashikhmin.o: ashikhmin.cpp ashikhmin.h shader.h world.h shaderec.h $(UTILS)
 
 bvhnode.o: bvhnode.cpp bvhnode.h object.h shaderec.h utils.h
 	$(CC) -c bvhnode.cpp $(CFLAGS)
+
+checkerboard.o: checkerboard.cpp checkerboard.h shader.h $(UTILS)
+	$(CC) -c checkerboard.cpp $(CFLAGS)
 
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)
@@ -76,7 +79,7 @@ sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 triangle.o: triangle.cpp triangle.h object.h utils.h
 	$(CC) -c triangle.cpp $(CFLAGS)
 
-world.o: world.cpp world.h bvhnode.h areaLight.h controls.h dirlight.h object.h plane.h pointlight.h shaderec.h sphere.h triangle.h utils.h
+world.o: world.cpp world.h bvhnode.h areaLight.h checkerboard.h controls.h dirlight.h object.h plane.h pointlight.h shaderec.h sphere.h triangle.h utils.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----

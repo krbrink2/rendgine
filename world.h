@@ -5,6 +5,7 @@
 #include "bvhnode.h"
 #include "areaLight.h"
 #include "ashikhmin.h"
+#include "checkerboard.h"
 #include "controls.h"
 #include "dirlight.h"
 #include "light.h"
