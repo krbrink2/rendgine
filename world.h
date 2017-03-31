@@ -49,7 +49,7 @@ public:
 
 	void build(void);
 	void addDefaultObjects(void);
-	void addBunny(const Matrix& matrix);
+	void addBunny(const Matrix& matrix, Shader& _sdr);
 	void addManyBunnies(int numBunnies);
 	void addManySpheres(int num);
 	void clearObjects(void);

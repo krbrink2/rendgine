@@ -11,6 +11,7 @@ using namespace std;
 
 // ---- Global variable declarations ----
 World* worldPtr;		// Pointer to active World object.
+int raysShot;
 
 // ---- Function declarations ----
 
@@ -34,6 +35,7 @@ void encodeOneStep(const char* filename, std::vector<unsigned char>& image, unsi
 // Any other output:	Writes file "image.png" to disk
 int main(int argc, char* argv[]){
 
+	raysShot = 0;
 	worldPtr = new World();
 	worldPtr->build();
 	if(ANIMATE)
@@ -41,6 +43,7 @@ int main(int argc, char* argv[]){
 	else
 		worldPtr->renderScene();
 	delete worldPtr;
+	cout << "> Rays shot: " << raysShot << endl;
 	return 0;
 
 

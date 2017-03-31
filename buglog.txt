@@ -3,3 +3,5 @@ Bug Log
 2-8-17
 World::computePixelOrtho seems to endlessly loop when given large resolutions and/or large number of samples. The n-rooks condition is likely failing. computePixelPerspec hasn't been written yet, so I don't know if that will carry over.
 
+3/30/17
+Shader slicing: derived shaders often become the base Shader class in certain contexts.

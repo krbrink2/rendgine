@@ -10,6 +10,7 @@ using namespace std;
 
 extern void encodeOneStep(const char* filename, std::vector<unsigned char>& image, \
  unsigned hres, unsigned vres);
+extern int raysShot;
 
 // ---- Constructor ----
 World::World(void){
@@ -72,10 +73,11 @@ void World::build(void){
 	// Add objects
 	//addDefaultObjects();
 	
-	addManyBunnies(2);
+	addManyBunnies(3);
+
 
 	// Add floor
-	double floorScale = 50;
+	double floorScale = 12;
 	double floorHeight = -5;
 	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.00001, -floorScale+.00001),
 									Point3D(-floorScale, floorHeight, floorScale),
@@ -102,7 +104,7 @@ void World::build(void){
 
 
 	// Add mirror sphere
-	objects.push_back(new Sphere(4, Point3D(0, 5, -15)));
+	objects.push_back(new Sphere(4, Point3D(0, 5, -7)));
 	Mirror mirror;	// On the wall...
 	//objects.back()->setShader(mirror);	
 	objects.back()->sdr = mirror.clone();
@@ -119,12 +121,21 @@ void World::build(void){
 
 	// Add areaLight triangle
 	double areaLightScale = 5;
-	objects.push_back(new AreaLight(Point3D(-10.001, 	floorHeight, areaLightScale/2),
-									Point3D(-10, 		floorHeight, -areaLightScale/2),
-									Point3D(-10, 		floorHeight + areaLightScale, areaLightScale/2)));
-	objects.push_back(new AreaLight(Point3D(-10.001, 	floorHeight, -areaLightScale/2),
-									Point3D(-10, 		floorHeight + areaLightScale, -areaLightScale/2),
-									Point3D(-10, 		floorHeight + areaLightScale, areaLightScale/2)));
+	double ALZOffset = 0;
+	double ALXOffset = -13;
+	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
+	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset-areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
+	// Add back side
+	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2)));
+	objects.push_back(new AreaLight(Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
+									Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
+									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+-areaLightScale/2)));
 	// PureColor pc(255, 255, 0);
 	// Shader sdr;
 	// sdr.c = RGBColor(255, 0, 255);
@@ -226,17 +237,26 @@ void World::addDefaultObjects(void){
 // Parameters:			none
 // Return value:		none
 // Any other output:	Reports if load failed.
-void World::addBunny(const Matrix& matrix){
+void World::addBunny(const Matrix& matrix, Shader& _sdr){
 	// Allocate Mesh
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny);
-	// Create ashikhmin shader
-	Ashikhmin ash;
-	ash.c = RGBColor(226, 114, 91);
-	bunnyPtr->setShader(ash);
-	// Create instance_t
-	// Add instance
-	bunnyPtr->addInstance(matrix, ash.clone());
+	if(rand_int(0, 2) == 0){
+		Ashikhmin ash;
+		ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
+		bunnyPtr->setShader(ash);//setShader(ash);
+		// Create instance_t
+		// Add instance
+		bunnyPtr->addInstance(matrix, ash.clone());
+	}
+	else{
+		Shader ash;
+		ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
+		bunnyPtr->setShader(ash);//setShader(ash);
+		// Create instance_t
+		// Add instance
+		bunnyPtr->addInstance(matrix, ash.clone());
+	}
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 		delete bunnyPtr;
@@ -246,7 +266,7 @@ void World::addBunny(const Matrix& matrix){
 }
 
 void World::addManyBunnies(int numBunnies){
-	double interval = 5;
+	double interval = 7;
 
 	for(int i = 0; i < numBunnies; i++){
 		for(int j = 0; j < numBunnies; j++){
@@ -258,7 +278,28 @@ void World::addManyBunnies(int numBunnies){
 			matrix.m[1][3] = -6;
 			matrix.m[2][3] = -interval * j;
 			//ash.c = RGBColor(i*255/NUM_BUNNIES + 10, j*255/NUM_BUNNIES + 10, 10);
-			addBunny(matrix);
+			//Shader* sdr;
+			if(i == 0 && j == 1){
+					Ashikhmin ash;
+					ash.c = RGBColor(0, 0, 25);
+					addBunny(matrix, ash);
+			}
+			else if(i == 1 && j == 0){
+					Ashikhmin ash;
+					ash.c = RGBColor(225, 225, 0);
+					addBunny(matrix, ash);
+			}
+			else if(i == 1 && j == 1){
+				Shader shader3;
+				shader3.c = RGBColor(225, 0, 225);
+				addBunny(matrix, shader3);
+			}
+			else{
+				Ashikhmin ash;
+				ash.c = RGBColor(226, 114, 91);
+				addBunny(matrix, ash);
+			}
+			//addBunny(matrix, sdr);
 		}
 	}
 	// Mirror mirror; // on the wall...
@@ -342,7 +383,7 @@ void World::renderAnimation(void){
 	ash.c = RGBColor(255, 80, 20);
 	objects.back()->sdr = ash.clone();	//@TODO @BUG why does this chop/go to Shader?
 	//objects.back()->setShader(ash);
-	addBunny(Matrix());
+	//addBunny(Matrix(), ash.clone()); // Just wasn't compiling
 	// Add floor
 	double floorScale = .3;
 	double floorHeight = .037;
@@ -591,6 +632,7 @@ RGBColor World::computePixelPerspec(const int x, const int y) const{
 // Return value:		None (returns information thru sr)
 // Any other output:	None
 void World::traceRay(const Ray& ray, ShadeRec& sr) const{
+	raysShot++;
 	sr.ray = ray;
 	// Let objects check against this ray,
 	//	using sr to record information.
