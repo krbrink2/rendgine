@@ -21,7 +21,7 @@
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 // Rendering
 #define MAX_BOUNCES 				(2)
-#define AREALIGHT_NUM_SAMPLES 		(16)
+#define AREALIGHT_NUM_SAMPLES 		(3)
 
 // Bunny:
 // #define S 		(.002)
@@ -31,10 +31,10 @@
 
 // Defaults:
 #define S 		(.02)
-#define	EYE		Point3D(2, 4, 9)
+#define	EYE		Point3D(3, 6, 15)
 // #define	EYE		Point3D(15, 4, 0)
 #define LOOKAT	Point3D(0, 0, 0)
-#define D 		(4)
+#define D 		(6)
 
 // Many spheres:
 // #define S 		(.02)

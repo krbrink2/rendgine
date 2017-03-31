@@ -75,7 +75,7 @@ void World::build(void){
 	addManyBunnies(2);
 
 	// Add floor
-	double floorScale = 7;
+	double floorScale = 10;
 	double floorHeight = -5;
 	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.00001, -floorScale+.00001),
 									Point3D(-floorScale, floorHeight, floorScale),
@@ -84,30 +84,45 @@ void World::build(void){
 	objects.push_back(new Triangle(	Point3D(floorScale, floorHeight, -floorScale),
 									Point3D(-floorScale, floorHeight, floorScale),
 									Point3D(floorScale, floorHeight, floorScale)));
-	// objects.back()->sdr->c = RGBColor(0, 0, 255);
+	objects.back()->sdr->c = RGBColor(0, 0, 255);
+
+	// Add wall
+	double wallScale = 30;
+	double wallHeight = -5;
+	objects.push_back(new Triangle(	Point3D(-wallScale/2, wallHeight, -floorScale+.0001),
+									Point3D(wallScale/2, wallHeight + wallScale, -floorScale),
+									Point3D(-wallScale/2, wallHeight + wallScale, -floorScale)));
+	objects.back()->sdr->c = RGBColor(150/3, 150/3, 150/3);
+	objects.push_back(new Triangle(	Point3D(-wallScale/2, wallHeight, -floorScale),
+									Point3D(wallScale/2, wallHeight, -floorScale),
+									Point3D(wallScale/2, wallHeight + wallScale, -floorScale+.0001)));
+	objects.back()->sdr->c = RGBColor(100/3, 100/3, 100/3);
 
 
 	// Add mirror sphere
-	//objects.push_back(new Sphere(3, Point3D(0, 3, -1)));
+	objects.push_back(new Sphere(5, Point3D(3, 5, -10)));
 	Mirror mirror;	// On the wall...
 	//objects.back()->setShader(mirror);	
-	//objects.back()->sdr = mirror.clone();
+	objects.back()->sdr = mirror.clone();
 
 	// Add mirror triangle
-	objects.push_back(new Triangle(	Point3D(-10, 0, -10),
-									Point3D(10, 0, -10),
-									Point3D(-10, 10, 0)));
-	objects.back()->sdr = mirror.clone();
-	objects.push_back(new Triangle(	Point3D(10, 10, 0),
-									Point3D(-10, 10, 0),
-									Point3D(10, 0, -10)));
-	objects.back()->sdr = mirror.clone();
+	// objects.push_back(new Triangle(	Point3D(-5, floorHeight, -floorScale+.01),
+	// 								Point3D(5, floorHeight, -floorScale+.01),
+	// 								Point3D(-5, 5, -floorScale+.01)));
+	// objects.back()->sdr = mirror.clone();
+	// objects.push_back(new Triangle(	Point3D(5, 5, -floorScale+.01),
+	// 								Point3D(-5, 5, -floorScale+.01),
+	// 								Point3D(5, floorHeight, -floorScale+.01)));
+	// objects.back()->sdr = mirror.clone();
 
 	// Add areaLight triangle
-	double areaLightScale = 10;
-	objects.push_back(new AreaLight(Point3D(-floorScale-2.001, floorHeight, areaLightScale/2),
-									Point3D(-floorScale-2, floorHeight, -areaLightScale/2),
-									Point3D(-floorScale-2, floorHeight + areaLightScale*.7, 0)));
+	double areaLightScale = 5;
+	objects.push_back(new AreaLight(Point3D(-floorScale-2.001, 	floorHeight, areaLightScale/2),
+									Point3D(-floorScale-2, 		floorHeight, -areaLightScale/2),
+									Point3D(-floorScale-2, 		floorHeight + areaLightScale, areaLightScale/2)));
+	objects.push_back(new AreaLight(Point3D(-floorScale-2.001, 	floorHeight, -areaLightScale/2),
+									Point3D(-floorScale-2, 		floorHeight + areaLightScale, -areaLightScale/2),
+									Point3D(-floorScale-2, 		floorHeight + areaLightScale, areaLightScale/2)));
 	// PureColor pc(255, 255, 0);
 	// Shader sdr;
 	// sdr.c = RGBColor(255, 0, 255);
