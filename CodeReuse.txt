@@ -19,3 +19,6 @@ The main function was inspired by Suffern.
 
 Mesh::load
 1 https://github.com/wdas/brdf/blob/master/src/brdf/SimpleModel.cpp
+
+halton.cpp and halton.hpp
+1 https://people.sc.fsu.edu/~jburkardt/cpp_src/halton/halton.cpp

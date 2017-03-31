@@ -4,11 +4,11 @@
 // Compilation controls. This will handle render parameters for now.
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(4)
-#define SQRT_NUM_SAMPLES	(2)
+#define NUM_SAMPLES 		(1)
+#define SQRT_NUM_SAMPLES	(1)
 // Resolution
-#define	HRES 				(900)	// 1366,	1920
-#define VRES 				(500)	// 768,		1080
+#define	HRES 				(700)	// 1366,	1920
+#define VRES 				(400)	// 768,		1080
 // Camera
 #define	ORTHO				(false)
 #define UP 					Vector3D(0, 1, 0)
@@ -21,7 +21,7 @@
 #define ANIMATION_VECTOR	Vector3D(.004, -.0005, 0)
 // Rendering
 #define MAX_BOUNCES 				(2)
-#define AREALIGHT_NUM_SAMPLES 		(25)
+#define AREALIGHT_NUM_SAMPLES 		(8)
 
 // Bunny:
 // #define S 		(.002)
@@ -31,7 +31,7 @@
 
 // Defaults:
 #define S 		(.02)
-#define	EYE		Point3D(1, 10, 1)
+#define	EYE		Point3D(2, 3, 10)
 // #define	EYE		Point3D(15, 4, 0)
 #define LOOKAT	Point3D(0, 0, 0)
 #define D 		(7)

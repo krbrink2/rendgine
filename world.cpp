@@ -74,7 +74,7 @@ void World::build(void){
 	// Add objects
 	//addDefaultObjects();
 	
-	addManyBunnies(3);
+	addManyBunnies(2);
 
 
 	// Add floor
