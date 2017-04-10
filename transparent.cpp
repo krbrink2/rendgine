@@ -21,8 +21,11 @@ Transparent::Transparent():
 RGBColor Transparent::shade(const World& w, const ShadeRec& sr){
 	// Trace another ray
 	// Creat new origin, push it to other side of hit point.
-	Point3D point = sr.hitPoint - .0001*sr.hitNormal;
-	Vector3D direction = sr.ray.direction;
+	Point3D point = sr.hitPoint;
+	point.x -= .001*sr.hitNormal.x;
+	point.y -= .001*sr.hitNormal.y;
+	point.z -= .001*sr.hitNormal.z;
+	Vector3D direction = sr.ray.d;
 	Ray newRay(point, direction);
 	ShadeRec newSr;
 	newSr.ray = newRay;	// Why do I do this in mirror?

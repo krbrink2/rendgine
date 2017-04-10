@@ -10,7 +10,7 @@ public:
 	Transparent();
 
 	RGBColor shade(const World& w, const ShadeRec& sr);
-	Mirror* clone();
+	Transparent* clone();
 
 	Shader* second; // Secondary shader effect
 	double mix; 	// High value is in favor of second shader above.

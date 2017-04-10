@@ -74,10 +74,27 @@ void World::build(void){
 	// Add objects
 	//addDefaultObjects();
 	
-	addManyBunnies(2);
+	//addManyBunnies(1);
+	Matrix matrix;
+	// Scale
+	matrix.m[0][0] = matrix.m[1][1] = matrix.m[2][2] = 30;
+	// Translate
+	matrix.m[0][3] = 0;//interval * ((numBunnies - 1)/-2.0 + i);
+	matrix.m[1][3] = -6;
+	matrix.m[2][3] = 0;//-interval * j;
+	//ash.c = RGBColor(i*255/NUM_BUNNIES + 10, j*255/NUM_BUNNIES + 10, 10);
+	//Shader* sdr;
+	Ashikhmin ash;
+	ash.c = RGBColor(0, 0, 25);
+	Transparent trans;
+	delete trans.second;
+	trans.second = ash.clone();
+	trans.mix = 0;
+	addBunny(matrix, trans);
 
 
-	// Add floor
+
+	// ==== Add floor
 	double floorScale = 12;
 	double floorHeight = -5;
 	objects.push_back(new Triangle(	Point3D(-floorScale, floorHeight+.00001, -floorScale+.00001),
@@ -89,7 +106,7 @@ void World::build(void){
 									Point3D(floorScale, floorHeight, floorScale)));
 	objects.back()->sdr = new Checkerboard(RGBColor(150, 150, 150));
 
-	// Add wall
+	// ==== Add wall
 	double wallScale = floorScale*2;
 	double wallHeight = -5;
 	objects.push_back(new Triangle(	Point3D(-wallScale/2, wallHeight, -floorScale+.0001),
@@ -104,13 +121,13 @@ void World::build(void){
 	objects.back()->sdr = new Checkerboard(RGBColor(100, 100, 100));
 
 
-	// Add mirror sphere
-	objects.push_back(new Sphere(4, Point3D(0, 5, -7)));
-	Mirror mirror;	// On the wall...
-	//objects.back()->setShader(mirror);	
-	objects.back()->sdr = mirror.clone();
+	// ==== Add mirror sphere
+	// objects.push_back(new Sphere(4, Point3D(0, 5, -7)));
+	// Mirror mirror;	// On the wall...
+	// //objects.back()->setShader(mirror);	
+	// objects.back()->sdr = mirror.clone();
 
-	// Add mirror triangle
+	// ==== Add mirror triangle
 	// objects.push_back(new Triangle(	Point3D(-5, floorHeight, -floorScale+.01),
 	// 								Point3D(5, floorHeight, -floorScale+.01),
 	// 								Point3D(-5, 5, -floorScale+.01)));
@@ -120,33 +137,33 @@ void World::build(void){
 	// 								Point3D(5, floorHeight, -floorScale+.01)));
 	// objects.back()->sdr = mirror.clone();
 
-	// Add areaLight triangle
-	double areaLightScale = 5;
-	double ALZOffset = 0;
-	double ALXOffset = -13;
-	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
-	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset-areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
-	// Add back side
-	objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2)));
-	objects.push_back(new AreaLight(Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
-									Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
-									Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+-areaLightScale/2)));
+	// ==== Add areaLight rectangle
+	// double areaLightScale = 5;
+	// double ALZOffset = 0;
+	// double ALXOffset = -13;
+	// objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
+	// objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset-areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2)));
+	// // Add back side
+	// objects.push_back(new AreaLight(Point3D(ALXOffset+.001, 	floorHeight, ALZOffset+areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight, ALZOffset-areaLightScale/2)));
+	// objects.push_back(new AreaLight(Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+areaLightScale/2),
+	// 								Point3D(ALXOffset+.001, 	floorHeight, ALZOffset-areaLightScale/2),
+	// 								Point3D(ALXOffset, 		floorHeight + areaLightScale, ALZOffset+-areaLightScale/2)));
 	// PureColor pc(255, 255, 0);
 	// Shader sdr;
 	// sdr.c = RGBColor(255, 0, 255);
 	// objects.back()->sdr = sdr.clone();//PureColor(255, 255, 0);//pc.clone();
 	// ======== ========  ======== ========
 	//@luces
-	// lights.push_back(new PointLight(Point3D(-1, 2, 15)));
-	// lights.back()->color = RGBColor(255, 255, 255);
-	//lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
-	//lights.back()->color = RGBColor(40, 30, 30);
+	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
+	lights.back()->color = RGBColor(255, 255, 255);
+	// lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
+	// lights.back()->color = RGBColor(40, 30, 30);
 	// lights.push_back(new PointLight(Point3D(15, -10, 10)));
 	// lights.back()->color = RGBColor(4, 4, 6);
 
@@ -242,22 +259,24 @@ void World::addBunny(const Matrix& matrix, Shader& _sdr){
 	// Allocate Mesh
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny);
-	if(rand_int(0, 2) == 0){
-		Ashikhmin ash;
-		ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
-		bunnyPtr->setShader(ash);//setShader(ash);
-		// Create instance_t
-		// Add instance
-		bunnyPtr->addInstance(matrix, ash.clone());
-	}
-	else{
-		Shader ash;
-		ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
-		bunnyPtr->setShader(ash);//setShader(ash);
-		// Create instance_t
-		// Add instance
-		bunnyPtr->addInstance(matrix, ash.clone());
-	}
+	// if(rand_int(0, 2) == 0){
+	// 	Ashikhmin ash;
+	// 	ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
+	// 	bunnyPtr->setShader(ash);//setShader(ash);
+	// 	// Create instance_t
+	// 	// Add instance
+	// 	bunnyPtr->addInstance(matrix, ash.clone());
+	// }
+	// else{
+	// 	Shader ash;
+	// 	ash.c = RGBColor(rand_int(0, 255), rand_int(0, 255), rand_int(0, 255));
+	// 	bunnyPtr->setShader(ash);//setShader(ash);
+	// 	// Create instance_t
+	// 	// Add instance
+	// 	bunnyPtr->addInstance(matrix, ash.clone());
+	// }
+	bunnyPtr->setShader(_sdr);
+	bunnyPtr->addInstance(matrix, _sdr.clone());
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 		delete bunnyPtr;

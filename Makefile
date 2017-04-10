@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
-TARGET = MP_3_TEST
+TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o halton.o light.o lodepng.o mesh.o \
@@ -76,7 +76,7 @@ shaderec.o: shaderec.cpp shaderec.h object.h utils.h
 sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 	$(CC) -c sphere.cpp $(CFLAGS)
 
-transparent.o: transparent.cpp transparent.h sahder.h world.h shadrec.h $(UTILS)
+transparent.o: transparent.cpp transparent.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c transparent.cpp $(CFLAGS)
 
 triangle.o: triangle.cpp triangle.h object.h utils.h
