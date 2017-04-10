@@ -5,8 +5,11 @@ extern World* worldPtr;
 
 // ---- Constructor ----
 Transparent::Transparent():
-	Shader(){
-	// Pass	
+	Shader(),
+	second(new Shader),
+	mix(.5)
+{
+	second->c = RGBColor(0, 255, 0);
 }
 
 // Function name:		shade
@@ -16,6 +19,32 @@ Transparent::Transparent():
 // Return value:		Computed color.
 // Any other output:	May write to sr.
 RGBColor Transparent::shade(const World& w, const ShadeRec& sr){
+	// Trace another ray
+	// Creat new origin, push it to other side of hit point.
+	Point3D point = sr.hitPoint - .0001*sr.hitNormal;
+	Vector3D direction = sr.ray.direction;
+	Ray newRay(point, direction);
+	ShadeRec newSr;
+	newSr.ray = newRay;	// Why do I do this in mirror?
+	worldPtr->traceRay(newRay, newSr);
+	RGBColor firstColor;
+	if(newSr.hitObject){
+		firstColor = newSr.hitShader->shade(*worldPtr, newSr);
+	}
+	else{
+		firstColor = worldPtr->backgroundColor;
+	}
+
+
+	// Run second shader
+	RGBColor secondColor = second->shade(*worldPtr, sr);
+
+	// Mix and return colors
+	return (1 - mix)*firstColor + mix*secondColor;
+}
+
+
+	/*
 	if(sr.numBounces >= MAX_BOUNCES - 1){
 		// Can't bounce again.
 		return RGBColor(0,0,0);
@@ -41,4 +70,4 @@ RGBColor Transparent::shade(const World& w, const ShadeRec& sr){
 
 Transparent* Transparent::clone(){
 	return new Transparent(*this);
-}
+}*/
