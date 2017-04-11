@@ -11,7 +11,7 @@ public:
 	PureColor& operator=(const PureColor& rhs);*/
 	~PureColor();
 	RGBColor shade(const World& w, const ShadeRec& sr);
-	PureColor* clone();
+	Shader* clone() const;
 };
 
 #endif

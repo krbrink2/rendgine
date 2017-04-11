@@ -26,7 +26,7 @@ Mesh::Mesh(const Mesh& mesh):
 {
 	instances = mesh.instances;
 	for(size_t i = 0; i < mesh.faces.size(); i++)
-		faces.push_back(mesh.faces[i]->clone());
+		faces.push_back((Triangle*)mesh.faces[i]->clone());
 }
 
 // ---- Assignment operator ----
@@ -36,7 +36,7 @@ Mesh& Mesh::operator=(const Mesh& rhs){
 	numTriangles = rhs.numTriangles;
 	instances = rhs.instances;
 	for(size_t i = 0; i < rhs.faces.size(); i++){
-		faces.push_back(rhs.faces[i]->clone());
+		faces.push_back((Triangle*)rhs.faces[i]->clone());
 	}
 	return *this;
 }
@@ -51,7 +51,7 @@ Mesh::~Mesh(){
 // Parameters:			none
 // Return value:		Pointer to new clone.
 // Any other output:	none
-Mesh* Mesh::clone(){
+Object* Mesh::clone() const{
 	return new Mesh(*this);
 }
 

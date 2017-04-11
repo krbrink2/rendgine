@@ -22,7 +22,7 @@ Sphere::Sphere(double _r, Point3D _c):
 // Parameters:			None
 // Return value:		Pointer to new sphere
 // Any other output:	None
-Sphere* Sphere::clone(void){
+Object* Sphere::clone(void) const{
 	return new Sphere(*this);
 }
 

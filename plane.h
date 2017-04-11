@@ -15,7 +15,7 @@ public:
 	Plane();
 	Plane(Point3D _a, Normal _n);
 
-	Plane* clone(void);
+	Object* clone(void) const;
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();

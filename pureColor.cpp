@@ -41,6 +41,6 @@ RGBColor PureColor::shade(const World& w, const ShadeRec& sr){
 // Parameters:			none
 // Return value:		Pointer to new PureColor.
 // Any other output:	none
-PureColor* PureColor::clone(){
+Shader* PureColor::clone() const{
 	return new PureColor(*this);
 }

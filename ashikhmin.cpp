@@ -102,6 +102,6 @@ RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 // Parameters:			none
 // Return value:		Pointer to new shader.
 // Any other output:	none
-Ashikhmin* Ashikhmin::clone(){
+Shader* Ashikhmin::clone() const{
 	return new Ashikhmin(*this);
 }	

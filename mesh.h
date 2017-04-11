@@ -23,7 +23,7 @@ public:
 	Mesh(const Mesh& mesh);
 	Mesh& operator=(const Mesh& rhs);
 	virtual ~Mesh();
-	Mesh* clone();
+	Object* clone() const;
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();

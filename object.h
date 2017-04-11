@@ -11,7 +11,7 @@ public:
 	Object();
 	Object(const Object& obj);
 	virtual ~Object();
-	virtual Object* clone() = 0;
+	virtual Object* clone() const = 0;
 	//virtual bool hit(const Ray& ray, double& t) = 0;
 	virtual bool hit(const Ray& ray, ShadeRec& sr) = 0;
 	virtual Point3D getMaxPoint() = 0;

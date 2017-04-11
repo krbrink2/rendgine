@@ -17,7 +17,7 @@ public:
 	virtual Triangle& operator=(const Triangle& rhs);
 	virtual ~Triangle();
 	*/
-	virtual Triangle* clone(void);
+	Object* clone(void) const;
 	//virtual bool hit(const Ray& ray, double& t) = 0;
 	Point3D getMaxPoint();
 	Point3D getMinPoint();

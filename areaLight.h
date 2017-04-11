@@ -13,7 +13,7 @@ class AreaLight : public Light, public Triangle{
 public:
 	AreaLight();
 	AreaLight(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2);
-	AreaLight* clone(void);
+	Object* clone(void) const;
 	RGBColor getIrradiance(const Point3D& p);
 	Vector3D getDirection(const Point3D& p);
 	void getSamples(vector< pair<Vector3D, RGBColor> >& vect, const Point3D p);

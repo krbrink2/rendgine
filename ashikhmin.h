@@ -11,7 +11,7 @@ public:
 	~Ashikhmin();
 
 	RGBColor shade(const World& w, const ShadeRec& sr);
-	virtual Ashikhmin* clone();
+	Shader* clone() const;
 
 	int nu, nv;
 	double kdiff, kspec;

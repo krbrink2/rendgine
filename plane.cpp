@@ -21,7 +21,7 @@ Plane::Plane(Point3D _a, Normal _n):
 // Parameters:			None
 // Return value:		Pointer to new sphere
 // Any other output:	None
-Plane* Plane::clone(void){
+Object* Plane::clone(void) const{
 	return new Plane(*this);
 }
 

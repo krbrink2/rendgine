@@ -80,6 +80,6 @@ Transparent* Transparent::clone(){
 	return new Transparent(*this);
 }*/
 
-Transparent* Transparent::clone(){
+Shader* Transparent::clone() const{
 	return new Transparent(*this);
 }

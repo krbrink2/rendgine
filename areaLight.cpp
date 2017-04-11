@@ -26,7 +26,7 @@ AreaLight::AreaLight(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2)
 // Parameters:			none
 // Return value:		Pointer to new clone.
 // Any other output:	none
-AreaLight* AreaLight::clone(void){
+Object* AreaLight::clone(void) const{
 	return new AreaLight(*this);
 }
 

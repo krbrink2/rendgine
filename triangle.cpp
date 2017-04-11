@@ -26,7 +26,7 @@ Triangle::Triangle(const Point3D& _v0, const Point3D& _v1, const Point3D& _v2):
 // Parameters:			None
 // Return value:		Pointer to identical triangle
 // Any other output:	None
-Triangle* Triangle::clone(void){
+Object* Triangle::clone(void) const{
 	return new Triangle(*this);
 }
 

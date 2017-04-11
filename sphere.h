@@ -11,7 +11,7 @@ public:
 	Sphere();
 	Sphere(double _r, Point3D _c);
 
-	Sphere* clone(void);
+	Object* clone(void) const;
 	Point3D getMaxPoint();
 	Point3D getMinPoint();
 	Point3D getMedPoint();
