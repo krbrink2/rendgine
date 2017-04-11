@@ -32,7 +32,7 @@ public:
 	void clear(void);
 	bool load(const char* filename);
 	void setShader(const Shader* _sdr);
-	void addInstance(const Matrix& matrix, Shader* sdr);
+	void addInstance(const Matrix& matrix, Shader* _sdr);
 
 	std::vector<instance_t> instances;
 	bool loaded;

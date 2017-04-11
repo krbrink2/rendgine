@@ -85,13 +85,14 @@ void World::build(void){
 	//ash.c = RGBColor(i*255/NUM_BUNNIES + 10, j*255/NUM_BUNNIES + 10, 10);
 	//Shader* sdr;
 	Ashikhmin ash;
-	ash.c = RGBColor(0, 0, 25);
+	ash.c = RGBColor(50, 2, 255);
 	Transparent trans;
 	delete trans.second;
 	trans.second = ash.clone();
-	trans.mix = 0;
-	addBunny(matrix, &trans);
-
+	trans.mix = .5;
+	//addBunny(matrix, &trans);
+	objects.push_back(new Sphere(3, Point3D(0, 0, 0)));
+	objects.back()->sdr = trans.clone();
 
 
 	// ==== Add floor

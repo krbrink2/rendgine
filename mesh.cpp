@@ -372,10 +372,10 @@ void Mesh::setShader(const Shader* _sdr){
 //						sdr for shading.
 // Return value:		none
 // Any other output:	pushed to instances vector.
-void Mesh::addInstance(const Matrix& matrix, Shader* sdr){
+void Mesh::addInstance(const Matrix& matrix, Shader* _sdr){
 	instance_t inst;
 	inst.matrix = matrix;
-	inst.sdr = sdr;
+	inst.sdr = _sdr;
 	for(const Triangle* face : faces){
 		inst.faces.push_back(new Triangle(
 			matrix * face->v0,
