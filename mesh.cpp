@@ -355,11 +355,11 @@ bool Mesh::load(const char* filename){
 // Function name:		setShader
 // Function purpose:	Sets all shaders in this mesh to copy of _sdr.
 // Parameters:			_sdr to be copied.
-void Mesh::setShader(const Shader& _sdr){
+void Mesh::setShader(const Shader* _sdr){
 	// Sets all children to point to same shader.
 	if(sdr != NULL)
 		delete sdr;
-	sdr  = _sdr.clone();
+	sdr  = _sdr->clone();
 	for(size_t i = 0; i < faces.size(); i++){
 		faces[i]->setShader(_sdr);
 	}

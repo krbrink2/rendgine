@@ -31,7 +31,7 @@ public:
 	bool hit(const Ray& ray, ShadeRec& sr);	// Must these be declared?
 	void clear(void);
 	bool load(const char* filename);
-	void setShader(const Shader& _sdr);
+	void setShader(const Shader* _sdr);
 	void addInstance(const Matrix& matrix, Shader* sdr);
 
 	std::vector<instance_t> instances;

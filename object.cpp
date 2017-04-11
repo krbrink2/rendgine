@@ -21,8 +21,8 @@ Object::~Object(){
 // Parameters:			_sdr to be copied.
 // Return value:		none
 // Any other output:	Writes sdr.
-void Object::setShader(const Shader& _sdr){
+void Object::setShader(const Shader* _sdr){
 	if(sdr != NULL)
 		delete sdr;
-	sdr = _sdr.clone();
+	sdr = _sdr->clone();
 }

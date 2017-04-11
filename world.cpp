@@ -90,7 +90,7 @@ void World::build(void){
 	delete trans.second;
 	trans.second = ash.clone();
 	trans.mix = 0;
-	addBunny(matrix, trans);
+	addBunny(matrix, &trans);
 
 
 
@@ -230,7 +230,7 @@ void World::addDefaultObjects(void){
 	Ashikhmin ash;
 	ash.kspec = ash.kdiff = .5;
 	ash.c = RGBColor(255, 80, 20);
-	objects.back()->setShader(ash);
+	objects.back()->setShader(&ash);
 
 	// Sphere 1
 	objects.push_back(new Sphere(6, Point3D(-10, 12, -10)));
@@ -255,7 +255,7 @@ void World::addDefaultObjects(void){
 // Parameters:			none
 // Return value:		none
 // Any other output:	Reports if load failed.
-void World::addBunny(const Matrix& matrix, Shader& _sdr){
+void World::addBunny(const Matrix& matrix, Shader* _sdr){
 	// Allocate Mesh
 	const char bunny[128] = "bunny.obj";
 	Mesh* bunnyPtr = new Mesh(bunny);
@@ -276,7 +276,7 @@ void World::addBunny(const Matrix& matrix, Shader& _sdr){
 	// 	bunnyPtr->addInstance(matrix, ash.clone());
 	// }
 	bunnyPtr->setShader(_sdr);
-	bunnyPtr->addInstance(matrix, _sdr.clone());
+	bunnyPtr->addInstance(matrix, _sdr->clone());
 	if(!bunnyPtr->loaded){
 		cout << "Not loaded!!!" << endl;
 		delete bunnyPtr;
@@ -308,22 +308,22 @@ void World::addManyBunnies(int numBunnies){
 			if(i == 0 && j == 1){
 					Ashikhmin ash;
 					ash.c = RGBColor(0, 0, 25);
-					addBunny(matrix, ash);
+					addBunny(matrix, &ash);
 			}
 			else if(i == 1 && j == 0){
 					Ashikhmin ash;
 					ash.c = RGBColor(225, 225, 0);
-					addBunny(matrix, ash);
+					addBunny(matrix, &ash);
 			}
 			else if(i == 1 && j == 1){
 				Shader shader3;
 				shader3.c = RGBColor(225, 0, 225);
-				addBunny(matrix, shader3);
+				addBunny(matrix, &shader3);
 			}
 			else{
 				Ashikhmin ash;
 				ash.c = RGBColor(226, 114, 91);
-				addBunny(matrix, ash);
+				addBunny(matrix, &ash);
 			}
 			//addBunny(matrix, sdr);
 		}
