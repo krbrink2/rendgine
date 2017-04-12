@@ -4,12 +4,12 @@ TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o halton.o light.o lodepng.o mesh.o \
-mirror.o object.o plane.o pointlight.o pureColor.o shader.o \
+mirror.o noise.o object.o plane.o pointlight.o pureColor.o shader.o \
 shaderec.o sphere.o world.o transparent.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
 HEADERS =  areaLight.h ashikhmin.h bvhnode.h checkerboard.h dirlight.h halton.hpp controls.h \
-light.h lodepng.h mesh.h mirror.h object.h plane.h pointlight.h \
+light.h lodepng.h mesh.h mirror.h noise.h object.h plane.h pointlight.h \
 pureColor.h\
 shader.h shaderec.h sphere.h triangle.h transparent.h world.h \
 Constants.h Maths.h Matrix.h Normal.h \
@@ -54,6 +54,9 @@ mesh.o: mesh.cpp mesh.h object.h utils.h triangle.h
 
 mirror.o: mirror.cpp mirror.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c mirror.cpp $(CFLAGS)
+
+noise.o: noise.cpp noise.h shader.h world.h shaderec.h $(UTILS)
+	$(CC) -c noise.cpp $(CFLAGS)
 
 object.o: object.cpp object.h utils.h shader.h shaderec.h utils.h
 	$(CC) -c object.cpp $(CFLAGS)
