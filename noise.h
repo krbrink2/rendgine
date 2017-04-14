@@ -2,6 +2,10 @@
 #define NOISE_H
 #include "shader.h"
 
+#define 	K_TABLE_SIZE	(256)
+#define 	K_TABLE_MASK 	(K_TABLE_SIZE - 1)
+#define 	SEED_VALUE		(253)
+
 class Noise: public Shader{
 public:
 	Noise();
