@@ -2,9 +2,11 @@
 #define NOISE_H
 #include "shader.h"
 
-#define 	K_TABLE_SIZE	(256)
-#define 	K_TABLE_MASK 	(K_TABLE_SIZE - 1)
-#define 	SEED_VALUE		(253)
+#define 	K_TABLE_SIZE		(256)
+#define 	K_TABLE_MASK 		(K_TABLE_SIZE - 1)
+#define 	SEED_VALUE			(253)
+#define 	PERM(x)				perm[(x) & K_TABLE_MASK]
+#define 	INDEX(ix, iy, iz)	PERM((ix) + PERM((iy) + PERM(IZ)))
 
 
 class Noise: public Shader{
@@ -19,7 +21,7 @@ public:
 	void setup(void);
 
 	int valueTable[K_TABLE_SIZE];
-	const unsigned char PERM[K_TABLE_SIZE] = {
+	const unsigned char perm[K_TABLE_SIZE] = {
     225,155,210,108,175,199,221,144,203,116, 70,213, 69,158, 33,252,
     5, 82,173,133,222,139,174, 27,  9, 71, 90,246, 75,130, 91,191,
     169,138,  2,151,194,235, 81,  7, 25,113,228,159,205,253,134,142,
