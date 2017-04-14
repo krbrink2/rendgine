@@ -50,3 +50,16 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 Shader* Noise::clone() const{
 	return new Noise(*this);
 }
+
+void Noise::setup(void){
+	set_rand_seed(SEED_VALUE);
+	for(int i = 0; i < K_TABLE_SIZE; i++){
+		valueTable[i] = 1.0 - 2.0*rand_float();	// Why range [-1.0, 1.0]?
+	}
+}
+
+
+
+
+
+

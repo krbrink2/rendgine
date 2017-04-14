@@ -15,6 +15,9 @@ public:
 
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	Shader* clone() const;
+	void setup(void);
+
+	int valueTable[K_TABLE_SIZE];
 
 };
 
