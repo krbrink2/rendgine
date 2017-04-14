@@ -6,7 +6,7 @@
 #define 	K_TABLE_MASK 		(K_TABLE_SIZE - 1)
 #define 	SEED_VALUE			(253)
 #define 	PERM(x)				perm[(x) & K_TABLE_MASK]
-#define 	INDEX(ix, iy, iz)	PERM((ix) + PERM((iy) + PERM(IZ)))
+#define 	INDEX(ix, iy, iz)	PERM((ix) + PERM((iy) + PERM(iz)))
 
 
 class Noise: public Shader{
@@ -19,6 +19,7 @@ public:
 	RGBColor shade(const World& w, const ShadeRec& sr);
 	Shader* clone() const;
 	void setup(void);
+	double lerp(double a, double b, double t) const;
 
 	int valueTable[K_TABLE_SIZE];
 	const unsigned char perm[K_TABLE_SIZE] = {
