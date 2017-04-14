@@ -1,10 +1,10 @@
-#include "ashikhmin.h"
+#include "noise.h"
 #include <cmath>
 #include "world.h"
 #include "shaderec.h"
 
 // ---- Default constructor ----
-Ashikhmin::Ashikhmin():
+Noise::Noise():
 	Shader(),
 	nu(100),
 	nv(100),
@@ -13,7 +13,7 @@ Ashikhmin::Ashikhmin():
 {}
 
 // ---- Constructor ----
-Ashikhmin::Ashikhmin(int _nu, int _nv):
+Noise::Noise(int _nu, int _nv):
 	Shader(),
 	nu(_nu),
 	nv(_nv),
@@ -22,7 +22,7 @@ Ashikhmin::Ashikhmin(int _nu, int _nv):
 {}
 
 // ---- Copy consructor ----
-Ashikhmin::Ashikhmin(const Ashikhmin& ash):
+Noise::Noise(const Noise& ash):
 	Shader(ash),
 	nu(ash.nu),
 	nv(ash.nv),
@@ -31,7 +31,7 @@ Ashikhmin::Ashikhmin(const Ashikhmin& ash):
 {}
 
 // ---- Assignment operator ----
-Ashikhmin& Ashikhmin::operator=(const Ashikhmin& rhs){
+Noise& Noise::operator=(const Noise& rhs){
 	c = rhs.c;
 	nu = rhs.nu;
 	nv = rhs.nv;
@@ -41,7 +41,7 @@ Ashikhmin& Ashikhmin::operator=(const Ashikhmin& rhs){
 }
 
 // ---- Destructor ----
-Ashikhmin::~Ashikhmin(){
+Noise::~Noise(){
 }
 
 // Function name:		shade
@@ -49,7 +49,7 @@ Ashikhmin::~Ashikhmin(){
 // Parameters:			World for reference, sr for data
 // Return value:		Color
 // Any other output:	none
-RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
+RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	RGBColor accum(0,0,0);
 
 	// For each light...
@@ -98,10 +98,10 @@ RGBColor Ashikhmin::shade(const World& w, const ShadeRec& sr){
 }
 
 // Function name:		clone
-// Function purpose:	Returns pointer to clone of this Ashikhmin.
+// Function purpose:	Returns pointer to clone of this Noise.
 // Parameters:			none
 // Return value:		Pointer to new shader.
 // Any other output:	none
-Shader* Ashikhmin::clone() const{
-	return new Ashikhmin(*this);
+Shader* Noise::clone() const{
+	return new Noise(*this);
 }	
