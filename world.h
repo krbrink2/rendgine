@@ -11,6 +11,7 @@
 #include "light.h"
 #include "mesh.h"
 #include "mirror.h"
+#include "noise.h"
 #include "object.h"
 #include "plane.h"
 #include "pointlight.h"

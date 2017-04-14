@@ -86,11 +86,15 @@ void World::build(void){
 	//Shader* sdr;
 	Ashikhmin ash;
 	ash.c = RGBColor(255, 255, 255);
-	Transparent trans;
-	delete trans.second;
-	trans.second = ash.clone();
-	trans.mix = .3;
-	addBunny(matrix, &trans);
+	// Transparent trans;
+	// delete trans.second;
+	// trans.second = ash.clone();
+	// trans.mix = .3;
+	// addBunny(matrix, &trans);
+	Noise noise;
+	noise.c = RGBColor(100, 150, 20);
+	addBunny(matrix, &noise);
+
 	// objects.push_back(new Sphere(3, Point3D(0, 0, 0)));
 	// objects.back()->sdr = trans.clone();
 
