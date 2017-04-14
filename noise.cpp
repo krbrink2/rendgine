@@ -44,17 +44,23 @@ Noise::Noise():
 RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	const Point3D& p = sr.hitPoint;
 
-	double x0, x1, y0, y1, z0, z1;
+	int x0, x1, y0, y1, z0, z1;
+	x0 = floor(p.x);
+	x1 = ceil(p.x);
+	y0 = floor(p.y);
+	y1 = ceil(p.y);
+	z0 = floor(p.z);
+	z1 = ceil(p.z);
 	// The best variable names, full stop.
 	double aaa, aab, aba, abb, baa, bab, bba, bbb;
-	aaa = valueTable[INDEX((int)floor(p.x), (int)floor(p.y), (int)floor(p.z))];
-	aab = valueTable[INDEX((int)floor(p.x), (int)floor(p.y), (int)ceil(p.z))];
-	aba = valueTable[INDEX((int)floor(p.x), (int)ceil(p.y), (int)floor(p.z))];
-	abb = valueTable[INDEX((int)floor(p.x), (int)ceil(p.y), (int)ceil(p.z))];
-	baa = valueTable[INDEX((int)ceil(p.x), (int)floor(p.y), (int)floor(p.z))];
-	bab = valueTable[INDEX((int)ceil(p.x), (int)floor(p.y), (int)ceil(p.z))];
-	bba = valueTable[INDEX((int)ceil(p.x), (int)ceil(p.y), (int)floor(p.z))];
-	bbb = valueTable[INDEX((int)ceil(p.x), (int)ceil(p.y), (int)ceil(p.z))];
+	aaa = valueTable[INDEX(x0, y0, z0)];
+	aab = valueTable[INDEX(x0, y0, z1)];
+	aba = valueTable[INDEX(x0, y1, z0)];
+	abb = valueTable[INDEX(x0, y1, z1)];
+	baa = valueTable[INDEX(x1, y0, z0)];
+	bab = valueTable[INDEX(x1, y0, z1)];
+	bba = valueTable[INDEX(x1, y1, z0)];
+	bbb = valueTable[INDEX(x1, y1, z1)];
 
 	// Interpolate out x dimension.
 	double aa, ab, ba, bb;

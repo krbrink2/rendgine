@@ -85,7 +85,7 @@ transparent.o: transparent.cpp transparent.h shader.h world.h shaderec.h $(UTILS
 triangle.o: triangle.cpp triangle.h object.h utils.h
 	$(CC) -c triangle.cpp $(CFLAGS)
 
-world.o: world.cpp world.h bvhnode.h areaLight.h checkerboard.h controls.h dirlight.h object.h plane.h pointlight.h shaderec.h sphere.h triangle.h utils.h
+world.o: world.cpp world.h bvhnode.h areaLight.h checkerboard.h controls.h dirlight.h noise.h object.h plane.h pointlight.h shaderec.h sphere.h triangle.h utils.h
 	$(CC) -c world.cpp $(CFLAGS)
 
 # ---- rtftgu ----
