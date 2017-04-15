@@ -72,13 +72,13 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	// Interpolate out y dimension.
 	double a, b;
 	a = lerp(aa, ba, fmod(p.y, 1.0));
-	b = lerp(ab, bb, fmod(p.z, 1.0));
+	b = lerp(ab, bb, fmod(p.y, 1.0));
 
 	// Interpolate out z dimension.
 	double val;
 	val = lerp(a, b, fmod(p.z, 1.0));
 
-	return c * val;
+	return val * c;
 }
 
 // Function name:		clone
@@ -98,8 +98,9 @@ void Noise::setup(void){
 	}
 }
 
-double Noise::lerp(double a, double b, double t) const{
-  return (1 - t)*a + t*b;
+double Noise::lerp(double a, double b, double _t) const{
+	double t = fabs(_t);
+  return ((1 - t)*a) + (t*b);
 }
 
 
