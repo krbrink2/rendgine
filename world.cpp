@@ -91,9 +91,11 @@ void World::build(void){
 	// trans.second = ash.clone();
 	// trans.mix = .3;
 	// addBunny(matrix, &trans);
-	Noise noise;
-	noise.c = RGBColor(100, 150, 20);
-	addBunny(matrix, &noise);
+	// Noise noise;
+	// noise.c = RGBColor(100, 150, 20);
+	Texture tex("earth.png");
+
+	addBunny(matrix, &tex);
 
 	// objects.push_back(new Sphere(3, Point3D(0, 0, 0)));
 	// objects.back()->sdr = trans.clone();

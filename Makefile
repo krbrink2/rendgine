@@ -78,7 +78,7 @@ shaderec.o: shaderec.cpp shaderec.h object.h utils.h
 
 sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 	$(CC) -c sphere.cpp $(CFLAGS)
-	
+
 texture.o: texture.cpp texture.h shader.h shaderec.h $(UTILS)
 	$(CC) -c texture.cpp $(CFLAGS)
 
