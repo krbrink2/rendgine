@@ -52,6 +52,32 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	z0 = floor(p.z);
 	z1 = ceil(p.z);
 	// The best variable names, full stop.
+	// double aaa, aab, aba, abb, baa, bab, bba, bbb;
+	// aaa = valueTable[INDEX(x0, y0, z0)];
+	// aab = valueTable[INDEX(x0, y0, z1)];
+	// aba = valueTable[INDEX(x0, y1, z0)];
+	// abb = valueTable[INDEX(x0, y1, z1)];
+	// baa = valueTable[INDEX(x1, y0, z0)];
+	// bab = valueTable[INDEX(x1, y0, z1)];
+	// bba = valueTable[INDEX(x1, y1, z0)];
+	// bbb = valueTable[INDEX(x1, y1, z1)];
+
+	// // Interpolate out x dimension.
+	// double aa, ab, ba, bb;
+	// aa = lerp(aaa, baa, fmod(p.x, 1.0));
+	// ab = lerp(aab, bab, fmod(p.x, 1.0));
+	// ba = lerp(aba, bba, fmod(p.x, 1.0));
+	// bb = lerp(abb, bbb, fmod(p.x, 1.0));
+
+	// // Interpolate out y dimension.
+	// double a, b;
+	// a = lerp(aa, ba, fmod(p.y, 1.0));
+	// b = lerp(ab, bb, fmod(p.y, 1.0));
+
+	// // Interpolate out z dimension.
+	// double val;
+	// val = lerp(a, b, fmod(p.z, 1.0));
+
 	double aaa, aab, aba, abb, baa, bab, bba, bbb;
 	aaa = valueTable[INDEX(x0, y0, z0)];
 	aab = valueTable[INDEX(x0, y0, z1)];
@@ -63,20 +89,26 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	bbb = valueTable[INDEX(x1, y1, z1)];
 
 	// Interpolate out x dimension.
+	double fx, fy, fz;
+	fx = p.x - floor(p.x);
+	fy = p.y - floor(p.y);
+	fz = p.z - floor(p.z);
+
 	double aa, ab, ba, bb;
-	aa = lerp(aaa, baa, fmod(p.x, 1.0));
-	ab = lerp(aab, bab, fmod(p.x, 1.0));
-	ba = lerp(aba, bba, fmod(p.x, 1.0));
-	bb = lerp(abb, bbb, fmod(p.x, 1.0));
+	aa = lerp(aaa, baa, fx);
+	ab = lerp(aba, bba, fx);
+	ba = lerp(aab, bab, fx);
+	bb = lerp(abb, bbb, fx);
 
 	// Interpolate out y dimension.
 	double a, b;
-	a = lerp(aa, ba, fmod(p.y, 1.0));
-	b = lerp(ab, bb, fmod(p.y, 1.0));
+	a = lerp(aa, ab, fy);
+	b = lerp(ba, bb, fy);
 
 	// Interpolate out z dimension.
 	double val;
-	val = lerp(a, b, fmod(p.z, 1.0));
+	val = lerp(a, b, fz);
+
 
 	return val * c;
 }
@@ -98,8 +130,7 @@ void Noise::setup(void){
 	}
 }
 
-double Noise::lerp(double a, double b, double _t) const{
-	double t = fabs(_t);
+double Noise::lerp(double a, double b, double t) const{
   return ((1 - t)*a) + (t*b);
 }
 
