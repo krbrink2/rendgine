@@ -7,6 +7,7 @@
 #define 	SEED_VALUE			(253)
 #define 	PERM(x)				perm[(x) & K_TABLE_MASK]
 #define 	INDEX(ix, iy, iz)	PERM((ix) + PERM((iy) + PERM(iz)))
+#define 	NOISE_FACTOR		(10)
 
 
 class Noise: public Shader{

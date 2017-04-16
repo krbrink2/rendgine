@@ -42,7 +42,9 @@ Noise::Noise():
 // Return value:		Color
 // Any other output:	none
 RGBColor Noise::shade(const World& w, const ShadeRec& sr){
-	const Point3D& p = sr.hitPoint;
+	const Point3D p = sr.hitPoint * NOISE_FACTOR;
+
+	// Get color.
 
 	int x0, x1, y0, y1, z0, z1;
 	x0 = floor(p.x);
@@ -52,32 +54,6 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	z0 = floor(p.z);
 	z1 = ceil(p.z);
 	// The best variable names, full stop.
-	// double aaa, aab, aba, abb, baa, bab, bba, bbb;
-	// aaa = valueTable[INDEX(x0, y0, z0)];
-	// aab = valueTable[INDEX(x0, y0, z1)];
-	// aba = valueTable[INDEX(x0, y1, z0)];
-	// abb = valueTable[INDEX(x0, y1, z1)];
-	// baa = valueTable[INDEX(x1, y0, z0)];
-	// bab = valueTable[INDEX(x1, y0, z1)];
-	// bba = valueTable[INDEX(x1, y1, z0)];
-	// bbb = valueTable[INDEX(x1, y1, z1)];
-
-	// // Interpolate out x dimension.
-	// double aa, ab, ba, bb;
-	// aa = lerp(aaa, baa, fmod(p.x, 1.0));
-	// ab = lerp(aab, bab, fmod(p.x, 1.0));
-	// ba = lerp(aba, bba, fmod(p.x, 1.0));
-	// bb = lerp(abb, bbb, fmod(p.x, 1.0));
-
-	// // Interpolate out y dimension.
-	// double a, b;
-	// a = lerp(aa, ba, fmod(p.y, 1.0));
-	// b = lerp(ab, bb, fmod(p.y, 1.0));
-
-	// // Interpolate out z dimension.
-	// double val;
-	// val = lerp(a, b, fmod(p.z, 1.0));
-
 	double aaa, aab, aba, abb, baa, bab, bba, bbb;
 	aaa = valueTable[INDEX(x0, y0, z0)];
 	aab = valueTable[INDEX(x0, y0, z1)];
@@ -110,7 +86,32 @@ RGBColor Noise::shade(const World& w, const ShadeRec& sr){
 	val = lerp(a, b, fz);
 
 
-	return val * c;
+	// Now, do lambertian shading.
+
+
+	RGBColor accum(0, 0, 0);
+	//Vector3D& E = worldPtr->E;
+
+	// For each light...
+	for(size_t i = 0; i < worldPtr->lights.size(); i++){
+		vector<std::pair<Vector3D, RGBColor> > samples;
+		worldPtr->lights[i]->getSamples(samples, sr.hitPoint);
+		// For each sample...
+		for(auto sample : samples){
+			// May want to put this in another function.
+			Vector3D& L = sample.first;
+			double NDotL = clamp((sr.hitNormal * L), 0, 1);
+			accum += (val * c * NDotL * sample.second)/256;
+		}
+	}
+
+	// Clamp color
+	accum.r = clamp(accum.r, 0, 255);
+	accum.g = clamp(accum.g, 0, 255);
+	accum.b = clamp(accum.b, 0, 255);
+
+	return accum;
+
 }
 
 // Function name:		clone
