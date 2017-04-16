@@ -18,6 +18,7 @@
 #include "pureColor.h"
 #include "shaderec.h"
 #include "sphere.h"
+#include "texture.h"
 #include "transparent.h"
 #include "triangle.h"
 #include "utils.h"

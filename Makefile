@@ -5,13 +5,13 @@ UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o halton.o light.o lodepng.o mesh.o \
 mirror.o noise.o object.o plane.o pointlight.o pureColor.o shader.o \
-shaderec.o sphere.o world.o transparent.o triangle.o \
+shaderec.o sphere.o world.o texture.o transparent.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
 HEADERS =  areaLight.h ashikhmin.h bvhnode.h checkerboard.h dirlight.h halton.hpp controls.h \
 light.h lodepng.h mesh.h mirror.h noise.h object.h plane.h pointlight.h \
 pureColor.h\
-shader.h shaderec.h sphere.h triangle.h transparent.h world.h \
+shader.h shaderec.h sphere.h texture.h triangle.h transparent.h world.h \
 Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
 
@@ -78,6 +78,9 @@ shaderec.o: shaderec.cpp shaderec.h object.h utils.h
 
 sphere.o: sphere.cpp sphere.h shaderec.h object.h utils.h
 	$(CC) -c sphere.cpp $(CFLAGS)
+	
+texture.o: texture.cpp texture.h shader.h shaderec.h $(UTILS)
+	$(CC) -c texture.cpp $(CFLAGS)
 
 transparent.o: transparent.cpp transparent.h shader.h world.h shaderec.h $(UTILS)
 	$(CC) -c transparent.cpp $(CFLAGS)
