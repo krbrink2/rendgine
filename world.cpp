@@ -94,6 +94,7 @@ void World::build(void){
 	Noise noise;
 	noise.c = RGBColor(100, 150, 20);
 	addBunny(matrix, &noise);
+	//Source: https://ericmportfolio.wordpress.com/texture-designs/
 	Texture tex("earth.png");
 	objects.push_back(new Sphere(5, Point3D(-4, 6, -5)));
 	objects.back()->sdr = tex.clone();
