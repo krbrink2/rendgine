@@ -34,10 +34,11 @@ RGBColor Texture::shade(const World& w, const ShadeRec& sr){
 	// For now, just do uv's by taking normal xy's.
 	int u, v;
 	u = ((sr.hitNormal.x/2.0) + .5)*width;
-	v = ((sr.hitNormal.y/2.0) + .5)*height;
-	textel.r = image[4*(v*width + u + 0)];
-	textel.g = image[4*(v*width + u + 1)];
-	textel.b = image[4*(v*width + u + 2)];
+	v = (-(sr.hitNormal.y/2.0) + .5)*height;
+	int index = 4*(v*width + u);
+	textel.r = image[index];
+	textel.g = image[index + 1];
+	textel.b = image[index];
 
 	// Now do lamberian shading
 

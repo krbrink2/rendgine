@@ -7,8 +7,8 @@
 #define NUM_SAMPLES 		(1)
 #define SQRT_NUM_SAMPLES	(1)
 // Resolution
-#define	HRES 				(700)	// 1366,	1920
-#define VRES 				(400)	// 768,		1080
+#define	HRES 				(500)	// 1366,	1920
+#define VRES 				(700)	// 768,		1080
 // Camera
 #define	ORTHO				(false)
 #define UP 					Vector3D(0, 1, 0)
