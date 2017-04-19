@@ -99,6 +99,7 @@ void World::build(void){
 
 	Glossy glossy;
 	glossy.c = RGBColor(100, 150, 20);
+	glossy.exp = 500;
 	// addBunny(matrix, &glossy);
 
 	//Source: https://ericmportfolio.wordpress.com/texture-designs/
