@@ -38,7 +38,7 @@ RGBColor Texture::shade(const World& w, const ShadeRec& sr){
 	int index = 4*(v*width + u);
 	textel.r = image[index];
 	textel.g = image[index + 1];
-	textel.b = image[index];
+	textel.b = image[index + 2];
 
 	// Now do lamberian shading
 
