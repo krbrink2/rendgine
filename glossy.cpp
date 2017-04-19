@@ -25,26 +25,35 @@ RGBColor Glossy::shade(const World& w, const ShadeRec& sr){
 	Vector3D samples[GLOSSY_NUM_SAMPLES];
 	setSamples(samples);
 
-
-
-	
-
-	// Generate new ray
+	// Generate R: perfect reflection direction.
 	Vector3D toOrigin = -sr.ray.d;
-	Vector3D foo = toOrigin - (sr.hitNormal*toOrigin)*sr.hitNormal;
-	Ray newRay(sr.hitPoint, sr.hitNormal - 2*foo);
+	Vector3D R = toOrigin - (sr.hitNormal*toOrigin)*sr.hitNormal;
+	R = sr.hitNormal - 2*R;
 
-	// Generate new ShadeRec
-	ShadeRec newSr;
-	newSr.numBounces = sr.numBounces + 1;
-	newSr.ray = newRay;
-	worldPtr->traceRay(newRay, newSr);
-	if(newSr.hitObject){
-		RGBColor c = newSr.hitShader->shade(*worldPtr, newSr);
-		return c;
-	}
-	else{
-		return worldPtr->backgroundColor;
+	// Generate orthonormal basis.
+	Vector3D U, v, W;
+	W = R;
+	U = (UP + Vector3D(.0001, .0001, .0001)) ^ W;	// Cross product with pertrubed up.
+	U.normalize()
+	V = U ^ W;
+	
+	for(int i = 0; i < GLOSSY_NUM_SAMPLES; i++){
+		// Generate sample direction
+		Vector3D dir = samples[i];
+		//@RESUME
+
+		// Generate new ShadeRec
+		ShadeRec newSr;
+		newSr.numBounces = sr.numBounces + 1;
+		newSr.ray = newRay;
+		worldPtr->traceRay(newRay, newSr);
+		if(newSr.hitObject){
+			RGBColor c = newSr.hitShader->shade(*worldPtr, newSr);
+			return c;
+		}
+		else{
+			return worldPtr->backgroundColor;
+		}
 	}
 
 }
@@ -68,9 +77,9 @@ void Glossy::setSamples(Vector3D* samples){
 		randPairs[i].second = rands[1];
 		delete rands;
 	}
+
+	// Convert them to hemisphereical samples.
 	hemisphereize(randPairs, samples);
-
-
 }
 
 void Glossy::hemisphereize(const std::pair<double, double>* randPairs, Vector3D* samples){
