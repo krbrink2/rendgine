@@ -20,6 +20,15 @@ RGBColor Glossy::shade(const World& w, const ShadeRec& sr){
 		// Can't bounce again.
 		return c;
 	}
+
+	// Generate samples
+	Vector3D samples[GLOSSY_NUM_SAMPLES];
+	setSamples(samples);
+
+
+
+	
+
 	// Generate new ray
 	Vector3D toOrigin = -sr.ray.d;
 	Vector3D foo = toOrigin - (sr.hitNormal*toOrigin)*sr.hitNormal;
@@ -48,3 +57,45 @@ RGBColor Glossy::shade(const World& w, const ShadeRec& sr){
 Shader* Glossy::clone() const{
 	return new Glossy(*this);
 }	
+
+
+void Glossy::setSamples(Vector3D* samples){
+	// Get halton samples
+	std::pair<double, double> randPairs[GLOSSY_NUM_SAMPLES];
+	for(int i = 0; i < GLOSSY_NUM_SAMPLES; i++){
+		double* rands = halton(i, 2);
+		randPairs[i].first = rands[0];
+		randPairs[i].second = rands[1];
+		delete rands;
+	}
+	hemisphereize(randPairs, samples);
+
+
+}
+
+void Glossy::hemisphereize(const std::pair<double, double>* randPairs, Vector3D* samples){
+	// Pretty much taken verbatum from RTftGU
+	for(int j = 0; j < GLOSSY_NUM_SAMPLES; j++) {
+		float cos_phi = cos(2.0 * PI * randPairs[j].first);
+		float sin_phi = sin(2.0 * PI * randPairs[j].first);	
+		float cos_theta = pow((1.0 - randPairs[j].second), 1.0 / (exp + 1.0));
+		float sin_theta = sqrt (1.0 - cos_theta * cos_theta);
+		float pu = sin_theta * cos_phi;
+		float pv = sin_theta * sin_phi;
+		float pw = cos_theta;
+		samples[j] = Vector3D(pu, pv, pw);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
