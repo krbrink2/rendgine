@@ -93,18 +93,19 @@ void World::build(void){
 	// trans.mix = .3;
 	// addBunny(matrix, &trans);
 
-	// Noise noise;
-	// noise.c = RGBColor(100, 150, 20);
-	// addBunny(matrix, &noise);
+	Noise noise;
+	noise.c = RGBColor(100, 150, 20);
+	addBunny(matrix, &noise);
 
 	Glossy glossy;
 	glossy.c = RGBColor(100, 150, 20);
-	addBunny(matrix, &glossy);
+	// addBunny(matrix, &glossy);
 
 	//Source: https://ericmportfolio.wordpress.com/texture-designs/
-	Texture tex("earth.png");
+	// ==== Add Earth
+	// Texture tex("earth.png");
 	objects.push_back(new Sphere(5, Point3D(-4, 6, -5)));
-	objects.back()->sdr = tex.clone();
+	objects.back()->sdr = glossy.clone();//tex.clone();
 
 	// objects.push_back(new Sphere(3, Point3D(0, 0, 0)));
 	// objects.back()->sdr = trans.clone();

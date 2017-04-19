@@ -22,7 +22,7 @@
 // Rendering
 #define MAX_BOUNCES 				(2)
 #define AREALIGHT_NUM_SAMPLES 		(8)
-#define GLOSSY_NUM_SAMPLES 			(8)
+#define GLOSSY_NUM_SAMPLES 			(32)
 
 // Bunny:
 // #define S 		(.002)
