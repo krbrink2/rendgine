@@ -21,7 +21,7 @@ RGBColor Glossy::shade(const World& w, const ShadeRec& sr){
 		return c;
 	}
 
-	// Generate samples
+	// Generate hemisphereical samples
 	Vector3D samples[GLOSSY_NUM_SAMPLES];
 	setSamples(samples);
 
@@ -31,31 +31,49 @@ RGBColor Glossy::shade(const World& w, const ShadeRec& sr){
 	R = sr.hitNormal - 2*R;
 
 	// Generate orthonormal basis.
-	Vector3D U, v, W;
+	Vector3D U, V, W;
 	W = R;
 	U = (UP + Vector3D(.0001, .0001, .0001)) ^ W;	// Cross product with pertrubed up.
-	U.normalize()
+	U.normalize();
 	V = U ^ W;
 	
+	// Transform each sample to the reflected basis.
 	for(int i = 0; i < GLOSSY_NUM_SAMPLES; i++){
 		// Generate sample direction
-		Vector3D dir = samples[i];
-		//@RESUME
+		Vector3D dir = 	samples[i].x*U + 
+						samples[i].y*V +
+						samples[i].z*W;
+		// Reflect if beneath surface.
+		if(sr.hitNormal * dir < 0){
+			Vector3D dir = 	-samples[i].x*U + 
+							-samples[i].y*V +
+							samples[i].z*W;
+		}
+		samples[i] = dir;
+	}
 
+
+	// Shoot ray in new direction.
+	RGBColor accum(0,0,0);
+	for(int i = 0; i < GLOSSY_NUM_SAMPLES; i++){
 		// Generate new ShadeRec
 		ShadeRec newSr;
 		newSr.numBounces = sr.numBounces + 1;
+		// Generate new ray to trace
+		Ray newRay(sr.hitPoint, samples[i]);
 		newSr.ray = newRay;
 		worldPtr->traceRay(newRay, newSr);
 		if(newSr.hitObject){
-			RGBColor c = newSr.hitShader->shade(*worldPtr, newSr);
-			return c;
+			accum = accum + newSr.hitShader->shade(*worldPtr, newSr);
 		}
 		else{
-			return worldPtr->backgroundColor;
+			accum = accum + worldPtr->backgroundColor;
 		}
 	}
 
+	// Normalize accum
+	accum = accum / GLOSSY_NUM_SAMPLES;
+	return accum;
 }
 
 // Function name:		clone
