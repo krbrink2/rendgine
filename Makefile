@@ -3,12 +3,12 @@ CFLAGS = -std=c++11 -g -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-v
 TARGET = rendgine
 UTILS = Constants.h Maths.h Matrix.h Normal.h \
 Point3D.h Ray.h RGBColor.h Vector3D.h
-OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o halton.o light.o lodepng.o mesh.o \
+OBJS = areaLight.o ashikhmin.o bvhnode.o checkerboard.o dirlight.o glossy.o halton.o light.o lodepng.o mesh.o \
 mirror.o noise.o object.o plane.o pointlight.o pureColor.o shader.o \
 shaderec.o sphere.o world.o texture.o transparent.o triangle.o \
 Maths.o Matrix.o \
 Normal.o Point3D.o Ray.o RGBColor.o Vector3D.o
-HEADERS =  areaLight.h ashikhmin.h bvhnode.h checkerboard.h dirlight.h halton.hpp controls.h \
+HEADERS =  areaLight.h ashikhmin.h bvhnode.h checkerboard.h dirlight.h glossy.h halton.hpp controls.h \
 light.h lodepng.h mesh.h mirror.h noise.h object.h plane.h pointlight.h \
 pureColor.h\
 shader.h shaderec.h sphere.h texture.h triangle.h transparent.h world.h \
@@ -39,6 +39,9 @@ checkerboard.o: checkerboard.cpp checkerboard.h shader.h $(UTILS)
 
 dirlight.o: dirlight.cpp dirlight.h light.h
 	$(CC) -c dirlight.cpp $(CFLAGS)
+
+glossy.o: glossy.cpp glossy.h controls.h shader.h world.h shaderec.h $(UTILS)
+	$(CC) -c glossy.cpp $(CFLAGS)
 
 halton.o: halton.cpp halton.hpp
 	$(CC) -c halton.cpp $(CFLAGS)

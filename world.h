@@ -8,6 +8,7 @@
 #include "checkerboard.h"
 #include "controls.h"
 #include "dirlight.h"
+#include "glossy.h"
 #include "light.h"
 #include "mesh.h"
 #include "mirror.h"
