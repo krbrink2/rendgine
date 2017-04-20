@@ -86,8 +86,14 @@ Shader* Glossy::clone() const{
 }	
 
 
+// Function name:		setSamples
+// Function purpose:	Adds hemisphereical sample Vector3d's to samples array.
+// Parameters:			Pointer to array to add samples to.
+// Return value:		none
+// Any other output:	Writes to samples array.
 void Glossy::setSamples(Vector3D* samples){
 	// Get halton samples
+	//@TODO cite
 	std::pair<double, double> randPairs[GLOSSY_NUM_SAMPLES];
 	for(int i = 0; i < GLOSSY_NUM_SAMPLES; i++){
 		double* rands = halton(i, 2);
@@ -100,6 +106,12 @@ void Glossy::setSamples(Vector3D* samples){
 	hemisphereize(randPairs, samples);
 }
 
+// Function name:		hemisphereize
+// Function purpose:	Turns randPairs points into hemisphereical samples.
+// Parameters:			randPairs: array of input points
+//						sampels: array of output Vector3D's
+// Return value:		none
+// Any other output:	Writes to samples array.
 void Glossy::hemisphereize(const std::pair<double, double>* randPairs, Vector3D* samples){
 	// Pretty much taken verbatum from RTftGU
 	for(int j = 0; j < GLOSSY_NUM_SAMPLES; j++) {
@@ -113,13 +125,6 @@ void Glossy::hemisphereize(const std::pair<double, double>* randPairs, Vector3D*
 		samples[j] = Vector3D(pu, pv, pw);
 	}
 }
-
-
-
-
-
-
-
 
 
 

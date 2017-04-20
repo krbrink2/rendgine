@@ -75,6 +75,11 @@ Shader* Texture::clone() const{
 	return new Texture(*this);
 }
 
+// Function name:		loadImage
+// Function purpose:	Loads filename into image vector.
+// Parameters:			filename: string name of texture file.
+// Return value:		none
+// Any other output:	Writes to image member vector.
 void Texture::loadImage(const char* filename){
 	std::pair<unsigned, unsigned> wh = decodeOneStep(filename, image);
 	width = wh.first;

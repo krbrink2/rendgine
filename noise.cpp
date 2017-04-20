@@ -99,6 +99,12 @@ Shader* Noise::clone() const{
 	return new Noise(*this);
 }
 
+
+// Function name:		setup
+// Function purpose:	Initilizes valueTable full of pseudorandom values.
+// Parameters:			none
+// Return value:		none
+// Any other output:	Writes to valueTable array.
 void Noise::setup(void){
 	set_rand_seed(SEED_VALUE);
 	for(int i = 0; i < K_TABLE_SIZE; i++){
@@ -107,6 +113,13 @@ void Noise::setup(void){
 	}
 }
 
+// Function name:		lerp
+// Function purpose:	Linear interpretation
+// Parameters:			First value a
+// 						Second value b
+//						Interpolation amount t
+// Return value:		Interpolated value
+// Any other output:	none
 double Noise::lerp(double a, double b, double t) const{
   return ((1 - t)*a) + (t*b);
 }

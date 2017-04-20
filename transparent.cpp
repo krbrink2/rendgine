@@ -51,35 +51,11 @@ RGBColor Transparent::shade(const World& w, const ShadeRec& sr){
 	return (1 - mix)*firstColor + mix*secondColor;
 }
 
-
-	/*
-	if(sr.numBounces >= MAX_BOUNCES - 1){
-		// Can't bounce again.
-		return RGBColor(0,0,0);
-	}
-	// Generate new ray
-	Vector3D toOrigin = -sr.ray.d;
-	Vector3D foo = toOrigin - (sr.hitNormal*toOrigin)*sr.hitNormal;
-	Ray newRay(sr.hitPoint, sr.hitNormal - 2*foo);
-
-	// Generate new ShadeRec
-	ShadeRec newSr;
-	newSr.numBounces = sr.numBounces + 1;
-	newSr.ray = newRay;
-	worldPtr->traceRay(newRay, newSr);
-	if(newSr.hitObject){
-		RGBColor c = newSr.hitShader->shade(*worldPtr, newSr);
-		return c;
-	}
-	else{
-		return worldPtr->backgroundColor;
-	}
-}
-
-Transparent* Transparent::clone(){
-	return new Transparent(*this);
-}*/
-
+// Function name:		clone
+// Function purpose:	Returns pointer to new copy of this Transparent.
+// Parameters:			none
+// Return value:		Pointer to new Transparent copy.
+// Any other output:	Allocates memory.
 Shader* Transparent::clone() const{
 	return new Transparent(*this);
 }
