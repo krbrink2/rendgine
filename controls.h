@@ -4,8 +4,8 @@
 // Compilation controls. This will handle render parameters for now.
 
 // Anti-aliasing
-#define NUM_SAMPLES 		(1)
-#define SQRT_NUM_SAMPLES	(1)
+#define NUM_SAMPLES 		(4)
+#define SQRT_NUM_SAMPLES	(2)
 // Resolution
 #define	HRES 				(500)	// 1366,	1920
 #define VRES 				(700)	// 768,		1080
@@ -22,7 +22,8 @@
 // Rendering
 #define MAX_BOUNCES 				(2)
 #define AREALIGHT_NUM_SAMPLES 		(8)
-#define GLOSSY_NUM_SAMPLES 			(16)
+#define NOISE_FACTOR				(5)
+#define GLOSSY_NUM_SAMPLES 			(32)
 
 // Bunny:
 // #define S 		(.002)
@@ -32,9 +33,10 @@
 
 // Defaults:
 #define S 		(.02)
-#define	EYE		Point3D(2, 3, 10)
+// #define	EYE		Point3D(2, 6, 6)
+#define	EYE		Point3D(-7, .5, 6)
 // #define	EYE		Point3D(15, 4, 0)
-#define LOOKAT	Point3D(0, 0, 0)
+#define LOOKAT	Point3D(0, 4, -5)
 #define D 		(7)
 
 // Many spheres:

@@ -93,23 +93,44 @@ void World::build(void){
 	// trans.mix = .3;
 	// addBunny(matrix, &trans);
 
-	Noise noise;
-	noise.c = RGBColor(100, 150, 20);
-	addBunny(matrix, &noise);
+	// Noise noise;
+	// noise.c = RGBColor(100, 150, 20);
+	//addBunny(matrix, &noise);
 
-	Glossy glossy;
-	glossy.c = RGBColor(100, 150, 20);
-	glossy.exp = 500;
+	// Glossy glossy;
+	// glossy.c = RGBColor(100, 150, 20);
+	// glossy.exp = 500;
 	// addBunny(matrix, &glossy);
 
 	//Source: https://ericmportfolio.wordpress.com/texture-designs/
-	// ==== Add Earth
-	// Texture tex("earth.png");
-	objects.push_back(new Sphere(5, Point3D(-4, 6, -5)));
-	objects.back()->sdr = glossy.clone();//tex.clone();
+	// ==== Add Earth and Spheres
+	const double rad = 3;
+	const double spacing = 4;
+	const double height = 8;
+	Texture tex("earth.png");
+	objects.push_back(new Sphere(rad, Point3D(-spacing, height, -5)));
+	objects.back()->sdr = tex.clone();
 
-	// objects.push_back(new Sphere(3, Point3D(0, 0, 0)));
-	// objects.back()->sdr = trans.clone();
+	Noise noise;
+	noise.c = RGBColor(100, 150, 15);
+	objects.push_back(new Sphere(rad, Point3D(spacing, height, -5)));
+	objects.back()->sdr = noise.clone();
+
+	Transparent trans;
+	Ashikhmin ash;
+	ash.c = RGBColor(255, 255, 255);
+	//trans.c = RGBColor(20, 200, 210);
+	delete trans.second;
+	trans.second = ash.clone();
+	trans.mix = .6;
+	objects.push_back(new Sphere(rad, Point3D(-spacing, 1, -5)));
+	objects.back()->sdr = trans.clone();
+
+	Glossy glossy;
+	glossy.exp = 100;
+	objects.push_back(new Sphere(rad, Point3D(spacing, 1, -5)));
+	objects.back()->sdr = glossy.clone();
+
 
 
 	// ==== Add floor
@@ -180,6 +201,8 @@ void World::build(void){
 	//@luces
 	lights.push_back(new PointLight(Point3D(-1, 2, 15)));
 	lights.back()->color = RGBColor(255, 255, 255);
+	lights.push_back(new PointLight(Point3D(-40, 2, 0)));
+	lights.back()->color = RGBColor(255/2, 255/2, 255/2);
 	// lights.push_back(new DirLight(Vector3D(-.1, -.1, 1)));
 	// lights.back()->color = RGBColor(40, 30, 30);
 	// lights.push_back(new PointLight(Point3D(15, -10, 10)));

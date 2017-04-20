@@ -1,7 +1,6 @@
-Rays shot & render times
+Rays Shot and Render Times
 
-photo0.png shot 406,320,494 rays total, and took about seven hours to render. The area light used 128 samples.
+photo0.png took 55.61 seconds and shot 13,984,118 rays total. 
 
-photo1.png used 95,249,134 rays, and took about 45 minutes. It only used 20 samples for the area light, explaining the much smaller render time.
+photo1.png took 33.33 seconds and shot 9,478,994 rays total.
 
-These times are approximate; I had to leave the machine running, so I wasn't there to record the exact time the program finished.

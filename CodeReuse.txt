@@ -1,4 +1,3 @@
-
 lodepng.h
 1 1762 lodev.org/lodepng/
 
@@ -22,3 +21,12 @@ Mesh::load
 
 halton.cpp and halton.hpp
 1 https://people.sc.fsu.edu/~jburkardt/cpp_src/halton/halton.cpp
+
+noise.cpp and noise.h use Perlin's constant permutation array, and RTftGU indexing macros and interpolation organization.
+1 55 www.raytracegroundup.com/downloads.html
+
+Glossy::hemisphereize taken verbatum from RTftGU
+1 10 www.raytracegroundup.com/downloads.html
+
+earth.png
+1 1 https://ericmportfolio.wordpress.com/texture-designs/
